@@ -7,7 +7,6 @@
 }
 
 .App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -19,4 +18,246 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+p{color:black;}
+
+
+.Appred{
+  background-color: red;
+  min-height: 100vh;
+  display: flex;
+}
+
+.fade-enter {
+opacity:0;
+}
+
+.fade-enter.fade-enter-active {
+
+  opacity: 1;
+  transition:2000ms ease-in;
+}
+
+.fade-exit {
+
+  opacity: 1;
+}
+
+.fade-exit.fade-exit-active {
+opacity:0;
+  transition:  300ms ease-in;
+}
+/*
+.transition-group {
+  position: relative;
+}
+section.route-section {
+position: absolute;
+width: 100%;
+top: 0;
+left: 0;
+}
+*/
+.timeline-item {
+  background: #fff;
+
+  padding: 12px;
+width:100%;
+  margin: 0 auto;
+  max-width: 472px;
+  min-height: 200px;
+}
+
+@keyframes placeHolderShimmer{
+  0%{
+      background-position: -468px 0
+  }
+  100%{
+      background-position: 468px 0
+  }
+}
+
+.animated-background {
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: #f6f7f8;
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 800px 104px;
+  height: 200px;
+  position: relative;
+}
+
+.reflow{  /*4x5 image*/
+  position:relative;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: #f6f7f8;
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 800px 104px;
+  padding-bottom:125%;
+}
+.reflow > img{
+  position:absolute;
+}
+.r-main{
+  background-color:black;
+  padding-bottom:125%;
+}
+
+.opacity{
+  opacity:1;
+  transition:0.5s ease-out;
+}
+
+
+.imghun{
+  height:100%;
+}
+
+.trails-main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.trails-text {
+  position: relative;
+  width: 100%;
+height:400px;
+  line-height: 80px;
+  color: palevioletred;
+  font-size: 5em;
+  font-weight: 800;
+  text-transform: uppercase;
+  will-change: transform, opacity;
+  overflow: hidden;
+}
+
+.loadmeh{
+  display:none;
+}
+
+
+
+.btn{
+  position:fixed;
+  right:0;
+  z-index:1000;
+  width:5rem;
+  height: 5rem;
+  background-color:transparent;
+  border: none;
+  color:white;
+}
+
+.hamburger-1{
+  position:absolute;
+  top:35%;
+  left:0;
+  width:50px;
+  height:3px;
+  background-color:black;
+  transform-origin: center;
+}
+
+.hamburger-2{
+  position:absolute;
+  top:50%;
+  left:0;
+  width:50px;
+  height:3px;
+  background-color:black;
+}
+.hamburger-3{
+  position:absolute;
+  top:65%;
+  left:0;
+  width:50px;
+  height:3px;
+  background-color:black;
+}
+
+.hamburger-4{
+  position:absolute;
+  top:0;
+  left:50%;
+  width:3px;
+  height:50px;
+  background-color:black;
+}
+.utsurundesu{
+
+
+  width: 13rem;
+  
+}
+.logo{
+  position: fixed;
+  mix-blend-mode: difference;
+
+  z-index: 500;
+}
+.navbar--hidden{
+background-color: red;
+}
+
+.utsurundesu-hide{
+  position:relative;
+  width:0.1rem;
+  height:4rem;
+  top:-3.5rem;
+  left:13rem;
+  background-color:black;
+  transform-origin: left;
+  transition: 0.5s;
+  mix-blend-mode: subtract;
+}
+
+
+.fullpageload{
+  position: absolute;
+  z-index: 5000;
+  top: 0;
+  background: blue;
+  height: 1%;
+  width: 100%;;
+  transition: 1s;
+}
+.fullpageloadout{
+  position: absolute;
+  z-index: 5000;
+  background: black;
+  height: 100%;
+  width: 50%;;
+  transition: 1s;
+}
+
+.loading-animated-background{
+
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: #f6f7f8;
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 800px 104px;
+  height: 400px;
+  width: 300px;
+  margin: 2rem auto;
+  position: relative;
+
 }
