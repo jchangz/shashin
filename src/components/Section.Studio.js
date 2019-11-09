@@ -17,6 +17,7 @@ function Studio() {
         >
           Learn React
         </a>
+        <img src="https://jian2changz.github.io/kendrajian/img/2.jpg"></img>
       </header>
     </div>
       );

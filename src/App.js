@@ -4,10 +4,12 @@ import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import CMRK from './components/camerarollkyoto.js';
 import Header from "./components/Header";
-import Japan from './components/Section.Japan.js';
+import BB from './components/Section.Japan.js';
 import Latest from './components/Section.Latest.js';
 import Studio from './components/Section.Studio.js';
 import { TransitionGroup, Transition, CSSTransition } from "react-transition-group";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 function App() {
   return (
@@ -16,10 +18,10 @@ function App() {
        <Header />
        <Route render={({location}) => (
           <TransitionGroup className="transition-group">
-            <CSSTransition key={location.key} timeout={{ enter: 300, exit: 300 }} classNames={"fade"} unmountOnExit>
+            <CSSTransition key={location.key} timeout={{ /*enter: 2000, exit: 300*/ }} classNames={"fade"} unmountOnExit>
             <section className="route-section">
               <Switch location={location}>
-                <Route exact path="/" component={Japan} />
+                <Route exact path="/" component={BB} />
                 <Route path="/Latest" render={({ match: { path } }) => (
                   <div>
                     <Route exact path={path} component={Latest} />
@@ -34,10 +36,20 @@ function App() {
          )}
         />
 
-      
+<ScrollToTop />
     </Router>
     
   );
+}
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [pathname]);
+
+  return null;
 }
 
 function Home() {

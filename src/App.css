@@ -20,6 +20,8 @@
   color: #09d3ac;
 }
 
+p{color:black;}
+
 
 .Appred{
   background-color: red;
@@ -28,25 +30,25 @@
 }
 
 .fade-enter {
-  transform:translateX(-100%);
+opacity:0;
 }
 
 .fade-enter.fade-enter-active {
-  transform: translateX(0);
+
   opacity: 1;
-  transition:300ms ease-in;
+  transition:2000ms ease-in;
 }
 
 .fade-exit {
-  transform:translateY(0%);
+
   opacity: 1;
 }
 
 .fade-exit.fade-exit-active {
-  transform:translateY(100%);
+opacity:0;
   transition:  300ms ease-in;
 }
-
+/*
 .transition-group {
   position: relative;
 }
@@ -55,4 +57,94 @@ position: absolute;
 width: 100%;
 top: 0;
 left: 0;
+}
+*/
+.timeline-item {
+  background: #fff;
+
+  padding: 12px;
+width:100%;
+  margin: 0 auto;
+  max-width: 472px;
+  min-height: 200px;
+}
+
+@keyframes placeHolderShimmer{
+  0%{
+      background-position: -468px 0
+  }
+  100%{
+      background-position: 468px 0
+  }
+}
+
+.animated-background {
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: #f6f7f8;
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 800px 104px;
+  height: 200px;
+  position: relative;
+}
+
+.reflow{  /*4x5 image*/
+  position:relative;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: #f6f7f8;
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 800px 104px;
+  padding-bottom:125%;
+}
+.reflow > img{
+  position:absolute;
+}
+.r-main{
+  background-color:black;
+  padding-bottom:125%;
+}
+
+.opacity{
+  opacity:1;
+  transition:0.5s ease-out;
+}
+
+
+.imghun{
+  height:100%;
+}
+
+.trails-main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.trails-text {
+  position: relative;
+  width: 100%;
+height:400px;
+  line-height: 80px;
+  color: palevioletred;
+  font-size: 5em;
+  font-weight: 800;
+  text-transform: uppercase;
+  will-change: transform, opacity;
+  overflow: hidden;
+}
+
+.loadmeh{
+  display:none;
 }
