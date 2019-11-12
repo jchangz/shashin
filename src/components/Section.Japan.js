@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import '../App.css';
 import {useSpring, useTrail, animated} from 'react-spring';
-
+import Loading from './Loading.js';
 const items = ['https://live.staticflickr.com/65535/48034089697_3e1ecbe66a_o.jpg', 'https://live.staticflickr.com/65535/48033979186_a770ede3d1_o.jpg', 'https://live.staticflickr.com/65535/48033978411_1f263e8b98_o.jpg', 'https://live.staticflickr.com/65535/48034022103_278e793262_o.jpg']
 const config = { mass: 5, tension: 2000, friction: 200 }
 
@@ -73,6 +73,7 @@ const Japan = ()=> {
       );
 
 }
+
 function imgLoad(url) {
     return new Promise(function(resolve, reject) {
       var img = new Image();
@@ -124,17 +125,24 @@ function imgLoad(url) {
     render() {
 
         if (!this.state.data) {
-            return( 
-            <div>Loading...
-             
-                
-                {/* <img  className="loadmeh" src={items[0]} onLoad={this.handleImageLoaded.bind(this)}/>
-               */}
-                
-                </div>)
+            return(
+              <div >
+              <div className="loading-animated-background">
+            
+             </div>
+             <div className="loading-animated-background">
+            
+             </div>
+             <div className="loading-animated-background">
+            
+             </div>
+             </div>
+            )
         }
         return <div>
+           
             <Japan />
+            
         </div>;
     }
 }

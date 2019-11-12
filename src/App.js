@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import CMRK from './components/camerarollkyoto.js';
-import Header from "./components/Header";
+import Navbar from "./components/Header";
 import BB from './components/Section.Japan.js';
 import Latest from './components/Section.Latest.js';
 import Studio from './components/Section.Studio.js';
@@ -15,7 +15,7 @@ function App() {
   return (
     <Router>
 
-       <Header />
+       <Navbar />
        <Route render={({location}) => (
           <TransitionGroup className="transition-group">
             <CSSTransition key={location.key} timeout={{ /*enter: 2000, exit: 300*/ }} classNames={"fade"} unmountOnExit>

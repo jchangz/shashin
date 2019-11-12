@@ -130,6 +130,7 @@ width:100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: white;
 }
 
 .trails-text {
@@ -147,4 +148,116 @@ height:400px;
 
 .loadmeh{
   display:none;
+}
+
+
+
+.btn{
+  position:fixed;
+  right:0;
+  z-index:1000;
+  width:5rem;
+  height: 5rem;
+  background-color:transparent;
+  border: none;
+  color:white;
+}
+
+.hamburger-1{
+  position:absolute;
+  top:35%;
+  left:0;
+  width:50px;
+  height:3px;
+  background-color:black;
+  transform-origin: center;
+}
+
+.hamburger-2{
+  position:absolute;
+  top:50%;
+  left:0;
+  width:50px;
+  height:3px;
+  background-color:black;
+}
+.hamburger-3{
+  position:absolute;
+  top:65%;
+  left:0;
+  width:50px;
+  height:3px;
+  background-color:black;
+}
+
+.hamburger-4{
+  position:absolute;
+  top:0;
+  left:50%;
+  width:3px;
+  height:50px;
+  background-color:black;
+}
+.utsurundesu{
+
+
+  width: 13rem;
+  
+}
+.logo{
+  position: fixed;
+  mix-blend-mode: difference;
+
+  z-index: 500;
+}
+.navbar--hidden{
+background-color: red;
+}
+
+.utsurundesu-hide{
+  position:relative;
+  width:0.1rem;
+  height:4rem;
+  top:-3.5rem;
+  left:13rem;
+  background-color:black;
+  transform-origin: left;
+  transition: 0.5s;
+  mix-blend-mode: subtract;
+}
+
+
+.fullpageload{
+  position: absolute;
+  z-index: 5000;
+  top: 0;
+  background: blue;
+  height: 1%;
+  width: 100%;;
+  transition: 1s;
+}
+.fullpageloadout{
+  position: absolute;
+  z-index: 5000;
+  background: black;
+  height: 100%;
+  width: 50%;;
+  transition: 1s;
+}
+
+.loading-animated-background{
+
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: #f6f7f8;
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 800px 104px;
+  height: 400px;
+  width: 300px;
+  margin: 2rem auto;
+  position: relative;
+
 }
