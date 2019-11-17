@@ -208,7 +208,7 @@ height:400px;
   position: fixed;
   mix-blend-mode: difference;
 
-  z-index: 500;
+  z-index: 901;
 }
 .navbar--hidden{
 background-color: red;
@@ -244,6 +244,14 @@ background-color: red;
   width: 50%;;
   transition: 1s;
 }
+.loading{
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  background: red;
+  z-index: 33;
+
+}
 
 .loading-animated-background{
 
@@ -261,3 +269,47 @@ background-color: red;
   position: relative;
 
 }
+
+.navbar{
+  position: fixed;
+  z-index: 5000;
+  font-size: 3rem;
+  background: green;
+}
+
+.navbarHidden{
+  background: red;
+}
+
+.headerpage{
+  position: fixed;
+
+  background-color: black;
+  width: 100%;
+  height: 100%;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.navbuttons{
+  position: relative;
+  width: 100%;
+height:100px;
+  line-height: 100px;
+  color: palevioletred;
+  font-size: 5em;
+  font-weight: 800;
+  text-transform: uppercase;
+  will-change: transform, opacity;
+  overflow: hidden;
+  list-style: none;
+}
+
+.navbuttons > a{
+  overflow: hidden;
+  display: block;
+}
+

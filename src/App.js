@@ -4,6 +4,7 @@ import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import CMRK from './components/camerarollkyoto.js';
 import Navbar from "./components/Header";
+import Hooksnav from "./components/Scroll.js";
 import BB from './components/Section.Japan.js';
 import Latest from './components/Section.Latest.js';
 import Studio from './components/Section.Studio.js';
