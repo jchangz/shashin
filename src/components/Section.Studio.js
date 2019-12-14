@@ -12,6 +12,7 @@ const Japan = ()=> {
 
   const trail = useTrail(items.length, {
     config,
+    delay:250,
     opacity: toggle ? 1 : 0,
     x: toggle ? 0 : 400,
     height: toggle ? 400 : 400,
@@ -26,12 +27,12 @@ const Japan = ()=> {
 <animated.div  className="App">
  <div className="trails-main" onClick={() => set(state => !state)}>
         <div >
-          {trail.map(({ x, height, ...rest }, index) => (
+          {trail.map(({ x, height,opacity, ...rest }, index) => (
             <animated.div
                 key={items[index]}
                 className="trails-text"
-                style={{ ...rest, transform: x.interpolate(x => `translate3d(0,${x}px,0)`) }}>
-                <animated.div style={{ height }}>
+                style={{ ...rest, transform: x.interpolate(x => `translate3d(0,0,0)`) }}>
+                <animated.div style={{ opacity }}>
                     <a href="">
                     <img className="imghun" src={items[index]}></img>
                     </a>
@@ -134,11 +135,7 @@ function imgLoad(url) {
                 </div>)
         }
         return <div>
-              <div className="loading">
-              <div className="loading-animated-background">
-             <img src="http://167.99.106.90/img/shashin.svg"></img>
-             </div>
-             </div>
+   
             <Japan />
             
         </div>;

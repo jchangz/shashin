@@ -18,22 +18,18 @@ function App() {
 
        <Navbar />
        <Route render={({location}) => (
-          <TransitionGroup className="transition-group">
-            <CSSTransition key={location.key} timeout={{ /*enter: 2000, exit: 300*/ }} classNames={"fade"} unmountOnExit>
-            <section className="route-section">
+
               <Switch location={location}>
                 <Route exact path="/" component={BB} />
                 <Route path="/Latest" render={({ match: { path } }) => (
                   <div>
                     <Route exact path={path} component={Latest} />
-                    <Route path={`${path}/camerarollkyoto`} component={CMRK} />
+                    <Route path={`${path}/CameraRollKyoto`} component={CMRK} />
                   </div>
                 )}/>
                 <Route path="/Studio" component={Studio} />
               </Switch>
-              </section>
-            </CSSTransition>
-          </TransitionGroup>
+
          )}
         />
 
@@ -47,7 +43,7 @@ function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    window.scrollTo({ top: 0 })
   }, [pathname]);
 
   return null;

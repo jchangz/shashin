@@ -26,7 +26,7 @@ function Latest() {
         
         <animated.div style={props} className="timeline-item">
         <div className="animated-background">
-        <Link to={`${url}/camerarollkyoto`}>camerarollkyoto</Link>
+        <Link to={`${url}/CameraRollKyoto`}>camerarollkyoto</Link>
         </div>
     </animated.div>
         

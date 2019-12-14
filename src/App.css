@@ -1,5 +1,11 @@
 .App {
-  text-align: center;
+background: #f8f8f8;
+padding: 4rem 1rem 1rem;
+
+}
+
+a{
+  text-decoration: none;
 }
 
 .App-logo {
@@ -116,9 +122,89 @@ width:100%;
   transition:0.5s ease-out;
 }
 
+.japanp{
+  max-width: 1800px;
+  display: grid;
+  grid-template-areas: "content";
+  margin: 0 auto;
+  /*box-shadow: 6px 10px 28px -15px rgba(0,0,0,0.75);*/
+  margin-bottom: 2rem;
+  background: #ccc;
+}
+.japanp.one{
+}
 
+.subtitlecontainer{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+transition: 0.5s;
+}
+
+@media only screen and (min-width: 769px) {
+  .japanp{
+    grid-template-columns: 1fr 1fr;
+  }
+  .subtitlecontainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-column: 2;
+  }
+  .japanp:hover > .subtitlecontainer{
+    background: black;
+  }
+
+}
 .imghun{
-  height:100%;
+
+  width: 100%;
+
+  grid-area: content;
+}
+
+.imghun.one{
+ /* filter: brightness(0.8);*/
+}
+.text{
+  grid-area: content;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  font-family: "Roboto";
+}
+
+.text.camerarollkyoto{
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.text h4{
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+  color: white;
+}
+.text p{
+  font-weight: 400;
+  color: white;
+
+}
+p{
+  margin: 0;
+}
+.subtitletext{
+  position:absolute;
+  width: 7vw;
+  padding: 1rem 2rem;
+}
+@media only screen and (min-width: 769px) {
+  .subtitletext{
+
+    width: 6vw;
+
+  }
 }
 
 .trails-main {
@@ -146,6 +232,28 @@ height:400px;
   overflow: hidden;
 }
 
+.imge{
+  position: relative;
+  width: 100%;
+height:100%;
+  line-height: 80px;
+  color: palevioletred;
+  font-size: 5em;
+  font-weight: 800;
+  text-transform: uppercase;
+  will-change: transform, opacity;
+  overflow: hidden;
+}
+
+.imge > div{
+  overflow: hidden;
+  display: block;
+}
+.trails-text > div{
+  overflow: hidden;
+  display: block;
+}
+
 .loadmeh{
   display:none;
 }
@@ -161,69 +269,79 @@ height:400px;
   background-color:transparent;
   border: none;
   color:white;
+  mix-blend-mode: difference;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 1rem;
 }
 
 .hamburger-1{
-  position:absolute;
-  top:35%;
-  left:0;
-  width:50px;
-  height:3px;
-  background-color:black;
+
+  margin-bottom: 0.25rem;
+  width:30px;
+  height:4px;
+  background-color:white;
   transform-origin: center;
 }
 
 .hamburger-2{
-  position:absolute;
-  top:50%;
-  left:0;
-  width:50px;
-  height:3px;
-  background-color:black;
+  margin-bottom: 0.25rem;
+  width:30px;
+  height:4px;
+  background-color:white;
 }
 .hamburger-3{
-  position:absolute;
-  top:65%;
-  left:0;
-  width:50px;
-  height:3px;
-  background-color:black;
+  margin-bottom: 0.25rem;
+  width:30px;
+  height:4px;
+  background-color:white;
 }
 
 .hamburger-4{
   position:absolute;
-  top:0;
+  top:-5rem;
   left:50%;
   width:3px;
-  height:50px;
-  background-color:black;
+  height:30px;
+  background-color:white;
 }
 .utsurundesu{
+margin: 1rem;
 
-
-  width: 13rem;
+  width: 10rem;
   
 }
 .logo{
   position: fixed;
   mix-blend-mode: difference;
-
+  
   z-index: 901;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 .navbar--hidden{
 background-color: red;
 }
 
 .utsurundesu-hide{
-  position:relative;
+  position: absolute;;
   width:0.1rem;
-  height:4rem;
-  top:-3.5rem;
-  left:13rem;
+  height:2.5rem;
+  top:0;
+  margin: 1rem;
+  left:10rem;
   background-color:black;
   transform-origin: left;
   transition: 0.5s;
   mix-blend-mode: subtract;
+}
+.logoblock{
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  background: white;
 }
 
 
@@ -283,8 +401,8 @@ background-color: red;
 
 .headerpage{
   position: fixed;
-
-  background-color: black;
+  top: 0;
+  background-color: #f4f4f4;
   width: 100%;
   height: 100%;
   z-index: 900;
@@ -297,19 +415,62 @@ background-color: red;
 .navbuttons{
   position: relative;
   width: 100%;
-height:100px;
-  line-height: 100px;
-  color: palevioletred;
-  font-size: 5em;
+height:50px;
+  line-height: 50px;
+  font-size: 2rem;
   font-weight: 800;
-  text-transform: uppercase;
   will-change: transform, opacity;
   overflow: hidden;
   list-style: none;
 }
 
-.navbuttons > a{
+.navbuttons > div{
   overflow: hidden;
   display: block;
 }
 
+.navbuttons > div > a{
+  color: black;
+  font-family: "Roboto";
+  text-decoration: none;
+  text-transform: uppercase;
+}
+@media only screen and (min-width: 769px) {
+
+  .headerpage{
+    transform: translate(0);
+    width: 50%;
+  }
+
+  .headerpageDesktop{
+    width: 100%;
+
+    left: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 850;
+
+    opacity: 1;
+  }
+ 
+
+  .changebg{
+    background: red;
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    top: 10rem;
+    z-index: 970;
+    
+  }
+
+  .changebg:hover ~ .headerpageDesktop{
+    background: green;
+  }
+}
+
+.tetxt .sub-title-h3{
+  font-size: 3rem;
+  text-align: center;
+  font-family: Roboto;
+}

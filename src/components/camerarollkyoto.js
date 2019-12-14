@@ -21,7 +21,7 @@ function CMRK() {
   </section>
   
  <div class="tetxt">
-    <h3 class="sub-title-h3">They often say the best camera is the one you have with you - how about this 2015 iPhone?</h3>
+    <h3 class="sub-title-h3">Camera Roll Kyoto</h3>
   </div>
 
   <section class="image-double">

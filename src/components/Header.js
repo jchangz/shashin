@@ -1,59 +1,7 @@
 import React, {useState, Component} from 'react';
-import { Link } from "react-router-dom";
 import '../App.css';
-import {useSpring, useTrail, animated} from 'react-spring';
-import debounce from 'lodash/debounce';
 import throttle from 'lodash/throttle';
-import {Spring} from 'react-spring/renderprops';
-
-const items = ['Japan', 'Latest', 'Studio', 'Nostalgia', 'Travel'];
-const config = { mass: 5, tension: 2000, friction: 200 };
-const routes = ['', 'Latest', 'Studio'];
-
-
-function Header() {
-  
-  const [state, toggle] = useState(true)
-  const props = useSpring({opacity: state ? 1: 0, transform: state ? "translateY(0px)": "translateY(15%)"})
-  const propss = useSpring({transform: state ? "translateY(-100%)": "translateY(0)"})
-  const trail = useTrail(items.length, {
-    config,
-    opacity: state ? 0 : 1,
-    x: state ? 20 : 0,
-    height: state ? 0 : 100,
-    from: { opacity: 1, x: 0, height:100 },
-
-  });
-
-  return(
-  <header>
-    <nav>
-    
-    <animated.div style={propss} className="headerpage">
-
-      {trail.map(({ x, height, ...rest }, index) => ( <animated.li key={items[index]} className="navbuttons" style=
-      {{ ...rest, transform: x.interpolate(x => `translate3d(0,${x}px,0)`) }}>
-        <animated.a style={{ height }}>
-        <Link onClick={() => toggle(!state)} to={routes[index]}>{items[index]}</Link>
-        </animated.a>
-        </animated.li>))}
-    
- 
-      </animated.div>
-      <button className="btn" onClick={() => toggle(!state)}>
-	<div class="hamburger-1"></div>
-	<animated.div style={props} className="hamburger-2" ></animated.div>
-	<div class="hamburger-3"></div>
-  <div class="hamburger-4"></div>
-    </button>
-    </nav>
-
-    
-  </header>
-  )
-  };
-
-
+import Navigation from './Navigation.js';
 
 
 export default class Navbar extends Component {
@@ -103,7 +51,9 @@ export default class Navbar extends Component {
     return (
       console.log("hello2", this.state),
       <div>
-        <Header />
+ 
+        <Navigation />
+        <div className="logoblock">
       <div className="logo">
       <div className="utsurundesu">
       <img src="http://167.99.106.90/img/shashin.svg"></img>
@@ -115,6 +65,7 @@ export default class Navbar extends Component {
   {props => <div style={props} className="utsurundesu-hide"></div>}
 </Spring>
       )}*/}
+      </div>
       </div>
       </div>
      </div>
