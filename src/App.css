@@ -127,11 +127,13 @@ width:100%;
   display: grid;
   grid-template-areas: "content";
   margin: 0 auto;
+  border-radius: 10px;
   /*box-shadow: 6px 10px 28px -15px rgba(0,0,0,0.75);*/
   margin-bottom: 2rem;
   background: #ccc;
 }
 .japanp.one{
+  background: #ddd;
 }
 
 .subtitlecontainer{
@@ -157,13 +159,14 @@ transition: 0.5s;
 
 }
 .imghun{
-
+border-radius: 10px;
   width: 100%;
 
   grid-area: content;
 }
 
 .imghun.one{
+  mix-blend-mode: multiply;
  /* filter: brightness(0.8);*/
 }
 .text{
@@ -174,14 +177,14 @@ transition: 0.5s;
   font-family: "Roboto";
 }
 
-.text.camerarollkyoto{
+.text.camerarollkyoto, .text.camerarolltokyo{
   justify-content: center;
   align-items: center;
   
 }
 
 .text h4{
-  font-size: 1.3rem;
+  font-size: 1.8rem;
   font-weight: 700;
   margin: 0;
   color: white;
@@ -264,8 +267,8 @@ height:100%;
   position:fixed;
   right:0;
   z-index:1000;
-  width:5rem;
-  height: 5rem;
+  width:4rem;
+  height: 4rem;
   background-color:transparent;
   border: none;
   color:white;
@@ -281,7 +284,7 @@ height:100%;
 
   margin-bottom: 0.25rem;
   width:30px;
-  height:4px;
+  height:3px;
   background-color:white;
   transform-origin: center;
 }
@@ -289,13 +292,13 @@ height:100%;
 .hamburger-2{
   margin-bottom: 0.25rem;
   width:30px;
-  height:4px;
+  height:3px;
   background-color:white;
 }
 .hamburger-3{
   margin-bottom: 0.25rem;
   width:30px;
-  height:4px;
+  height:3px;
   background-color:white;
 }
 
@@ -308,9 +311,9 @@ height:100%;
   background-color:white;
 }
 .utsurundesu{
-margin: 1rem;
+margin: 1.25rem;
 
-  width: 10rem;
+  width: 6rem;
   
 }
 .logo{
@@ -401,10 +404,11 @@ background-color: red;
 
 .headerpage{
   position: fixed;
-  top: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
   background-color: #f4f4f4;
-  width: 100%;
-  height: 100%;
+  height: 200px;
   z-index: 900;
   display: flex;
   flex-direction: column;
@@ -416,9 +420,8 @@ background-color: red;
   position: relative;
   width: 100%;
 height:50px;
-  line-height: 50px;
   font-size: 2rem;
-  font-weight: 800;
+  font-weight: 700;
   will-change: transform, opacity;
   overflow: hidden;
   list-style: none;
@@ -433,7 +436,7 @@ height:50px;
   color: black;
   font-family: "Roboto";
   text-decoration: none;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
 }
 @media only screen and (min-width: 769px) {
 
@@ -473,4 +476,15 @@ height:50px;
   font-size: 3rem;
   text-align: center;
   font-family: Roboto;
+}
+.coverparent{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+.coverpage{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
 }

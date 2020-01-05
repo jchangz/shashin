@@ -69,7 +69,7 @@ const Japan = ()=> {
     from: { opacity: 0, x: 250, height: 0 },
   })
 
-
+  const heightt = useSpring({opacity: 1, from: {opacity: 0}, delay:250, config: config.slow})
     return (
        
 
@@ -91,9 +91,9 @@ const Japan = ()=> {
           ))}
         </div>
           </div>*/}
-          <div>
-{trail.map(({ x, opacity, ...rest }, index) => (
-  <animated.div style={{ opacity }}>
+          <animated.div style={heightt}>
+{items.map(({ }, index) => (
+  <div>
           <Link to={`/Latest/CameraRollKyoto`}>
             
             <div class={"japanp " + itemss[index]}>
@@ -111,8 +111,8 @@ const Japan = ()=> {
   <img className="subtitletext" src={subtitle[index]}></img>
 </div>*/}
          
-</div></Link></animated.div>))}
-</div>
+</div></Link></div>))}
+</animated.div>
 
 
       <header className="App-header">

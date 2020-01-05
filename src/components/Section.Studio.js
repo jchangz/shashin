@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import '../App.css';
 import {useSpring, useTrail, animated} from 'react-spring';
 import Loading from './Loading.js';
-const items = ['https://live.staticflickr.com/65535/48165939651_4b3225bd62_b.jpg', 'https://live.staticflickr.com/65535/48165938451_539fc1a464_b.jpg']
+const items = ['https://live.staticflickr.com/65535/48165939651_4b3225bd62_b.jpg', 'https://live.staticflickr.com/65535/48165937296_8e7afc1769_b.jpg', 'https://live.staticflickr.com/65535/48165938451_539fc1a464_b.jpg']
 const config = { mass: 5, tension: 2000, friction: 200 }
 
 const Japan = ()=> {

@@ -16,17 +16,24 @@ function Navigation() {
   const [width, height] = useWindowSize();
   const [state, toggle] = useState(true)
   const props = useSpring({opacity: state ? 1: 0, transform: state ? "translateY(0px)": "translateY(15%)"})
-  const propss = useSpring({transform: state ? "translateX(-100%)": "translateX(0)"})
+  const showmee = {"mix-blend-mode": state ? "difference": "initial"}
+  const covrr = {"z-index": state ? "-1": "800"}
+  const covr = useSpring({opacity: state ? 0: 1})
+  const propss = useSpring({
+    config:{mass:1, tension: 462, friction: 22},
+    opacity: state? 0: 1,
+    height: state? 0: 200,
+    padding: state ? 0 : 25,
+    })
   const propsss = useSpring({transform: state ? "translateX(-100%)": "translateX(0)"})
   const porps = ({display: (width > 769) ? "none": ""})
   const ooo = ({display: (width < 769) ? "none": "block"})
   const trail = useTrail(items.length, {
-    config,
-    delay: 250,
+    config:{mass:1, tension: 462, friction: 22},
     opacity: state ? 0 : 1,
     x: state ? 0 : 0,
-    width: state ? 0 : 200,
-    from: { opacity: 1, x: 0, width: 200 },
+    height: state ? 0 : 45,
+    from: { opacity: 1, x: 0, height: 45 },
 
   });
 
@@ -38,11 +45,14 @@ function Navigation() {
       </div>
     
     <div style={porps}>
+    <div style={covrr} className="coverparent">
+        <animated.div style={covr} onClick={() => toggle(!state)} className="coverpage"></animated.div>
+    </div>
     <animated.div style={propss} className="headerpage">
 
-      {trail.map(({ x, width, ...rest }, index) => ( <animated.li key={items[index]} className={"navbuttons " + items[index]} style=
+      {trail.map(({ x, height, ...rest }, index) => ( <animated.li key={items[index]} className={"navbuttons " + items[index]} style=
       {{ ...rest, transform: x.interpolate(x => `translate3d(0,0,0)`) }}>
-        <animated.div style={{ width }}>
+        <animated.div style={{ height }}>
         <Link onClick={() => toggle(!state)} to={routes[index]}>{items[index]}</Link>
         </animated.div>
         </animated.li>))}
@@ -55,7 +65,7 @@ function Navigation() {
         </animated.div>
       </animated.div>
       
-      <button className="btn" onClick={() => toggle(!state)}>
+      <button className="btn" style={showmee} onClick={() => toggle(!state)}>
 	<div class="hamburger-1"></div>
 	<animated.div style={props} className="hamburger-2" ></animated.div>
 	<div class="hamburger-3"></div>
