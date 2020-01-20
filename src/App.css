@@ -166,7 +166,7 @@ border-radius: 10px;
 }
 
 .imghun.one{
-  mix-blend-mode: multiply;
+  /*mix-blend-mode: multiply;*/
  /* filter: brightness(0.8);*/
 }
 .text{
@@ -488,3 +488,139 @@ height:50px;
   height: 100%;
   background: rgba(0,0,0,0.5);
 }
+
+.reflow2{  /*4x5 image*/
+  position:relative;
+  background-color:black;
+  padding-bottom:125%;
+  width: 100%;
+  grid-area: content;
+  border-radius: 15px;
+}
+.reflow2 > div img{
+
+  width: 100%;
+  height: auto;
+}
+
+.LazyLoad{
+  position: absolute;
+}
+
+@keyframes fadeInImg{
+ from{
+  opacity: 0}
+ to{
+  opacity: 1}
+}
+.img-loading{
+   opacity: 0;
+   width: 100%;
+   height: auto;
+}
+.img-loaded{
+   animation: fadeInImg cubic-bezier(0.23, 1, 0.32, 1) 1;
+   position: relative;
+   opacity: 0;
+   animation-fill-mode: forwards;
+   animation-duration: 0.7s;
+   animation-delay: 0.1s}
+
+
+   .hello{
+     display: none;
+   }
+   .hello2{
+   opacity: 0;
+   transition: 1s cubic-bezier(0.23, 1, 0.32, 1) ;
+  }
+   .loaded{
+     display: block;
+     position: relative;
+     opacity: 1;
+     transition: 1s cubic-bezier(0.23, 1, 0.32, 1) ;
+   }
+
+   .leader{
+     
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: #f6f7f8;
+  background: linear-gradient(to right, #000000 8%, #383838 18%, #000000 33%);
+  background-size: 800px 104px;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+  border-radius: 10px;
+   }
+
+   .header{
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: #f6f7f8;
+    background: white;
+    mix-blend-mode: color-burn;
+    background-size: 800px 104px;
+  
+     width: 200%;
+     height:100%;
+     position: fixed;
+     
+   }
+
+
+   .progress{
+     height: 75px;
+     top: 0;
+     width: 300px;
+     position: absolute;
+     animation-duration: 3s;
+     animation-fill-mode: forwards;
+     animation-iteration-count: infinite;
+     animation-name: placeHolderShimmer;
+     animation-timing-function: linear;
+     background-size: 800px 104px;
+     mix-blend-mode: lighten;
+     background: linear-gradient(to right, #000 8%, #000 18%, #f8f8f8 33%);
+     z-index: 999;
+   }
+
+   .up{
+
+    transform: translateY(-1rem);
+    transition: 1s cubic-bezier(0.23, 1, 0.32, 1) ;
+   }
+    .down{
+      display: block;
+      opacity: 1;
+      transition: 1s cubic-bezier(0.23, 1, 0.32, 1) ;
+    }
+
+    @keyframes example {
+      0% {background-color: red;}
+      50% {background-color: black;}
+      100% {background-color: red;}
+    }
+
+    .width{
+
+
+      width: 100%;
+
+    }
+    .close{
+      width: 0;
+
+    }
+
+
+  .hellobg{
+    background: white;
+  }
