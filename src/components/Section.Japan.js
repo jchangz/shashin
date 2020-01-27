@@ -3,6 +3,8 @@ import '../App.css';
 import {useSpring, useTrail, animated} from 'react-spring';
 import LazyLoad from 'react-lazy-load';
 import ImageLoader from '../hooks/lazyloadFadeIn.js';
+import HeroLoader from '../hooks/heroImageLoad.js';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -56,12 +58,15 @@ const subtitle =
   , "Article5"
 ]
 
+const hero = ['https://live.staticflickr.com/65535/48058927952_495a161b07_b.jpg']
+
 const JapanSection = ()=> {
-    
+
   return (
 
-  <div className="App">
-    <animated.div >
+  <div>
+    <HeroLoader src={hero}/>
+    <animated.div className="App">
       {items.map(({ }, index) => (
       <div>
         <Link to={`/Latest/CameraRollKyoto`}>

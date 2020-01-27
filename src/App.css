@@ -518,6 +518,15 @@ height:50px;
    width: 100%;
    height: auto;
 }
+
+.overflow{
+  height: 400px;
+  background: #000000;
+  overflow: hidden;
+}
+.bg{
+  width: 100%;
+}
 .img-loaded{
    animation: fadeInImg cubic-bezier(0.23, 1, 0.32, 1) 1;
    position: relative;
@@ -623,4 +632,14 @@ height:50px;
 
   .hellobg{
     background: white;
+  }
+
+  .desktopheader{
+    position: absolute;
+    display: flex;
+    right: 0;
+    width: 550px;
+    justify-content: space-evenly;
+    color: white;
+    z-index: 999;
   }

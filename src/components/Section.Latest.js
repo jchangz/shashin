@@ -5,6 +5,7 @@ import LazyLoad from 'react-lazy-load';
 import ImageLoader from '../hooks/lazyloadFadeIn.js';
 import SectionLoader from '../hooks/sectionImageLoad.js';
 import Loading from './Loading.js';
+import HeroLoader from '../hooks/heroImageLoad.js';
 import {
   BrowserRouter as Router,
   Switch,
@@ -51,6 +52,7 @@ const subtitle =
   , "Article4"
   , "Article5"
 ]
+const hero = ['https://live.staticflickr.com/1961/45173255361_a5653299af_b.jpg']
 /*const subtitle = [
   'http://167.99.106.90/img/camerarollkyotoorange.svg'
 ]*/
@@ -59,8 +61,9 @@ const LatestSection = ()=> {
     
   return (
 
-  <div className="App">
-    <animated.div >
+  <div >
+    <HeroLoader src={hero}/>
+    <animated.div className="App" >
       {items.map(({ }, index) => (
       <div>
         <Link to={`/Latest/CameraRollKyoto`}>
