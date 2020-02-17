@@ -4,6 +4,7 @@ import {useSpring, useTrail, animated} from 'react-spring';
 import LazyLoad from 'react-lazy-load';
 import ImageLoader from '../hooks/lazyloadFadeIn.js';
 import HeroLoader from '../hooks/heroImageLoad.js';
+import useWindowSize from '../hooks/useWindowSize.js';
 
 import {
   BrowserRouter as Router,
@@ -58,36 +59,32 @@ const subtitle =
   , "Article5"
 ]
 
-const hero = ['https://live.staticflickr.com/65535/48058927952_495a161b07_b.jpg']
+const hero = ['https://live.staticflickr.com/65535/47939939668_7fb42c8f81_b.jpg']
 
 const JapanSection = ()=> {
-
+  const [width, height] = useWindowSize();
+  const responsive = width > 769 ? " desktop" : " mobile";
   return (
 
-  <div>
-    <HeroLoader src={hero}/>
-    <animated.div className="App">
-      {items.map(({ }, index) => (
-      <div>
-        <Link to={`/Latest/CameraRollKyoto`}>
-          <div class={"japanp " + itemss[index]}>
-            <div class="reflow2">
-            <LazyLoad height={'100%'} >
-                <ImageLoader className={"imghun " + itemss[index]} src={items[index]}/>
-                </LazyLoad>
-            </div>
-            <animated.div className={"text " + classes[index]}>
-              <h4>{titles[index]}</h4>
-              <p>{subtitle[index]}</p>
-            </animated.div>       
-          </div>
-        </Link>
-      </div>
-      ))}
-    </animated.div>
-  </div>
-  );
-
+    <div >
+      <HeroLoader src={hero}/>
+      <animated.div className={"App" + responsive}>
+        {items.map(({ }, index) => (
+          <Link to={`/Latest/CameraRollKyoto`} class={"japanp " + itemss[index]}>
+              <div class={"reflow2" + responsive}>
+              <LazyLoad height={'100%'} >
+                  <ImageLoader className={"imghun " + itemss[index]} src={items[index]}/>
+                  </LazyLoad>
+              </div>
+              <animated.div className={"text "  + classes[index] + responsive}>
+                <h4>{titles[index]}</h4>
+                <p>{subtitle[index]}</p>
+              </animated.div>       
+          </Link>
+        ))}
+      </animated.div>
+    </div>
+    );
 }
 
 

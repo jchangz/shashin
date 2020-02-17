@@ -41,12 +41,11 @@ function Navigation() {
   <header>
     <nav>
       <div style={ooo}>
-        <animated.div className="desktopheader" >
-          <h2><a href="/">Latest</a></h2>
-          <h2><a href="/Latest">Japan</a></h2>
-          <h2><a href="/Studio">Studio</a></h2>
-          <h2>Nostalgia</h2>
-        </animated.div>
+      <animated.div className="desktopheader" >
+        {items.map(({  }, index) => (
+          <Link to={routes[index]}>{items[index]}</Link>
+        ))}
+      </animated.div>
       </div>
     
     <div style={porps}>

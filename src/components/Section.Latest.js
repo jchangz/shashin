@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import '../App.css';
 import {useSpring, useTrail, animated} from 'react-spring';
 import LazyLoad from 'react-lazy-load';
@@ -6,6 +6,10 @@ import ImageLoader from '../hooks/lazyloadFadeIn.js';
 import SectionLoader from '../hooks/sectionImageLoad.js';
 import Loading from './Loading.js';
 import HeroLoader from '../hooks/heroImageLoad.js';
+import useWindowSize from '../hooks/useWindowSize.js';
+import ImageScroller from '../hooks/imageScroller.js';
+import debounce from 'lodash/debounce';
+import throttle from 'lodash/throttle';
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,9 +20,11 @@ import {
 } from "react-router-dom";
 const items = [
   'https://live.staticflickr.com/65535/48135300432_4ef5c106de_b.jpg', 
-  'https://live.staticflickr.com/65535/48124445202_91c9c65c53_b.jpg', 
-  'https://live.staticflickr.com/65535/48124385723_83993500a7_b.jpg',
-  'https://live.staticflickr.com/65535/48112561962_fab0fd3dd7_b.jpg']
+  'https://live.staticflickr.com/65535/48420919721_783b7335be_k.jpg', 
+  'https://live.staticflickr.com/65535/48165937296_8e7afc1769_b.jpg',
+  'https://live.staticflickr.com/65535/48155183631_c48bd3c918_b.jpg',
+  'https://live.staticflickr.com/65535/48135206926_8d5ea89d81_c.jpg',
+  'https://live.staticflickr.com/65535/48034021928_1942b50c84_c.jpg']
 const config = { mass: 5, tension: 2000, friction: 200 }
 const itemss =
 [
@@ -38,8 +44,8 @@ const classes =
 ]
 const titles =
 [
-    "CAMERA ROLL KYOTO"
-  , "CAMERA ROLL TOKYO"
+    "Camera Roll Kyoto"
+  , "Camera Roll Tokyo"
   , "Article3"
   , "Article4"
   , "Article5"
@@ -58,33 +64,29 @@ const hero = ['https://live.staticflickr.com/1961/45173255361_a5653299af_b.jpg']
 ]*/
 
 const LatestSection = ()=> {
-    
+  const [width, height] = useWindowSize();
+  const responsive = width > 769 ? " desktop" : " mobile";
+
   return (
 
-  <div >
+  <div>
     <HeroLoader src={hero}/>
-    <animated.div className="App" >
+    <ImageScroller className={"App" + responsive}>
       {items.map(({ }, index) => (
-      <div>
-        <Link to={`/Latest/CameraRollKyoto`}>
-          <div class={"japanp " + itemss[index]}>
-            <div class="reflow2">
+        <Link to={`/Latest/CameraRollKyoto`} class={"japanp " + itemss[index]}>
+          <div class={"reflow2" + responsive}>
             <LazyLoad height={'100%'} >
-                <ImageLoader className={"imghun " + itemss[index]} src={items[index]}/>
-                </LazyLoad>
-            </div>
-            <animated.div className={"text " + classes[index]}>
-              <h4>{titles[index]}</h4>
-              <p>{subtitle[index]}</p>
-            </animated.div>       
+              <ImageLoader className={"imghun " + itemss[index]} src={items[index]}/>
+            </LazyLoad>
           </div>
+          <animated.div className={"text "  + classes[index] + responsive}>
+            <h4>{titles[index]}</h4>
+          </animated.div>       
         </Link>
-      </div>
       ))}
-    </animated.div>
+    </ImageScroller>
   </div>
   );
-
 }
 
 class Latest extends React.Component {
