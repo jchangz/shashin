@@ -1,10 +1,11 @@
 .App {
-padding: 4rem 1rem 1rem;
 display: grid;
 grid-gap: 2rem;
 grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
-grid-template-columns: repeat(6, 85%);
+grid-template-columns: repeat(3, 100%);
+height: 800px;
 overflow: scroll;
+transition: 0.25s;
 
 }
 
@@ -135,6 +136,7 @@ width:100%;
   display: grid;
   grid-template-areas: "content";
   border-radius: 10px;
+  transition: 0.35s;
   /*box-shadow: 6px 10px 28px -15px rgba(0,0,0,0.75);*/
 }
 
@@ -500,10 +502,7 @@ height:50px;
   border-radius: 15px;
 }
 .reflow2.desktop{
-  display: flex;
-  align-items: center;
-  padding-bottom: 75%;
-  overflow: hidden;
+
 }
 
 .reflow2.mobile{
@@ -662,10 +661,7 @@ height:50px;
     font-weight: 700;
   }
 .testcont{
-  transform: rotate(-90deg);
-  transform-origin: 0;
-  position: absolute;
-  bottom: 0;
+  top: 0;
   margin-left: 2rem;
   z-index: 999;
 }
@@ -674,13 +670,14 @@ height:50px;
     display: inline-block;
   }
   .testinkid{
-    color: white;
     display: inline-block;
   }
 
   .Appcon{
     position: relative;
     background-color: white;
+    max-width: 600px;
+    margin: 0 auto;
   }
 
   .Appcon.false{
@@ -688,20 +685,37 @@ height:50px;
   }
 
   .App.true > .japanp{
-    transform: perspective(500px) rotateY(5deg) scale(0.9);
+    transform: perspective(1000px) rotateY(5deg) scale(0.9);
     transition: 0.3s;
   }
 
-  .App.right > .japanp{
-    transform: perspective(500px) rotateY(5deg) scale(0.9);
+  .App.yes > .japanp{
+    transform: perspective(1000px) scale(0.9);
+   
+  }
+  .Appcon.left{
+    transform: perspective(1000px) rotateY(-2deg) ;
     transition: 0.15s;
   }
-  .App.left > .japanp{
-    transform: perspective(500px) rotateY(-5deg) scale(0.9);
+  .Appcon.right{
+    transform: perspective(1000px) rotateY(2deg);
     transition: 0.15s;
   }
 
   .App.false > .japanp{
-    transform: perspective(500px) rotateY(0deg);
+    transform: perspective(1000px) rotateY(0deg);
     transition: 0.15s;
+  }
+
+  .japanp.four, .japanp.five, .japanp.six{
+margin-bottom: 10rem;
+  }
+
+  .japanp.three::after{
+    content: '';
+    position: absolute;
+    right: -100px;
+    width: 40px;
+    height: 100%;
+    background: white;
   }

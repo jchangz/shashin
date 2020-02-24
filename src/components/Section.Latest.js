@@ -31,8 +31,9 @@ const itemss =
     "one"
   , "two"
   , "three"
-  , 4
-  , 5
+  , "four"
+  , "five"
+  , "six"
 ]
 const classes =
 [
@@ -70,7 +71,6 @@ const LatestSection = ()=> {
   return (
 
   <div>
-    <HeroLoader src={hero}/>
     <ImageScroller className={"App" + responsive}>
       {items.map(({ }, index) => (
         <Link to={`/Latest/CameraRollKyoto`} class={"japanp " + itemss[index]}>
