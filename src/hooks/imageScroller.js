@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import throttle from 'lodash/throttle';
+import {Spring} from 'react-spring/renderprops'
+import {Transition} from 'react-spring/renderprops'
+import smoothscroll from 'smoothscroll-polyfill';
 
 class ImageScroller extends React.Component {
-  
     constructor(props){
         super(props);
         this.myInput = React.createRef();
@@ -12,52 +14,20 @@ class ImageScroller extends React.Component {
             isScrolling: false,
             clicking: null,
             animation: null,
+            mobileclick: 'nope'
         };
     }
 
-    getImageProps = () => {
-       const imgprops = [];
+    TouchMe = () => {
+        var supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
 
-       for (var i = 0; i < this.props.children.length; i++) {
-            let imagesoffsetX    = this.myInput.current.children[i].offsetLeft
-            let imagesoffsetY    = this.myInput.current.children[i].offsetTop
-            let names            = this.myInput.current.children[i].text
-
-            imgprops.push({
-                name:           names,
-                coordinateX:    imagesoffsetX,
-                coordinateY:    imagesoffsetY
-            })
+        if (supportsTouch === true){
+            this.setState({touching : "yes"}, () => {console.log(this.state.touching)})
         }
-
-        this.setState({imgdata : {imgprops}}, () => {console.log(this.state.imgdata)})
-    };
-
-    handleScroll = (e) => {
-        var scrollPositionX     = e.target.scrollLeft
-        var scrollPositionY     = e.target.scrollTop
-
-        for (var i = 0; i < this.props.children.length; i++) {
-            let imagesoffsetX   = this.state.imgdata.imgprops[i].coordinateX
-            let imagesoffsetY   = this.state.imgdata.imgprops[i].coordinateY
-            let names           = this.state.imgdata.imgprops[i].name
-
-            if (scrollPositionX > (imagesoffsetX - 164) && scrollPositionY > (imagesoffsetY - 364)) {
-                this.setState({
-                    title:          names,
-                    currentviewX:   imagesoffsetX,
-                    currentviewY:   imagesoffsetY -120
-                });
-            }
+        else {
+            this.setState({touching : "no"}, () => {console.log(this.state.touching)})
         }
-    };
-
-    shouldComponentUpdate = (nextProps, nextState) =>{
-        if(this.state.isScrolling !== nextState.isScrolling ) {
-            this.toggleScrolling(nextState.isScrolling);
-        }
-        return true;
-    };
+    }
 
     toggleScrolling = (isEnable) => {
         if (isEnable) {
@@ -73,12 +43,7 @@ class ImageScroller extends React.Component {
         const {clientX, clientY, scrollLeft, scrollTop} = this.state;
         this.myInput.current.scrollLeft = scrollLeft + (clientX*3) - (e.clientX*3);
         this.myInput.current.scrollTop  = scrollTop + (clientY*3) - (e.clientY*3);
-        if (e.movementX < 0){
-            this.setState({animation: "right"})
-        }
-        else {
-            this.setState({animation: "left"})
-        }
+  
     };
 
     onMouseDown = (e) => {
@@ -113,27 +78,88 @@ class ImageScroller extends React.Component {
             behavior:       'smooth'
         })
     };
+
+    shouldComponentUpdate = (nextProps, nextState) =>{
+        if(this.state.isScrolling !== nextState.isScrolling ) {
+            this.toggleScrolling(nextState.isScrolling);
+        }
+        return true;
+    };
    
     componentDidMount(){
-        this.myInput.current.addEventListener("scroll",this.handleScroll);
-        this.getImageProps()
-        window.addEventListener("resize", this.getImageProps)
+  
+        document.documentElement.style.setProperty('--base', (window.innerHeight - 64 + 'px'));
+       console.log(document)
+        this.observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                const { isIntersecting, intersectionRatio } = entry
+                if (isIntersecting === true ) {
+                    this.setState({
+                        title: entry.target.textContent, 
+                        currentviewX: entry.target.offsetLeft - 32, 
+                        currentviewY: entry.target.offsetTop - 86
+                    })
+                }
+            })
+        }, 
+            {root:this.myInput.current, threshold: 0.75}
+        );
+
+        for (var i = 0; i < this.props.children.length; i++) {
+            this.observer.observe(this.myInput.current.children[i]);
+        }
+        
+        smoothscroll.polyfill();
+
+        this.TouchMe()
     }
 
     componentWillUnmount (){
-        this.myInput.current.removeEventListener("scroll",this.handleScroll);
         window.removeEventListener('mousemove', this.onMouseMove);
         window.removeEventListener('mouseup', this.onMouseUp);
-        window.removeEventListener("resize", this.getImageProps)
+    }
+    
+    onclick = () => {
+        if (this.state.mobileclick === "mob"){
+            this.setState({mobileclick: "nope"})
+            this.myInput.current.scrollTo({
+                left:           this.state.currentviewX, 
+                top:            this.state.currentviewY, 
+                behavior:       'smooth'
+            })
+        }
+        else{
+            this.setState({mobileclick: "mob"})
+
+        }
     }
 
     render() {
-        return(
-            <div className={"Appcon "+ this.state.animation + " " + this.state.clicking} onTouchEnd={this.onMouseUp} onMouseDown={this.onMouseDown}><div className="testcont">
-                <h1 className="testin">Japan</h1>
-                <h2 className="testinkid">{this.state.title}</h2>
+        if (this.state.touching === "no") {
+            return(
+                <div className={"Appcon "+ this.state.animation + " " + this.state.clicking} onTouchEnd={this.onMouseUp} onMouseDown={this.onMouseDown}><div className="testcont">
+                    <h1 className="testin">Japan</h1>
+                    <Transition items={this.state.title}
+              from={{ position: 'absolute', opacity: 0, transform: 'translate3d(0, 100%,0)' }}
+              enter={{ opacity: 1, transform: 'translate3d(0%,0,0)' }}
+              leave={{ opacity: 0, transform: 'translate3d(0,100%,0)' }}>
+            {item => props =>
+                <h2 style={props} className="testinkid">{item}</h2>}</Transition>
+                    </div>
+                    <div className={"App " + this.state.clicked} ref={this.myInput}>{this.props.children}</div>
                 </div>
-                <div className={"App " + this.state.clicked} ref={this.myInput}>{this.props.children}</div>
+            )
+        }
+        return(
+            <div className={"Appcon "+ this.state.animation + " " + this.state.clicking + " " + this.state.mobileclick} onClick={this.onclick}><div className="testcont">
+<Transition items={this.state.title}
+              from={{ position: 'absolute', height: 0, background: 'white', overflow: 'hidden'}}
+              enter={{ height: 'auto', opacity: 1}}
+              leave={{ height: 0, opacity: 0 }}>
+            {item => props =>
+                <h2 style={props} className="testinkid">{item}</h2>}</Transition>
+                </div>
+                <div className={"App mobile " + this.state.mobileclick} onClick={this.mobileonclick} ref={this.myInput}>{this.props.children}</div>
             </div>
         )
     }

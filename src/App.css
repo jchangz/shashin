@@ -3,10 +3,19 @@ display: grid;
 grid-gap: 2rem;
 grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
 grid-template-columns: repeat(3, 100%);
-height: 800px;
-overflow: scroll;
+height:130%;
+padding: 2rem;
+overflow: hidden;
+-webkit-overflow-scrolling: touch;
+will-change: transform;
 transition: 0.25s;
+height: var(--base);
+}
 
+@media only screen and (min-width: 600px) {
+  .App {
+    height: 750px;
+  }
 }
 
 .App.desktop{
@@ -132,10 +141,9 @@ width:100%;
 }
 
 .japanp{
-
+position: relative;
   display: grid;
   grid-template-areas: "content";
-  border-radius: 10px;
   transition: 0.35s;
   /*box-shadow: 6px 10px 28px -15px rgba(0,0,0,0.75);*/
 }
@@ -161,7 +169,7 @@ transition: 0.5s;
 
 }
 .imghun{
-border-radius: 10px;
+
   width: 100%;
   transition: 0.25s ;
 
@@ -499,7 +507,6 @@ height:50px;
   width: 100%;
   overflow: hidden;
 
-  border-radius: 15px;
 }
 .reflow2.desktop{
 
@@ -661,8 +668,11 @@ height:50px;
     font-weight: 700;
   }
 .testcont{
-  top: 0;
-  margin-left: 2rem;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  top: 2rem;
   z-index: 999;
 }
   .testin{
@@ -670,6 +680,8 @@ height:50px;
     display: inline-block;
   }
   .testinkid{
+    margin: 0;
+    left: 2rem;
     display: inline-block;
   }
 
@@ -678,6 +690,7 @@ height:50px;
     background-color: white;
     max-width: 600px;
     margin: 0 auto;
+    height: 100%;
   }
 
   .Appcon.false{
@@ -711,11 +724,67 @@ height:50px;
 margin-bottom: 10rem;
   }
 
-  .japanp.three::after{
+  .App.mobile.mob .japanp.three::after{
     content: '';
     position: absolute;
-    right: -100px;
-    width: 40px;
+    right: -50px;
+    width: 25px;
     height: 100%;
     background: white;
+  }
+  .japanp.three::after{
+    transition: 0.25s;
+  }
+
+  .App.mobile.nope .japanp.three::after{
+    content: '';
+    position: absolute;
+    right: -50px;
+    width: 25px;
+    height: 100%;
+    background: white;
+  }
+
+  .App.mobile > .japanp{
+    pointer-events: none;
+  }
+
+  .App.mobile.nope{
+    pointer-events: none;
+
+  }
+  .App.mobile.mob{
+    pointer-events: initial;
+    /*background-color: #000;*/
+overflow: scroll;
+
+
+  }
+
+  .App.mob > .japanp{
+    
+    pointer-events: none;
+  }
+  .App > .japanp::after, .App.yes > .japanp::after{
+    content: '';
+    position: absolute;
+    transition: 0.25s;
+    width: 100%;
+    opacity: 0;
+
+    height: 100%;
+    background: white;
+    box-shadow: 0 13px 27px -5px rgba(50,50,93,.25), 0 8px 16px -8px rgba(0,0,0,.3), 0 -6px 16px -6px rgba(0,0,0,.025);
+    z-index: -1;
+  }
+
+  .App.mob > .japanp::after,.App.yes > .japanp::after{
+
+    opacity: 1;
+  
+  }
+  @keyframes sheen {
+    100% {
+      opacity: 1;
+    }
   }

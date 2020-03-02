@@ -46,7 +46,7 @@ const classes =
 const titles =
 [
     "Camera Roll Kyoto"
-  , "Camera Roll Tokyo"
+  , "Tokyo"
   , "Article3"
   , "Article4"
   , "Article5"

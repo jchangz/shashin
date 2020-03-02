@@ -16,11 +16,11 @@ function App() {
   return (
     <Router>
 
-       <Navbar />
+       {/*<Navbar />*/}
        <Route render={({location}) => (
 
               <Switch location={location}>
-                <Route exact path="/" component={Japan} />
+                <Route exact path="/" component={Latest} />
                 <Route path="/Latest" render={({ match: { path } }) => (
                   <div>
                     <Route exact path={path} component={Latest} />
