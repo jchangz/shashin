@@ -171,39 +171,33 @@ class ImageScroller extends React.Component {
     beginLoad(){
         document.documentElement.style.setProperty('--base', (window.innerHeight - 64 + 'px'));
       
-         this.observer = new IntersectionObserver(entries => {
+        this.observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                const { isIntersecting, intersectionRatio } = entry
+                if (isIntersecting === true ) {
+                    this.setState({
+                        title: entry.target.textContent, 
+                        div: entry.target
+                    })
+                }
+            })
+        }, 
+            {root:this.myInput.current, threshold: 0.75}
+        );
  
-             entries.forEach(entry => {
-                 const { isIntersecting, intersectionRatio } = entry
-                
-                 if (isIntersecting === true ) {
- 
-                     this.setState({
-                         title: entry.target.textContent, 
-                         currentviewX: entry.target.offsetLeft - 32, 
-                         currentviewY: entry.target.offsetTop - 86
-                     })
-                 }
-             })
-         }, 
-             {root:this.myInput.current, threshold: 0.75}
-         );
- 
-         for (var i = 0; i < this.myInput.current.children.length; i++) {
-             this.observer.observe(this.myInput.current.children[i]);
-         }
-         
-         smoothscroll.polyfill();
-      
-         this.TouchMe()
+        for (var i = 0; i < this.myInput.current.children.length; i++) {
+            this.observer.observe(this.myInput.current.children[i]);
+        }
 
+        this.myInput.current.children[0].classList.add('click-state');
+
+        smoothscroll.polyfill();
+
+        this.TouchMe()
     }
    
     componentDidMount(){
-
         this.handleImageLoaded();
-  
-      
     }
 
     componentWillUnmount (){
@@ -211,18 +205,23 @@ class ImageScroller extends React.Component {
         window.removeEventListener('mouseup', this.onMouseUp);
     }
     
-    onclick = () => {
+    ontouchstart = (e) => {
         if (this.state.mobileclick === "mob"){
             this.setState({mobileclick: "nope"})
             this.myInput.current.scrollTo({
-                left:           this.state.currentviewX, 
-                top:            this.state.currentviewY, 
+                left:           e.target.offsetLeft - 32,
+                top:            e.target.offsetTop - 86,
                 behavior:       'smooth'
             })
+            e.target.classList.add('click-state');
         }
-        else{
+
+        else {
             this.setState({mobileclick: "mob"})
 
+            for (var i = 0; i < e.target.parentElement.children.length; i++) {
+                e.target.parentElement.children[i].classList.remove('click-state');
+            }
         }
     }
 
@@ -259,31 +258,31 @@ class ImageScroller extends React.Component {
             )
         }
         return(
-            <div className={"Appcon "+ this.state.animation + " " + this.state.clicking + " " + this.state.mobileclick} onClick={this.onclick}><div className="testcont">
-<Transition items={this.state.title}
-              from={{ position: 'absolute', height: 0, background: 'white', overflow: 'hidden'}}
-              enter={{ height: 'auto', opacity: 1}}
-              leave={{ height: 0, opacity: 0 }}>
-            {item => props =>
-                <h2 style={props} className="testinkid">{item}</h2>}</Transition>
+            <div className={"Appcon "+ this.state.animation + " " + this.state.clicking + " " + this.state.mobileclick}>
+                <div className="testcont">
+                    <Transition items={this.state.title}
+                        from={{ position: 'absolute', height: 0, background: 'white', overflow: 'hidden'}}
+                        enter={{ height: 'auto', opacity: 1}}
+                        leave={{ height: 0, opacity: 0 }}>
+                        {item => props =>
+                        <h2 style={props} className="testinkid">{item}</h2>}
+                    </Transition>
                 </div>
-                <div className={"App mobile " + this.state.mobileclick} onClick={this.mobileonclick} ref={this.myInput}>
-                    
-                {items.map(({ }, index) => (
-        <Link to={`/Latest/CameraRollKyoto`} class={"japanp " + itemss[index]}>
-          <div class={"reflow2"}>
-            <LazyLoad height={'100%'} >
-              <ImageLoader className={"imghun " + itemss[index]} src={items[index]}/>
-            </LazyLoad>
-          </div>
-          <animated.div className={"text "  + classes[index]}>
-            <h4>{titles[index]}</h4>
-          </animated.div>       
-        </Link>
-      ))}
-                    
-                    
-                    </div>
+
+                <div className={"App mobile " + this.state.mobileclick} ref={this.myInput}>     
+                    {items.map(({ }, index) => (
+                        <div class={"japanp " + itemss[index] + " "}  onClick={this.ontouchstart}>
+                            <div class={"reflow2"}>
+                                <LazyLoad height={'100%'} >
+                                    <ImageLoader className={"imghun " + itemss[index]} src={items[index]}/>
+                                </LazyLoad>
+                            </div>
+                            <animated.div className={"text "  + classes[index]}>
+                                <h4>{titles[index]}</h4>
+                            </animated.div>       
+                        </div>
+                    ))}
+                </div>
             </div>
         )
     }
