@@ -2,7 +2,67 @@ import React, { useState, useEffect, useRef } from "react";
 import throttle from 'lodash/throttle';
 import {Spring} from 'react-spring/renderprops'
 import {Transition} from 'react-spring/renderprops'
+import ImageLoader from '../hooks/lazyloadFadeIn.js';
 import smoothscroll from 'smoothscroll-polyfill';
+import {useSpring, useTrail, animated} from 'react-spring';
+
+import LazyLoad from 'react-lazy-load';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    useParams,
+    useRouteMatch
+  } from "react-router-dom";
+
+const MyContext = React.createContext(); 
+
+const items = [
+    'https://live.staticflickr.com/65535/48135300432_4ef5c106de_b.jpg', 
+    'https://live.staticflickr.com/65535/48420919721_783b7335be_k.jpg', 
+    'https://live.staticflickr.com/65535/48165937296_8e7afc1769_b.jpg',
+    'https://live.staticflickr.com/65535/48155183631_c48bd3c918_b.jpg',
+    'https://live.staticflickr.com/65535/48135206926_8d5ea89d81_c.jpg',
+    'https://live.staticflickr.com/65535/48034021928_1942b50c84_c.jpg']
+  const config = { mass: 5, tension: 2000, friction: 200 }
+  const itemss =
+  [
+      "one"
+    , "two"
+    , "three"
+    , "four"
+    , "five"
+    , "six"
+  ]
+  const classes =
+  [
+      "camerarollkyoto"
+    , "camerarolltokyo"
+    , "Article3"
+    , "Article4"
+    , "Article5"
+  ]
+  const titles =
+  [
+      "Camera Roll Kyoto"
+    , "Tokyo"
+    , "Article3"
+    , "Article4"
+    , "Article5"
+  ]
+  const subtitle =
+  [
+      "Kyoto through the lens of an iPhone"
+    , "The city that never sleeps"
+    , "Article3"
+    , "Article4"
+    , "Article5"
+  ]
+  const hero = ['https://live.staticflickr.com/1961/45173255361_a5653299af_b.jpg']
+  /*const subtitle = [
+    'http://167.99.106.90/img/camerarollkyotoorange.svg'
+  ]*/
 
 class ImageScroller extends React.Component {
     constructor(props){
@@ -17,6 +77,28 @@ class ImageScroller extends React.Component {
             mobileclick: 'nope'
         };
     }
+
+    handleImageLoaded() {
+
+        function imgLoad(url) {
+          return new Promise(function(resolve, reject) {
+            var img = new Image();
+            img.src = url;
+            img.onload = function() {
+              resolve(img);
+            }
+            img.onerror = reject
+          });
+        }
+    
+        let imageLoadpromises = items.map(imgLoad);
+    
+        Promise.all(imageLoadpromises ).then(() => {
+          this.setState({data: true});
+          this.beginLoad();
+        });
+       
+      }
 
     TouchMe = () => {
         var supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
@@ -85,33 +167,43 @@ class ImageScroller extends React.Component {
         }
         return true;
     };
+
+    beginLoad(){
+        document.documentElement.style.setProperty('--base', (window.innerHeight - 64 + 'px'));
+      
+         this.observer = new IntersectionObserver(entries => {
+ 
+             entries.forEach(entry => {
+                 const { isIntersecting, intersectionRatio } = entry
+                
+                 if (isIntersecting === true ) {
+ 
+                     this.setState({
+                         title: entry.target.textContent, 
+                         currentviewX: entry.target.offsetLeft - 32, 
+                         currentviewY: entry.target.offsetTop - 86
+                     })
+                 }
+             })
+         }, 
+             {root:this.myInput.current, threshold: 0.75}
+         );
+ 
+         for (var i = 0; i < this.myInput.current.children.length; i++) {
+             this.observer.observe(this.myInput.current.children[i]);
+         }
+         
+         smoothscroll.polyfill();
+      
+         this.TouchMe()
+
+    }
    
     componentDidMount(){
+
+        this.handleImageLoaded();
   
-        document.documentElement.style.setProperty('--base', (window.innerHeight - 64 + 'px'));
-       console.log(document)
-        this.observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                const { isIntersecting, intersectionRatio } = entry
-                if (isIntersecting === true ) {
-                    this.setState({
-                        title: entry.target.textContent, 
-                        currentviewX: entry.target.offsetLeft - 32, 
-                        currentviewY: entry.target.offsetTop - 86
-                    })
-                }
-            })
-        }, 
-            {root:this.myInput.current, threshold: 0.75}
-        );
-
-        for (var i = 0; i < this.props.children.length; i++) {
-            this.observer.observe(this.myInput.current.children[i]);
-        }
-        
-        smoothscroll.polyfill();
-
-        this.TouchMe()
+      
     }
 
     componentWillUnmount (){
@@ -135,6 +227,22 @@ class ImageScroller extends React.Component {
     }
 
     render() {
+
+        if (!this.state.data) {
+            return(
+              <div>
+                <div className="progress"></div>
+                <div className="App">
+                  <div className="loading-animated-background"></div>
+                  <div className="loading-animated-background"></div>
+                  <div className="loading-animated-background"></div>
+                  <div className="loading-animated-background"></div>
+                </div>
+              </div>
+            )
+          }
+          
+     
         if (this.state.touching === "no") {
             return(
                 <div className={"Appcon "+ this.state.animation + " " + this.state.clicking} onTouchEnd={this.onMouseUp} onMouseDown={this.onMouseDown}><div className="testcont">
@@ -159,7 +267,23 @@ class ImageScroller extends React.Component {
             {item => props =>
                 <h2 style={props} className="testinkid">{item}</h2>}</Transition>
                 </div>
-                <div className={"App mobile " + this.state.mobileclick} onClick={this.mobileonclick} ref={this.myInput}>{this.props.children}</div>
+                <div className={"App mobile " + this.state.mobileclick} onClick={this.mobileonclick} ref={this.myInput}>
+                    
+                {items.map(({ }, index) => (
+        <Link to={`/Latest/CameraRollKyoto`} class={"japanp " + itemss[index]}>
+          <div class={"reflow2"}>
+            <LazyLoad height={'100%'} >
+              <ImageLoader className={"imghun " + itemss[index]} src={items[index]}/>
+            </LazyLoad>
+          </div>
+          <animated.div className={"text "  + classes[index]}>
+            <h4>{titles[index]}</h4>
+          </animated.div>       
+        </Link>
+      ))}
+                    
+                    
+                    </div>
             </div>
         )
     }

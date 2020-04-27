@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import CMRK from './components/camerarollkyoto.js';
 import Navbar from "./components/Header";
 import Hooksnav from "./components/Scroll.js";
-import Japan from './components/Section.Japan.js';
+import ImageScroller from './hooks/imageScroller.js';
 import Latest from './components/Section.Latest.js';
 import Studio from './components/Section.Studio.js';
 import { TransitionGroup, Transition, CSSTransition } from "react-transition-group";
@@ -20,7 +20,7 @@ function App() {
        <Route render={({location}) => (
 
               <Switch location={location}>
-                <Route exact path="/" component={Latest} />
+                <Route exact path="/" component={ImageScroller} />
                 <Route path="/Latest" render={({ match: { path } }) => (
                   <div>
                     <Route exact path={path} component={Latest} />
