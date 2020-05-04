@@ -161,13 +161,6 @@ class ImageScroller extends React.Component {
         })
     };
 
-    shouldComponentUpdate = (nextProps, nextState) =>{
-        if(this.state.isScrolling !== nextState.isScrolling ) {
-            this.toggleScrolling(nextState.isScrolling);
-        }
-        return true;
-    };
-
     beginLoad(){
         document.documentElement.style.setProperty('--base', (window.innerHeight - 64 + 'px'));
       
@@ -213,19 +206,19 @@ class ImageScroller extends React.Component {
                 top:            e.target.offsetTop - 86,
                 behavior:       'smooth'
             })
+            for (var i = 0; i < e.target.parentElement.children.length; i++) {
+                e.target.parentElement.children[i].classList.remove('click-state');
+            }
             e.target.classList.add('click-state');
         }
 
         else {
             this.setState({mobileclick: "mob"})
-
-            for (var i = 0; i < e.target.parentElement.children.length; i++) {
-                e.target.parentElement.children[i].classList.remove('click-state');
-            }
         }
     }
 
     render() {
+        const togs = (this.state.mobileclick === "mob")
 
         if (!this.state.data) {
             return(
@@ -258,7 +251,7 @@ class ImageScroller extends React.Component {
             )
         }
         return(
-            <div className={"Appcon "+ this.state.animation + " " + this.state.clicking + " " + this.state.mobileclick}>
+            <div className={"Appcon"}>
                 <div className="testcont">
                     <Transition items={this.state.title}
                         from={{ position: 'absolute', height: 0, background: 'white', overflow: 'hidden'}}
@@ -271,7 +264,12 @@ class ImageScroller extends React.Component {
 
                 <div className={"App mobile " + this.state.mobileclick} ref={this.myInput}>     
                     {items.map(({ }, index) => (
-                        <div class={"japanp " + itemss[index] + " "}  onClick={this.ontouchstart}>
+                        <Spring
+                        from={{ opacity: 0 }}
+                        to={{ opacity: togs ? 1 : 0,
+                        transform: togs ? 'scale(0.9)' : 'scale(1)' }}>
+                            {props => 
+                        <div style={props} class={"japanp " + itemss[index] + " "}  onClick={this.ontouchstart}>
                             <div class={"reflow2"}>
                                 <LazyLoad height={'100%'} >
                                     <ImageLoader className={"imghun " + itemss[index]} src={items[index]}/>
@@ -280,7 +278,8 @@ class ImageScroller extends React.Component {
                             <animated.div className={"text "  + classes[index]}>
                                 <h4>{titles[index]}</h4>
                             </animated.div>       
-                        </div>
+                        </div>}
+                        </Spring>
                     ))}
                 </div>
             </div>

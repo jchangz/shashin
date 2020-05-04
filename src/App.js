@@ -20,14 +20,14 @@ function App() {
        <Route render={({location}) => (
 
               <Switch location={location}>
-                <Route exact path="/" component={ImageScroller} />
+                <Route exact path="/" component={Studio} />
                 <Route path="/Latest" render={({ match: { path } }) => (
                   <div>
                     <Route exact path={path} component={Latest} />
                     <Route path={`${path}/CameraRollKyoto`} component={CMRK} />
                   </div>
                 )}/>
-                <Route path="/Studio" component={Studio} />
+                <Route path="/Studio" component={ImageScroller} />
               </Switch>
 
          )}
