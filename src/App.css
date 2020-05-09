@@ -1,22 +1,18 @@
 .App {
 display: grid;
-grid-gap: 2rem;
 grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
-grid-template-columns: repeat(3, calc(100% + 5rem));
+grid-template-columns: repeat(3, calc(100% + 3rem));
 height:130%;
-padding: 2rem;
 overflow: hidden;
 -webkit-overflow-scrolling: touch;
 will-change: transform;
-transition: 0.25s;
 height: var(--base);
 padding-left: 7rem;
 }
 
-@media only screen and (min-width: 600px) {
-  .App {
-    height: 750px;
-  }
+.App.tablet{
+  grid-template-columns: repeat(3, calc(100%));
+  padding-left: 15rem;
 }
 
 .App.desktop{
@@ -46,52 +42,6 @@ a{
 
 .App-link {
   color: #09d3ac;
-}
-
-.Appred{
-  background-color: red;
-  min-height: 100vh;
-  display: flex;
-}
-
-.fade-enter {
-opacity:0;
-}
-
-.fade-enter.fade-enter-active {
-
-  opacity: 1;
-  transition:2000ms ease-in;
-}
-
-.fade-exit {
-
-  opacity: 1;
-}
-
-.fade-exit.fade-exit-active {
-opacity:0;
-  transition:  300ms ease-in;
-}
-/*
-.transition-group {
-  position: relative;
-}
-section.route-section {
-position: absolute;
-width: 100%;
-top: 0;
-left: 0;
-}
-*/
-.timeline-item {
-  background: #fff;
-
-  padding: 12px;
-width:100%;
-  margin: 0 auto;
-  max-width: 472px;
-  min-height: 200px;
 }
 
 @keyframes placeHolderShimmer{
@@ -142,7 +92,7 @@ width:100%;
 }
 
 .japanp{
-position: relative;
+  position: relative;
   display: grid;
   grid-template-areas: "content";
   /*box-shadow: 6px 10px 28px -15px rgba(0,0,0,0.75);*/
@@ -156,43 +106,17 @@ position: relative;
   margin-top: 5rem;
 }
 
-.subtitlecontainer{
-  width: 100%;
-  height: 100%;
-  position: absolute;
-transition: 0.5s;
-}
-
-@media only screen and (min-width: 769px) {
-  .subtitlecontainer{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    grid-column: 2;
-  }
-  .japanp:hover > .subtitlecontainer{
-    background: black;
-  }
-
-}
 .imghun{
-
   width: 100%;
   transition: 0.25s ;
-
   grid-area: content;
 }
 
-.imghun.one{
-  /*mix-blend-mode: multiply;*/
- /* filter: brightness(0.8);*/
-}
 .text{
-color: black;
+  color: black;
   display: flex;
   flex-direction: column;
   z-index: 1;
-  font-family: "Roboto";
   display: none;
 }
 
@@ -215,71 +139,6 @@ color: black;
 p{
   margin: 0;
 }
-.subtitletext{
-  position:absolute;
-  width: 7vw;
-  padding: 1rem 2rem;
-}
-@media only screen and (min-width: 769px) {
-  .subtitletext{
-
-    width: 6vw;
-
-  }
-}
-
-.trails-main {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-}
-
-.trails-text {
-  position: relative;
-  width: 100%;
-height:400px;
-  line-height: 80px;
-  color: palevioletred;
-  font-size: 5em;
-  font-weight: 800;
-  text-transform: uppercase;
-  will-change: transform, opacity;
-  overflow: hidden;
-}
-
-.imge{
-  position: relative;
-  width: 100%;
-height:100%;
-  line-height: 80px;
-  color: palevioletred;
-  font-size: 5em;
-  font-weight: 800;
-  text-transform: uppercase;
-  will-change: transform, opacity;
-  overflow: hidden;
-}
-
-.imge > div{
-  overflow: hidden;
-  display: block;
-}
-.trails-text > div{
-  overflow: hidden;
-  display: block;
-}
-
-.loadmeh{
-  display:none;
-}
-
-
 
 .btn{
   position:fixed;
@@ -299,7 +158,6 @@ height:100%;
 }
 
 .hamburger-1{
-
   margin-bottom: 0.25rem;
   width:30px;
   height:3px;
@@ -328,26 +186,22 @@ height:100%;
   height:30px;
   background-color:white;
 }
-.utsurundesu{
-margin: 1.25rem;
 
+.utsurundesu{
+  margin: 1.25rem;
   width: 6rem;
-  
 }
+
 .logo{
   position: fixed;
   mix-blend-mode: difference;
-  
   z-index: 901;
   max-width: 1280px;
   margin: 0 auto;
 }
-.navbar--hidden{
-background-color: red;
-}
 
 .utsurundesu-hide{
-  position: absolute;;
+  position: absolute;
   width:0.1rem;
   height:2.5rem;
   top:0;
@@ -364,7 +218,6 @@ background-color: red;
   position: relative;
   background: white;
 }
-
 
 .fullpageload{
   position: absolute;
@@ -389,11 +242,9 @@ background-color: red;
   width: 100%;
   background: red;
   z-index: 33;
-
 }
 
 .loading-animated-background{
-
   animation-duration: 1s;
   animation-fill-mode: forwards;
   animation-iteration-count: infinite;
@@ -406,7 +257,6 @@ background-color: red;
   width: 300px;
   margin: 2rem auto;
   position: relative;
-
 }
 
 .navbar{
@@ -414,10 +264,6 @@ background-color: red;
   z-index: 5000;
   font-size: 3rem;
   background: green;
-}
-
-.navbarHidden{
-  background: red;
 }
 
 .headerpage{
@@ -431,13 +277,12 @@ background-color: red;
   display: flex;
   flex-direction: column;
   justify-content: center;
-
 }
 
 .navbuttons{
   position: relative;
   width: 100%;
-height:50px;
+  height:50px;
   font-size: 2rem;
   font-weight: 700;
   will-change: transform, opacity;
@@ -456,8 +301,8 @@ height:50px;
   text-decoration: none;
   /*text-transform: uppercase;*/
 }
-@media only screen and (min-width: 769px) {
 
+@media only screen and (min-width: 769px) {
   .headerpage{
     transform: translate(0);
     width: 50%;
@@ -465,28 +310,11 @@ height:50px;
 
   .headerpageDesktop{
     width: 100%;
-
     left: 100%;
     height: 100%;
     position: fixed;
     z-index: 850;
-
     opacity: 1;
-  }
- 
-
-  .changebg{
-    background: red;
-    height: 200px;
-    width: 200px;
-    position: absolute;
-    top: 10rem;
-    z-index: 970;
-    
-  }
-
-  .changebg:hover ~ .headerpageDesktop{
-    background: green;
   }
 }
 
@@ -514,17 +342,12 @@ height:50px;
   width: 100%;
   overflow: hidden;
   pointer-events: none;
-
-}
-.reflow2.desktop{
-
 }
 
 .reflow2.mobile{
   grid-area: content;
 }
 .reflow2 > div img{
-
   width: 100%;
   height: auto;
 }
@@ -555,28 +378,29 @@ height:50px;
   background: #000000;
   overflow: hidden;
 }
+
 .bg{
   width: 100%;
 }
+
 .img-loaded{
-   animation: fadeInImg cubic-bezier(0.23, 1, 0.32, 1) 1;
-   position: relative;
-   opacity: 0;
-   animation-fill-mode: forwards;
-   animation-duration: 0.7s;
-   animation-delay: 0.1s;
-   pointer-events: none;
-  }
+  animation: fadeInImg cubic-bezier(0.23, 1, 0.32, 1) 1;
+  position: relative;
+  opacity: 0;
+  animation-fill-mode: forwards;
+  animation-duration: 0.7s;
+  animation-delay: 0.1s;
+  pointer-events: none;
+}
 
-   .loaded{
-     display: block;
-     position: relative;
-     opacity: 1;
-     transition: 1s cubic-bezier(0.23, 1, 0.32, 1) ;
-   }
+.loaded{
+  display: block;
+  position: relative;
+  opacity: 1;
+  transition: 1s cubic-bezier(0.23, 1, 0.32, 1) ;
+}
 
-   .leader{
-     
+.leader{
   animation-duration: 1s;
   animation-fill-mode: forwards;
   animation-iteration-count: infinite;
@@ -590,90 +414,69 @@ height:50px;
   position: absolute;
   z-index: 1;
   border-radius: 10px;
-   }
-
-   .header{
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
-    animation-iteration-count: infinite;
-    animation-name: placeHolderShimmer;
-    animation-timing-function: linear;
-    background: #f6f7f8;
-    background: white;
-    mix-blend-mode: color-burn;
-    background-size: 800px 104px;
-  
-     width: 200%;
-     height:100%;
-     position: fixed;
-     
-   }
-
-
-   .progress{
-     height: 75px;
-     top: 0;
-     width: 300px;
-     position: absolute;
-     animation-duration: 3s;
-     animation-fill-mode: forwards;
-     animation-iteration-count: infinite;
-     animation-name: placeHolderShimmer;
-     animation-timing-function: linear;
-     background-size: 800px 104px;
-     mix-blend-mode: lighten;
-     background: linear-gradient(to right, #000 8%, #000 18%, #f8f8f8 33%);
-     z-index: 999;
-   }
-
-   .up{
-
-    transform: translateY(-1rem);
-    transition: 1s cubic-bezier(0.23, 1, 0.32, 1) ;
-   }
-    .down{
-      display: block;
-      opacity: 1;
-      transition: 1s cubic-bezier(0.23, 1, 0.32, 1) ;
-    }
-
-    @keyframes example {
-      0% {background-color: red;}
-      50% {background-color: black;}
-      100% {background-color: red;}
-    }
-
-    .width{
-
-
-      width: 100%;
-
-    }
-    .close{
-      width: 0;
-
-    }
-
-
-  .hellobg{
-    background: white;
   }
 
-  .desktopheader{
-    position: absolute;
-    display: flex;
-    right: 0;
-    width: 550px;
-    justify-content: space-evenly;
-    color: white;
-    z-index: 999;
-    margin-top: 1rem;
-  }
+.header{
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: #f6f7f8;
+  background: white;
+  mix-blend-mode: color-burn;
+  background-size: 800px 104px;
+  width: 200%;
+  height:100%;
+  position: fixed; 
+}
 
-  .desktopheader a{
-    color: white;
-    font-weight: 700;
-  }
+.progress{
+  height: 75px;
+  top: 0;
+  width: 300px;
+  position: absolute;
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background-size: 800px 104px;
+  mix-blend-mode: lighten;
+  background: linear-gradient(to right, #000 8%, #000 18%, #f8f8f8 33%);
+  z-index: 999;
+}
+
+.up{
+  transform: translateY(-1rem);
+  transition: 1s cubic-bezier(0.23, 1, 0.32, 1) ;
+}
+
+.down{
+  display: block;
+  opacity: 1;
+  transition: 1s cubic-bezier(0.23, 1, 0.32, 1) ;
+}
+
+.width{
+  width: 100%;
+}
+
+.desktopheader{
+  position: absolute;
+  display: flex;
+  right: 0;
+  width: 550px;
+  justify-content: space-evenly;
+  color: white;
+  z-index: 999;
+  margin-top: 1rem;
+}
+
+.desktopheader a{
+  color: white;
+  font-weight: 700;
+}
 
 .testcont{
   position: absolute;
@@ -683,130 +486,159 @@ height:50px;
   top: 2rem;
   z-index: 999;
 }
-  .testin{
-    color: red;
-    display: inline-block;
-  }
-  .testinkid{
-    margin: 0;
-    left: 2rem;
-    display: inline-block;
-  }
 
-  .Appcon{
-    position: relative;
-    background-color: white;
-    max-width: 600px;
-    margin: 0 auto;
-    height: 100%;
-  }
+.testin{
+  color: red;
+  display: inline-block;
+}
 
-  .Appcon.false{
-    pointer-events: none;
-  }
+.testinkid{
+  margin: 0;
+  left: 2rem;
+  display: inline-block;
+}
 
-  .App.true > .japanp{
-    transform: perspective(1000px) rotateY(5deg) scale(0.9);
-    transition: 0.3s;
-  }
+.Appcon{
+  position: relative;
+  background-color: white;
+  max-width: 600px;
+  margin: 0 auto;
+  height: 100%;
+}
 
-  .App.yes > .japanp{
-    transform: perspective(1000px) scale(0.9);
-   
-  }
-  .Appcon.left{
-    transform: perspective(1000px) rotateY(-2deg) ;
-    transition: 0.15s;
-  }
-  .Appcon.right{
-    transform: perspective(1000px) rotateY(2deg);
-    transition: 0.15s;
-  }
+.Appcon.false{
+  pointer-events: none;
+}
 
-  .App.false > .japanp{
-    transform: perspective(1000px) rotateY(0deg);
-    transition: 0.15s;
-  }
+.App.true > .japanp{
+  transform: perspective(1000px) rotateY(5deg) scale(0.9);
+  transition: 0.3s;
+}
 
-  .japanp.four, .japanp.five, .japanp.six{
-    margin-bottom: 10rem;
-  }
+.App.yes > .japanp{
+  transform: perspective(1000px) scale(0.9); 
+}
+.Appcon.left{
+  transform: perspective(1000px) rotateY(-2deg) ;
+  transition: 0.15s;
+}
+.Appcon.right{
+  transform: perspective(1000px) rotateY(2deg);
+  transition: 0.15s;
+}
 
-  .App.mobile.mob .japanp.three::after{
-    content: '';
-    position: absolute;
-    right: -50px;
-    width: 25px;
-    height: 100%;
-    background: white;
-  }
+.App.false > .japanp{
+  transform: perspective(1000px) rotateY(0deg);
+  transition: 0.15s;
+}
 
-  .japanp.three::after{
-    transition: 0.25s;
-  }
+.japanp:nth-last-child(-n+3){
+  margin-bottom: 10rem;
+}
 
-  .App.mobile.nope .japanp.three::after{
-    content: '';
-    position: absolute;
-    right: -50px;
-    width: 25px;
-    height: 100%;
-    background: white;
-  }
+.App.mobile.mob .japanp.three::after{
+  content: '';
+  position: absolute;
+  right: -50px;
+  width: 25px;
+  height: 100%;
+  background: white;
+}
 
-  .App.mobile.mob{
-    pointer-events: initial;
-    overflow: scroll;
-  }
+.japanp.three::after{
+  transition: 0.25s;
+}
 
-  .App.mobile.mob .japanp{
-  }
+.App.mobile.nope .japanp.three::after{
+  content: '';
+  position: absolute;
+  right: -50px;
+  width: 25px;
+  height: 100%;
+  background: white;
+}
 
-  .App > .japanp::after, .App.yes > .japanp::after{
-    content: '';
-    position: absolute;
-    transition: 0.25s;
-    width: 100%;
-    opacity: 0;
-    height: 100%;
-    background: transparent;
-    box-shadow: 0 13px 27px -5px rgba(50,50,93,.25), 0 8px 16px -8px rgba(0,0,0,.3), 0 -6px 16px -6px rgba(0,0,0,.025);
-    z-index: -1;
-  }
+.App.mobile.mob{
+  pointer-events: initial;
+  overflow: scroll;
+}
 
-  .App.mob > .japanp::after,.App.yes > .japanp::after{
+.App > .japanp::after, .App.yes > .japanp::after{
+  content: '';
+  position: absolute;
+  transition: 0.25s;
+  width: 100%;
+  opacity: 0;
+  height: 100%;
+  background: transparent;
+  box-shadow: 0 13px 27px -5px rgba(50,50,93,.25), 0 8px 16px -8px rgba(0,0,0,.3), 0 -6px 16px -6px rgba(0,0,0,.025);
+  z-index: -1;
+}
+
+.App.mob > .japanp::after,.App.yes > .japanp::after{
+  opacity: 1;
+}
+
+@keyframes sheen {
+  100% {
     opacity: 1;
   }
+}
 
-  @keyframes sheen {
-    100% {
-      opacity: 1;
-    }
-  }
+.loadingsquare{
+  width: 200px;
+  height: 400px;
+  border: 1px solid black;
+}
 
-  .loadingsquare{
-    width: 200px;
-    height: 400px;
-    border: 1px solid black;
-  }
+.svg-wrapper {
+  position: absolute;
+  top: 3rem;
+  width: calc(100vw - 4rem);
+  height: calc((100vw - 4rem) * 1.25);
+  margin: 2rem;
+}
 
-  .svg-wrapper {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  .shape {
-    stroke-dashoffset: 1000;
-    stroke-dasharray: 500;
-    stroke-width: 2px;
-    fill: transparent;
-    stroke: black;
-    animation: loading-spinner 2.5s linear infinite;
-  }
+.shape {
+  stroke-dashoffset: 1000;
+  stroke-dasharray: 500;
+  stroke-width: 2px;
+  fill: transparent;
+  stroke: black;
+  animation: loading-spinner 2.5s linear infinite;
+}
   
-  @keyframes loading-spinner{
-   to {
-      stroke-dashoffset: 0;
-    }
+@keyframes loading-spinner{
+  to {
+    stroke-dashoffset: 0;
   }
+}
+
+.shape.loaded{
+  animation: loading-spinner2 1.5s linear forwards;
+}
+
+@media only screen and (min-width: 500px) {
+  .svg-wrapper{
+    top: 5rem;
+    width: calc(100% - 15rem);
+    height: calc((100vw - 15rem) * 1.25);
+    margin: 0 7.5rem;
+  }
+  .shape.loaded{
+    animation: loading-spinner3 1.5s linear forwards;
+  }
+}
+
+@keyframes loading-spinner2{
+  to {
+    stroke-dashoffset: 1800;
+    stroke-dasharray: 3800;
+  }
+}
+@keyframes loading-spinner3{
+  to {
+    stroke-dashoffset: 1800;
+    stroke-dasharray: 4700;
+  }
+}

@@ -1,4 +1,4 @@
-import React, {useState, Component} from 'react';
+import React, {Component} from 'react';
 import '../App.css';
 import throttle from 'lodash/throttle';
 import Navigation from './Navigation.js';
@@ -47,7 +47,6 @@ export default class Navbar extends Component {
   };
 
   render() {
-    const props = {transform: (this.state.visible ? "scaleX(0.1)" : "scaleX(-150)")}
     return (
       console.log("hello2", this.state),
       <div>

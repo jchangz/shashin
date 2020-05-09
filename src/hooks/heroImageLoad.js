@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import throttle from 'lodash/throttle';
 
 const _loaded = {};
@@ -27,7 +27,7 @@ class HeroLoader extends React.Component {
   
     render() {
 
-        let { className, loadedClassName, loadingClassName, ...props } = this.props;
+        let { className, loadedClassName, loadingClassName } = this.props;
 
         className = `${className} ${this.state.loaded ? loadedClassName: loadingClassName}`;
 

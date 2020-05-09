@@ -1,22 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
-import throttle from 'lodash/throttle';
+import React from "react";
 import {Spring} from 'react-spring/renderprops'
 import {Transition} from 'react-spring/renderprops'
 import ImageLoader from '../hooks/lazyloadFadeIn.js';
 import smoothscroll from 'smoothscroll-polyfill';
-import {useSpring, useTrail, animated} from 'react-spring';
-
 import LazyLoad from 'react-lazy-load';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    useParams,
-    useRouteMatch
-  } from "react-router-dom";
-
-const MyContext = React.createContext(); 
 
 const items = [
     'https://live.staticflickr.com/65535/48135300432_4ef5c106de_b.jpg', 
@@ -25,7 +12,7 @@ const items = [
     'https://live.staticflickr.com/65535/48155183631_c48bd3c918_b.jpg',
     'https://live.staticflickr.com/65535/48135206926_8d5ea89d81_c.jpg',
     'https://live.staticflickr.com/65535/48034021928_1942b50c84_c.jpg']
-  const config = { mass: 5, tension: 2000, friction: 200 }
+
   const itemss =
   [
       "one"
@@ -51,6 +38,7 @@ const items = [
     , "Article4"
     , "Article5"
   ]
+  /*
   const subtitle =
   [
       "Kyoto through the lens of an iPhone"
@@ -166,7 +154,7 @@ class ImageScroller extends React.Component {
       
         this.observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
-                const { isIntersecting, intersectionRatio } = entry
+                const { isIntersecting } = entry
                 if (isIntersecting === true ) {
                     this.setState({
                         title: entry.target.textContent, 
@@ -263,7 +251,7 @@ class ImageScroller extends React.Component {
                 </div>
 
                 <div className={"App mobile " + this.state.mobileclick} ref={this.myInput}>     
-                    {items.map(({ }, index) => (
+                    {items.map(({props }, index) => (
                         <Spring
                         from={{ opacity: 0 }}
                         to={{ opacity: togs ? 1 : 0,
@@ -275,9 +263,9 @@ class ImageScroller extends React.Component {
                                     <ImageLoader className={"imghun " + itemss[index]} src={items[index]}/>
                                 </LazyLoad>
                             </div>
-                            <animated.div className={"text "  + classes[index]}>
+                            <div className={"text "  + classes[index]}>
                                 <h4>{titles[index]}</h4>
-                            </animated.div>       
+                            </div>       
                         </div>}
                         </Spring>
                     ))}

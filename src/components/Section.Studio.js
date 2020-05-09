@@ -1,8 +1,8 @@
 import React, {useState, useRef, useEffect} from 'react';
 import '../App.css';
 import {useSprings, useSpring, useTransition, animated, config} from 'react-spring';
-import { useInView } from 'react-intersection-observer';
 import smoothscroll from 'smoothscroll-polyfill';
+import useWindowSize from '../hooks/useWindowSize.js';
 
 const items = [
   'https://live.staticflickr.com/65535/48135300432_4ef5c106de_b.jpg', 
@@ -10,7 +10,10 @@ const items = [
   'https://live.staticflickr.com/65535/48165937296_8e7afc1769_b.jpg',
   'https://live.staticflickr.com/65535/48155183631_c48bd3c918_b.jpg',
   'https://live.staticflickr.com/65535/48135206926_8d5ea89d81_c.jpg',
-  'https://live.staticflickr.com/65535/48034021928_1942b50c84_c.jpg'
+  'https://live.staticflickr.com/65535/48034021928_1942b50c84_c.jpg',
+  'https://live.staticflickr.com/65535/48048046752_7200f5604c_c.jpg',
+  'https://live.staticflickr.com/65535/48047965856_74dff9e275_c.jpg',
+  'https://live.staticflickr.com/65535/48034089697_a6f01b151b_c.jpg'
 ]
 
 const itemss = [
@@ -24,32 +27,54 @@ const itemss = [
 
 const Studio = ()=> {
 
-  const myInput = React.useRef()
-  const ref = useRef()
+  const myInput = useRef()
+
   const vrefs = []
-  const [inViewRef, inView, entry] = useInView()
 
   const [Name, setName] = useState(null)
 
   const [index, setIndex] = useState(null);
 
+  const [initial, setInitial] = useState(true);
+
   const [loading, setLoading] = useState(true);
 
   const counter = useRef(0);
 
+  const [width] = useWindowSize();
+
+  const phone = width < 500;
+
   smoothscroll.polyfill();
 
   const imageLoaded = () => {
-    console.log(loading)
+
     counter.current += 1;
+
+    document.documentElement.style.setProperty('--base',(window.innerHeight + 'px'));
+
     if (counter.current >= items.length) {
-      setLoading(false);
+
+      setInitial(false)
+
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500);
+
       setIndex(0)
-      myInput.current.scrollTo({
-        top:            0,
-        left:           80,
-      })
-      document.documentElement.style.setProperty('--base', (window.innerHeight - 64 + 'px'));
+
+      if (phone) {
+        myInput.current.scrollTo({
+          top:            0,
+          left:           80,
+        })
+      }
+      else {
+        myInput.current.scrollTo({
+          top:            0,
+          left:           120,
+        })
+      }
     }
   }
 
@@ -69,16 +94,24 @@ const Studio = ()=> {
     for (var i = 0; i < 6; i++) {
       observer.observe(vrefs[i]);
     }
-  }, [ref]);
+  }, [vrefs]);
 
   const clicked = (i, e) => {
     setIndex(i)
-
-    myInput.current.scrollTo({
-      top:            e.target.offsetParent.offsetTop -86,
-      left:           e.target.offsetParent.offsetLeft - 32,
-      behavior:       'smooth'
-    })
+    if (phone) {
+      myInput.current.scrollTo({
+        top:            e.target.offsetParent.offsetTop -86,
+        left:           e.target.offsetParent.offsetLeft - 32,
+        behavior:       'smooth'
+      })
+    }
+    else{
+      myInput.current.scrollTo({
+        top:            e.target.offsetParent.offsetTop -86,
+        left:           e.target.offsetParent.offsetLeft - 120,
+        behavior:       'smooth'
+      })
+    }
   }
 
   const clicked2 = () => {
@@ -99,14 +132,16 @@ const Studio = ()=> {
     })
   ))
 
+  const opacity = useSpring({opacity: loading ? 0 : 1})
+
   return (
 
   <div>
 
     {loading ?
-      <div class="svg-wrapper">
-        <svg height="400" width="320" xmlns="http://www.w3.org/2000/svg">
-          <rect class="shape" height="400" width="320" />
+      <div className="svg-wrapper" >
+        <svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
+          <rect className={"shape " + (initial === true ? '' : 'loaded' )} height="100%" width="100%" />
         </svg>
       </div>
     :
@@ -119,10 +154,10 @@ const Studio = ()=> {
       )}
     </div>
 
-    <div
+    <animated.div
       ref={myInput}
-      style={{opacity: loading ? 0 : 1}}
-      className={"App mobile " + (index === null ? 'mob' : 'hdie')}
+      style={opacity}
+      className={"App mobile " + (index === null ? 'mob' : 'hdie') + (phone ? "": " tablet")}
       onClick = {index !== null ? clicked2 : null }>
 
       {springs.map(({ x, height,opacity, transform, ...rest }, i) => (
@@ -135,11 +170,12 @@ const Studio = ()=> {
               ref={ref => vrefs[i] = ref}
               onLoad={imageLoaded}
               className={"imghun " + itemss[i]}
+              alt=""
               src={items[i]}>
             </img>
         </animated.div>
       ))}     
-    </div>
+    </animated.div>
   </div>
   );
 }

@@ -1,22 +1,11 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React from 'react';
 import '../App.css';
-import {useSpring, useTrail, animated} from 'react-spring';
 import LazyLoad from 'react-lazy-load';
 import ImageLoader from '../hooks/lazyloadFadeIn.js';
-import SectionLoader from '../hooks/sectionImageLoad.js';
-import Loading from './Loading.js';
-import HeroLoader from '../hooks/heroImageLoad.js';
 import useWindowSize from '../hooks/useWindowSize.js';
 import ImageScroller from '../hooks/imageScroller.js';
-import debounce from 'lodash/debounce';
-import throttle from 'lodash/throttle';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
   Link,
-  useParams,
-  useRouteMatch
 } from "react-router-dom";
 const items = [
   'https://live.staticflickr.com/65535/48135300432_4ef5c106de_b.jpg', 
@@ -25,7 +14,7 @@ const items = [
   'https://live.staticflickr.com/65535/48155183631_c48bd3c918_b.jpg',
   'https://live.staticflickr.com/65535/48135206926_8d5ea89d81_c.jpg',
   'https://live.staticflickr.com/65535/48034021928_1942b50c84_c.jpg']
-const config = { mass: 5, tension: 2000, friction: 200 }
+
 const itemss =
 [
     "one"
@@ -51,7 +40,7 @@ const titles =
   , "Article4"
   , "Article5"
 ]
-const subtitle =
+/*const subtitle =
 [
     "Kyoto through the lens of an iPhone"
   , "The city that never sleeps"
@@ -65,23 +54,23 @@ const hero = ['https://live.staticflickr.com/1961/45173255361_a5653299af_b.jpg']
 ]*/
 
 const LatestSection = ()=> {
-  const [width, height] = useWindowSize();
+  const [width] = useWindowSize();
   const responsive = width > 769 ? " desktop" : " mobile";
 
   return (
 
   <div>
     <ImageScroller className={"App" + responsive}>
-      {items.map(({ }, index) => (
+      {items.map(({props}, index) => (
         <Link to={`/Latest/CameraRollKyoto`} class={"japanp " + itemss[index]}>
           <div class={"reflow2" + responsive}>
             <LazyLoad height={'100%'} >
               <ImageLoader className={"imghun " + itemss[index]} src={items[index]}/>
             </LazyLoad>
           </div>
-          <animated.div className={"text "  + classes[index] + responsive}>
+          <div className={"text "  + classes[index] + responsive}>
             <h4>{titles[index]}</h4>
-          </animated.div>       
+          </div>       
         </Link>
       ))}
     </ImageScroller>

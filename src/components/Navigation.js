@@ -1,10 +1,7 @@
-import React, {useState, Component} from 'react';
+import React, {useState} from 'react';
 import { Link } from "react-router-dom";
 import '../App.css';
 import {useSpring, useTrail, animated} from 'react-spring';
-import debounce from 'lodash/debounce';
-import throttle from 'lodash/throttle';
-import {Spring} from 'react-spring/renderprops';
 import useWindowSize from '../hooks/useWindowSize.js';
 
 const items = ['Japan', 'Latest', 'Studio', 'Nostalgia', 'Travel'];
