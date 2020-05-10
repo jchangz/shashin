@@ -39,6 +39,8 @@ const Studio = ()=> {
 
   const [loading, setLoading] = useState(true);
 
+  const [intersecting, setIntersecting] = useState(null);
+
   const counter = useRef(0);
 
   const [width] = useWindowSize();
@@ -83,6 +85,7 @@ const Studio = ()=> {
       ([entry]) => {
         if (entry.isIntersecting) {
           setName(entry.target.className)
+          setIntersecting(entry.target.className)
         }
       },
       {
@@ -91,7 +94,7 @@ const Studio = ()=> {
         threshold: 0.75
       }
     );
-    for (var i = 0; i < 6; i++) {
+    for (var i = 0; i < 9; i++) {
       observer.observe(vrefs[i]);
     }
   }, [vrefs]);
@@ -100,7 +103,7 @@ const Studio = ()=> {
     setIndex(i)
     if (phone) {
       myInput.current.scrollTo({
-        top:            e.target.offsetParent.offsetTop -86,
+        top:            e.target.offsetParent.offsetTop - ((window.innerHeight - e.target.offsetParent.clientHeight) / 2),
         left:           e.target.offsetParent.offsetLeft - 32,
         behavior:       'smooth'
       })
@@ -118,25 +121,31 @@ const Studio = ()=> {
     setIndex(null)
   }
 
-  const transitions = useTransition(Name, null, {
-    config: config.wobbly,
-    from: { position: 'absolute', height: 0, overflow: 'hidden', opacity: 0},
-    enter: { height: 34, opacity: 1},
-    leave: { height: 0, opacity: 0 },
-  })
-
   const springs = useSprings(items.length, items.map((item, i) =>
     ({ 
       opacity: (index === null) | (i === index) ? 1 : 0,
-      transform: (index === null)  ? "scale(0.9)" : "scale(1)"
+      transform: (index === null)  ? "scale(0.9)" : "scale(1)",
+      width: intersecting === ("imghun " + itemss[i]) ? 50 : 0
     })
   ))
 
   const opacity = useSpring({opacity: loading ? 0 : 1})
 
+  const logo = useSpring({
+    opacity: (index === null) ? 0 : 1,
+    width: (index === null) ? 0 : 150
+  })
+
   return (
 
-  <div>
+  <div className="bgwhite">
+
+    <header>
+      {/*<div class="progress"></div>*/}
+      <animated.div style={logo} className="utsurundesu">
+          <img alt="" src="http://167.99.106.90/img/shashin.svg"></img>
+        </animated.div>
+    </header>
 
     {loading ?
       <div className="svg-wrapper" >
@@ -148,19 +157,13 @@ const Studio = ()=> {
       ""
     }
 
-    <div className="testcont">
-      {transitions.map(({ item, props, key }) =>
-        <animated.h2 className="testinkid" key={key} style={props}>{item}</animated.h2>
-      )}
-    </div>
-
     <animated.div
       ref={myInput}
       style={opacity}
       className={"App mobile " + (index === null ? 'mob' : 'hdie') + (phone ? "": " tablet")}
       onClick = {index !== null ? clicked2 : null }>
 
-      {springs.map(({ x, height,opacity, transform, ...rest }, i) => (
+      {springs.map(({ x, width, height, opacity, transform, ...rest }, i) => (
         <animated.div
           key={i}
           onClick ={index === null ? (e) => clicked(i,e) : null }
@@ -173,6 +176,9 @@ const Studio = ()=> {
               alt=""
               src={items[i]}>
             </img>
+          <animated.h2 className={"testetxt"} style={{ width }}>
+            {itemss[i]}
+          </animated.h2>
         </animated.div>
       ))}     
     </animated.div>

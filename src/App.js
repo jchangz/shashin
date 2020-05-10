@@ -9,7 +9,6 @@ import Studio from './components/Section.Studio.js';
 function App() {
   return (
     <Router>
-      {/*<Navbar />*/}
       <Route render={({location}) => (
           <Switch location={location}>
             <Route exact path="/" component={Studio} />

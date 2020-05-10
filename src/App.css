@@ -10,6 +10,10 @@ height: var(--base);
 padding-left: 7rem;
 }
 
+.bgwhite{
+  background-color: #fff;
+}
+
 .App.tablet{
   grid-template-columns: repeat(3, calc(100%));
   padding-left: 15rem;
@@ -103,7 +107,7 @@ a{
 }
 
 .japanp:nth-child(-n+3){
-  margin-top: 5rem;
+  margin-top: 10rem;
 }
 
 .imghun{
@@ -188,8 +192,14 @@ p{
 }
 
 .utsurundesu{
-  margin: 1.25rem;
-  width: 6rem;
+  position: absolute;
+  left: 2rem;
+  top: 3rem;
+  mix-blend-mode: difference;
+  overflow: hidden;
+}
+.utsurundesu img{
+  width: 9rem;
 }
 
 .logo{
@@ -478,24 +488,18 @@ p{
   font-weight: 700;
 }
 
-.testcont{
-  position: absolute;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  top: 2rem;
-  z-index: 999;
-}
-
 .testin{
   color: red;
   display: inline-block;
 }
 
-.testinkid{
+.testetxt{
+  z-index: 99;
+  color: red;
+  position: absolute;
+  overflow: hidden;
   margin: 0;
-  left: 2rem;
-  display: inline-block;
+  font-weight: 600;
 }
 
 .Appcon{
@@ -533,7 +537,7 @@ p{
 }
 
 .japanp:nth-last-child(-n+3){
-  margin-bottom: 10rem;
+  margin-bottom: 15rem;
 }
 
 .App.mobile.mob .japanp.three::after{
