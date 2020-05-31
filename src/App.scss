@@ -102,19 +102,6 @@ p {margin: 0;}
   }
 }
 
-.animated-background {
-  animation-duration: 1s;
-  animation-fill-mode: forwards;
-  animation-iteration-count: infinite;
-  animation-name: placeHolderShimmer;
-  animation-timing-function: linear;
-  background: #f6f7f8;
-  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
-  background-size: 800px 104px;
-  height: 200px;
-  position: relative;
-}
-
 @keyframes placeHolderShimmer{
   0% {background-position: -468px 0}
   100% {background-position: 468px 0}
@@ -211,5 +198,85 @@ p {margin: 0;}
   to {
     stroke-dashoffset: 1800;
     stroke-dasharray: 4700;
+  }
+}
+
+.cr{
+  position: relative;
+  background-color: #121212;
+  height: var(--base);
+  h2{
+    position: relative;
+    z-index: 2;
+    margin: 0;
+  }
+  .cr-grid{
+    padding: 0;
+    grid-gap: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 2rem;
+    img{
+      max-width: 100%;
+      margin: 0 auto;
+      display: block;
+    }
+  }
+  .cr-container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #121212;
+    height: var(--base);
+    display: flex;
+    align-items: center;
+    .cr-content{
+      position: relative;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      .cr-content-grid{
+        grid-gap: 0.25rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        img{
+          max-width: 100%;
+          margin: 0 auto;
+          display: block;
+        }
+        &.skeleton{
+          background-color: #121212;
+          width: 100%;
+          mix-blend-mode: multiply;
+          > div {
+            position:relative;
+            background-color:#464646;
+            padding-bottom:100%;
+          }
+        }
+      }
+      .cr-content-loader{
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        z-index: -1;
+        transform: translateY(-50%);
+      }
+    }
+  }
+}
+
+.progress-animation {
+  position: absolute;
+  animation: placeHolderShimmer 1s linear infinite forwards;
+  background: #f6f7f8;
+  background: linear-gradient(to right, #dadada 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 800px 104px;
+  height: 100%;
+  width: 100%;
+  &.fin{
+    animation-iteration-count: initial;
   }
 }

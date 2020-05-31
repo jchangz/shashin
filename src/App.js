@@ -3,6 +3,7 @@ import './App.scss';
 import {useSprings, useSpring, animated, config} from 'react-spring';
 import smoothscroll from 'smoothscroll-polyfill';
 import useWindowSize from './hooks/useWindowSize.js';
+import CameraRoll from './components/cameraRoll.js';
 
 const items = [
   'https://live.staticflickr.com/65535/48034090387_d62885f35e_c.jpg', 
@@ -67,6 +68,10 @@ function App() {
     counter.current += 1;
     if (counter.current >= items.length) {
       const defaultImage = myInput.current.children[4];
+      const defaultState = {
+        class: 4,
+        title: 'go'
+      }
 
       setInitial(false)
 
@@ -79,8 +84,8 @@ function App() {
       }, 1500);
 
       //initial load set image
-      setIndex(4)
-      setIntersecting('go')
+      setIndex(defaultState.class)
+      setIntersecting(defaultState.title)
 
       //get distance from bottom to top of image minus 2rem
       document.documentElement.style.setProperty('--logo',(deviceHeight - ((deviceHeight - defaultImage.clientHeight) / 2) + 32 + 'px'));
@@ -182,7 +187,9 @@ function App() {
         </animated.div>
       ))}     
     </animated.section>
-    
+    <div>
+     { index === 4 ? <CameraRoll/> : null}
+    </div>
   </div>
   );
 }
