@@ -35,43 +35,29 @@ const titles = [
 
 function App() {
 
-  //reference for main container
-  const myInput = useRef()
-
-  //array of image refs for observer
-  const vrefs = []
-
-  //active image status
-  const [index, setIndex] = useState(null);
-
-  //intial loader status
-  const [initial, setInitial] = useState(true);
+  const myInput = useRef() //reference for main container
+  const imageRef = useRef([]) //array of image refs for observer
+  const [index, setIndex] = useState(4); //active image status
+  const [intersecting, setIntersecting] = useState('go'); //image intersecting status for titles
 
   //image preload status
+  const [initial, setInitial] = useState(true);
   const counter = useRef(0);
   const [loading, setLoading] = useState(true);
-
-  //image intersecting status for titles
-  const [intersecting, setIntersecting] = useState(null);
 
   //updates for tablet sized devices
   const [width] = useWindowSize();
   const phone = width < 500;
-
   const deviceHeight = window.innerHeight;
 
   smoothscroll.polyfill();
 
   const imageLoaded = () => {
-
     //wait for images to onload
     counter.current += 1;
+
     if (counter.current >= items.length) {
       const defaultImage = myInput.current.children[4];
-      const defaultState = {
-        class: 4,
-        title: 'go'
-      }
 
       setInitial(false)
 
@@ -82,10 +68,6 @@ function App() {
       setTimeout(() => {
         setLoading(false);
       }, 1500);
-
-      //initial load set image
-      setIndex(defaultState.class)
-      setIntersecting(defaultState.title)
 
       //get distance from bottom to top of image minus 2rem
       document.documentElement.style.setProperty('--logo',(deviceHeight - ((deviceHeight - defaultImage.clientHeight) / 2) + 32 + 'px'));
@@ -99,22 +81,34 @@ function App() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) { setIntersecting(entry.target.className) }
-      },
-      { root: null, rootMargin: "0px", threshold: 0.75 }
+        if (entry.isIntersecting && index === null) { 
+          setIntersecting(entry.target.className) 
+        }
+      }, { root: null, rootMargin: "0px", threshold: 0.75 }
     );
-    for (var i = 0; i < 9; i++) {
-      observer.observe(vrefs[i]);
+    
+    if (index === null) {
+      imageRef.current.forEach(image => {
+        observer.observe(image);
+      })
+      return () => observer.disconnect();
     }
-  }, [vrefs]);
+  }, [index]);
 
   const selectImage = (i, e) => {
+    const clickTarget = e.target
+    const clickTargetParent = clickTarget.offsetParent
+
     //scroll to target image
     setIndex(i)
-    const clickTarget = e.target.offsetParent
+    //update title for selected image if not being observed
+    if (intersecting !== clickTarget.className) {
+      setIntersecting(clickTarget.className) 
+    }
+
     myInput.current.scrollTo({
-      top:            clickTarget.offsetTop - ((deviceHeight - clickTarget.clientHeight) / 2),
-      left:           (phone ? clickTarget.offsetLeft - 32 : clickTarget.offsetLeft - 120),
+      top:            clickTargetParent.offsetTop - ((deviceHeight - clickTargetParent.clientHeight) / 2),
+      left:           (phone ? clickTargetParent.offsetLeft - 32 : clickTargetParent.offsetLeft - 120),
       behavior:       'smooth'
     })
   }
@@ -165,17 +159,15 @@ function App() {
     <animated.section
       ref={myInput}
       style={opacity}
-      className={"App" + (index === null ? " active" : "") + (phone ? "": " tablet")}
-      onClick = {index !== null ? showImage : null }>
-
+      className={"App" + (index === null ? " active" : "") + (phone ? "": " tablet")}>
       {springs.map(({ height, opacity, transform }, i) => (
         <animated.div
           key={i}
-          onClick ={index === null ? (e) => selectImage(i,e) : null }
+          onClick ={index === null ? (e) => selectImage(i,e) : showImage}
           className={"shashin " + itemss[i]}
           style={{ opacity, transform }}>
             <img
-              ref={ref => vrefs[i] = ref}
+              ref={ref => imageRef.current[i] = ref}
               onLoad={imageLoaded}
               className={itemss[i]}
               alt=""
