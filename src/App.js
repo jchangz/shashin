@@ -39,11 +39,14 @@ function App() {
   const imageRef = useRef([]) //array of image refs for observer
   const [index, setIndex] = useState(4); //active image status
   const [intersecting, setIntersecting] = useState('go'); //image intersecting status for titles
+  const [opened, setOpened] = useState(false);
 
   //image preload status
   const [initial, setInitial] = useState(true);
   const counter = useRef(0);
+  const childcounter = useRef(0);
   const [loading, setLoading] = useState(true);
+  const [childloading, setchildLoading] = useState(true);
 
   //updates for tablet sized devices
   const [width] = useWindowSize();
@@ -78,6 +81,14 @@ function App() {
     }
   }
 
+  const imageChildLoaded = () =>{
+    childcounter.current += 1;
+    if (childcounter.current >= 4) {
+      setchildLoading(false)
+      childcounter.current = 0
+    }
+  }
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -106,6 +117,8 @@ function App() {
       setIntersecting(clickTarget.className) 
     }
 
+    setchildLoading(true)
+
     myInput.current.scrollTo({
       top:            clickTargetParent.offsetTop - ((deviceHeight - clickTargetParent.clientHeight) / 2),
       left:           (phone ? clickTargetParent.offsetLeft - 32 : clickTargetParent.offsetLeft - 120),
@@ -116,6 +129,10 @@ function App() {
   const showImage = () => {
     //show all images
     setIndex(null)
+  }
+
+  const clickShowMore = () => {
+    opened ? setOpened(false) : setOpened(true)
   }
 
   //showImage animation
@@ -129,18 +146,29 @@ function App() {
   //onload show image animation
   const opacity = useSpring({opacity: loading ? 0 : 1})
 
+  const fadeMe = useSpring({opacity: childloading ? 1 : 0})
+
+  const showme = useSpring({transform: opened ? 'translateY(-100%)' : 'translateY(10%)'})
+
+  const flipme = useSpring({transform: opened ? 'scale(-1)' : 'scale(1)'})
+
+  const showbutton = useSpring({height: childloading ? 0 : 50})
+  
   //logo animation
   const logo = useSpring({
     opacity: (index === null) ? 0 : 1,
     width: (index === null) ? 0 : (phone ? 150 : 270)
   })
 
-
   return (
-  <div>
+
+  <div className="hidden">
+    <animated.div className="buttoncontainer" style={showbutton}>
+      <animated.div className="button triangle" style={flipme} onClick={clickShowMore} />
+    </animated.div>
 
     <header>
-      {/*<div class="progress"></div>*/}
+      <animated.div style={fadeMe} className="progress"></animated.div>
       <animated.div style={logo} className="logo">
           <img alt="" src="http://167.99.106.90/img/shashin.svg"></img>
         </animated.div>
@@ -179,9 +207,10 @@ function App() {
         </animated.div>
       ))}     
     </animated.section>
-    <div>
-     { index === 4 ? <CameraRoll/> : null}
-    </div>
+    
+    <animated.div style={showme} className="contentcreate">
+     { index === 4 ? <CameraRoll childLoad={imageChildLoaded} /> : null}
+    </animated.div>
   </div>
   );
 }

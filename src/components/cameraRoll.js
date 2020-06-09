@@ -1,11 +1,11 @@
-import React, {useState, useRef} from 'react';
-import {useTrail, useSpring, a} from 'react-spring';
+import React, {useState, useRef, useEffect} from 'react';
+import {useTrail, useSpring, useSprings, a} from 'react-spring';
 
 const camerarollroutes = [
-  {url: 'https://live.staticflickr.com/65535/48034090387_d62885f35e_c.jpg', route: 'kyoto'},
-  {url: 'https://live.staticflickr.com/65535/48034089612_d49c757b5b_c.jpg', route: 'japan'},
-  {url: 'https://live.staticflickr.com/65535/48034089942_ebef0ec498_c.jpg', route: 'asia'},
-  {url: 'https://live.staticflickr.com/65535/48155183631_c48bd3c918_b.jpg', route: 'random'}
+  {url: 'https://live.staticflickr.com/65535/48034090387_d62885f35e_c.jpg', route: 'Kyoto'},
+  {url: 'https://live.staticflickr.com/65535/48034089612_d49c757b5b_c.jpg', route: 'Japan'},
+  {url: 'https://live.staticflickr.com/65535/48034089942_ebef0ec498_c.jpg', route: 'Asia'},
+  {url: 'https://live.staticflickr.com/65535/48155183631_c48bd3c918_b.jpg', route: 'Random'}
 ]
 
 const camerarollkyoto = [
@@ -68,18 +68,25 @@ function CameraRollContent ({content}) {
   )
 }
   
-const CameraRoll = ()=> {
+const CameraRoll = ({childLoad})=> {
 
   //open child on img click
   const [route, setRoute] = useState(null);
+  const routeName = useRef('');
+
   const [open, setOpen] = useState(null);
+
+  const imageRef = useRef([])
+  const [intersecting, setIntersecting] = useState(null);
 
   //logic for showing route content
   const selectImage = (e) => {
-    setOpen(true)
     const openRoute = e.target.className
-    if (openRoute === "kyoto"){setRoute(camerarollkyoto)}
-    if (openRoute === "japan"){setRoute(camerarolljapan)}
+
+    routeName.current = openRoute
+    setOpen(true)
+    if (openRoute === "Kyoto"){setRoute(camerarollkyoto)}
+    if (openRoute === "Japan"){setRoute(camerarolljapan)}
   }
 
   //return to camera roll main
@@ -91,20 +98,51 @@ const CameraRoll = ()=> {
     }, 475);
   }
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) { 
+          setIntersecting(entry.target.className) 
+        }
+      }, { root: null, rootMargin: "0px", threshold: 0.75 }
+    );
+   
+    imageRef.current.forEach(image => {
+      observer.observe(image);
+    })
+
+    return () => observer.disconnect();
+  
+  },[]);
+
   //slide in content
   const openRoute = useSpring({transform: open ? 'translateX(0)' : 'translateX(-100%)'})
   //animate main container
-  const openEffect = useSpring({transform: open ? 'translateX(-100%)' : 'translateX(0%)'})
+  const fadeOut = useSpring({opacity: open ? 0 : 1})
+  const fadeIn = useSpring({opacity: open ? 1 : 0})
   //return button styling
-  const openReturn = useSpring({color: open ? 'blue' : 'white'})
+  const openReturn = useSpring({color: open ? 'red' : 'white'})
+
+  const springs = useSprings(camerarollroutes.length, camerarollroutes.map(
+    ({route}, i) => (
+      {height: intersecting === (camerarollroutes[i].route) ? 28 : 0}
+    )
+  ));
 
   return (
     <div className="cr">
-      <a.h2 onClick={open ? returnHome : null} style={openReturn}>Camera Roll</a.h2>
-      <a.div className="cr-grid" style={openEffect}>
-        {camerarollroutes.map(item =>
+      <div onClick={open ? returnHome : null} className="cr-title">
+        <a.h2 style={openReturn}>Camera Roll</a.h2>
+        <a.h2 style={fadeIn}>{routeName.current}</a.h2>
+      </div>
+      
+      <a.div className="cr-grid" style={fadeOut}>
+        {springs.map(({height}, i) =>
           <div onClick = {route ? null : (e) => selectImage(e)}>
-            <img className={item.route} src={item.url} alt="" />
+            <img ref={ref => imageRef.current[i] = ref} 
+              className={camerarollroutes[i].route} onLoad={childLoad}
+              src={camerarollroutes[i].url} alt="" />
+            <a.h4 style={{height}} >{camerarollroutes[i].route}</a.h4>
           </div>
         )}
       </a.div>
