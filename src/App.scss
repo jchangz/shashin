@@ -39,11 +39,12 @@ p {margin: 0;}
     z-index: 99;
     position: absolute;
     overflow: hidden;
+    color: white;
     margin: 0;
     font-weight: 600;
-    bottom: -1.5rem;
     right: 0;
     font-size: 1rem;
+    pointer-events: none;
     @media only screen and (min-width: 500px) {
       font-size: 1.5rem;
       bottom: -3rem;
@@ -203,26 +204,26 @@ p {margin: 0;}
 
 .cr{
   position: relative;
-  background-color: #121212;
   height: var(--base);
   overflow: scroll;
   .cr-title{
     position: fixed;
-    z-index: 2;
-    display: inline-flex;
-    
+    display: flex;
+    flex-direction: column;
     left: 1.5rem;
     top:1rem;
-    
-    color: white;
+    .cr-title-route{
+      position: relative;
+      display: flex;
+      align-items: center;
+      margin: 1rem 0;
+    }
   }
   h2{
-    font-weight: 600;
-    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -2px;
+    font-size: 2.4rem;
     margin: 0;
-    &:last-of-type{
-margin-left: 0.5rem;
-    }
   }
   .cr-grid{
     padding: 0;
@@ -261,7 +262,6 @@ margin-left: 0.5rem;
     top: 0;
     left: 0;
     width: 100%;
-    background: #121212;
     height: var(--base);
     display: flex;
     align-items: center;
@@ -281,12 +281,11 @@ margin-left: 0.5rem;
           display: block;
         }
         &.skeleton{
-          background-color: #121212;
           width: 100%;
           mix-blend-mode: multiply;
           > div {
             position:relative;
-            background-color:#464646;
+            background-color:#f4f4f4;
             padding-bottom:100%;
           }
         }
@@ -315,14 +314,16 @@ margin-left: 0.5rem;
   }
 }
 
-.buttoncontainer{
+.button{
   position: absolute;
   z-index: 98;
   bottom: 0;
   left: 50%;
-  mix-blend-mode: difference;
   transform: translateX(-50%);
   overflow: hidden;
+  &.fxd{
+    position: fixed;
+  }
 }
 
 .hidden{
@@ -334,11 +335,26 @@ margin-left: 0.5rem;
   z-index: 95;
 }
 
-.triangle{
-  width: 0;
-  height: 0;
-  margin-bottom: 2rem;
-  border-style: solid;
-  border-width: 0 25px 25px 25px;
-  border-color: transparent transparent #fff transparent;
-}
+// .closebutton {
+//   position:relative;
+//   display:block;
+//   height:50px;
+//   width: 50px;
+//   .closebutton1{
+//     position: absolute;
+//     width: 6px;
+//     height: 33px;
+//     background-color: red;
+//     transform-origin: bottom;
+//     transform: rotate(45deg);
+//   }
+//   .closebutton2{
+//     position: absolute;
+//     right: 0;
+//     width: 6px;
+//     height: 33px;
+//     background-color: red;
+//     transform-origin: bottom;
+//     transform: rotate(-45deg);
+//   }
+// }

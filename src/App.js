@@ -1,13 +1,14 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './App.scss';
-import {useSprings, useSpring, animated, config} from 'react-spring';
+import { useSprings, useSpring, animated, config } from 'react-spring';
 import smoothscroll from 'smoothscroll-polyfill';
 import useWindowSize from './hooks/useWindowSize.js';
 import CameraRoll from './components/cameraRoll.js';
+import { iconchevron } from './components/images.js';
 
 const items = [
-  'https://live.staticflickr.com/65535/48034090387_d62885f35e_c.jpg', 
-  'https://live.staticflickr.com/65535/48034089612_d49c757b5b_c.jpg', 
+  'https://live.staticflickr.com/65535/48034090387_d62885f35e_c.jpg',
+  'https://live.staticflickr.com/65535/48034089612_d49c757b5b_c.jpg',
   'https://live.staticflickr.com/65535/48034089942_ebef0ec498_c.jpg',
   'https://live.staticflickr.com/65535/48155183631_c48bd3c918_b.jpg',
   'https://live.staticflickr.com/65535/48033979186_8ba9e4dcff_c.jpg',
@@ -33,13 +34,40 @@ const titles = [
   "nine"
 ]
 
+function Header({ prop }) {
+  const fadeOut = useSpring({ opacity: prop.childloading ? 1 : 0, zIndex: prop.childloading ? 99 : 0 })
+  const fadeLogo = useSpring({
+    opacity: (prop.index === null || prop.opened) ? 0 : 1,
+    width: (prop.index === null) ? 0 : (prop.phone ? 150 : 270),
+    transform: prop.opened ? "translateY(-2rem)" : "translateY(0rem)"
+  })
+
+  return (
+    <header >
+      <animated.div style={fadeOut} className="progress"></animated.div>
+      <animated.div style={fadeLogo} className="logo">
+        <img alt="" src="http://167.99.106.90/img/shashin.svg"></img>
+      </animated.div>
+    </header>
+  )
+}
+
+function Loader({ prop }) {
+  return (
+    <div className="svg-wrapper" >
+      <svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
+        <rect className={"shape " + (prop.initial === true ? '' : 'loaded')} height="100%" width="100%" />
+      </svg>
+    </div>
+  )
+}
+
 function App() {
 
   const myInput = useRef() //reference for main container
   const imageRef = useRef([]) //array of image refs for observer
   const [index, setIndex] = useState(4); //active image status
   const [intersecting, setIntersecting] = useState('go'); //image intersecting status for titles
-  const [opened, setOpened] = useState(false);
 
   //image preload status
   const [initial, setInitial] = useState(true);
@@ -47,6 +75,8 @@ function App() {
   const childcounter = useRef(0);
   const [loading, setLoading] = useState(true);
   const [childloading, setchildLoading] = useState(true);
+  const [opened, setOpened] = useState(false);
+  const [childchildopened, setchildchildOpened] = useState(false);
 
   //updates for tablet sized devices
   const [width] = useWindowSize();
@@ -65,7 +95,7 @@ function App() {
       setInitial(false)
 
       //get device window height to set container height
-      document.documentElement.style.setProperty('--base',(deviceHeight + 'px'));
+      document.documentElement.style.setProperty('--base', (deviceHeight + 'px'));
 
       //remove svg loader after 1.5s
       setTimeout(() => {
@@ -73,7 +103,7 @@ function App() {
       }, 1500);
 
       //get distance from bottom to top of image minus 2rem
-      document.documentElement.style.setProperty('--logo',(deviceHeight - ((deviceHeight - defaultImage.clientHeight) / 2) + 32 + 'px'));
+      document.documentElement.style.setProperty('--logo', (deviceHeight - ((deviceHeight - defaultImage.clientHeight) / 2) + 32 + 'px'));
 
       //scroll to default middle image
       myInput.current.scrollTop = defaultImage.offsetTop - ((deviceHeight - defaultImage.clientHeight) / 2);
@@ -81,7 +111,7 @@ function App() {
     }
   }
 
-  const imageChildLoaded = () =>{
+  const preloadChild = () => {
     childcounter.current += 1;
     if (childcounter.current >= 4) {
       setchildLoading(false)
@@ -89,15 +119,24 @@ function App() {
     }
   }
 
+  const clickShowMore = () => {
+    if (childchildopened === true) {
+      setchildchildOpened(false)
+    }
+    else {
+      opened ? setOpened(false) : setOpened(true)
+    }
+  }
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && index === null) { 
-          setIntersecting(entry.target.className) 
+        if (entry.isIntersecting && index === null) {
+          setIntersecting(entry.target.className)
         }
       }, { root: null, rootMargin: "0px", threshold: 0.75 }
     );
-    
+
     if (index === null) {
       imageRef.current.forEach(image => {
         observer.observe(image);
@@ -107,111 +146,89 @@ function App() {
   }, [index]);
 
   const selectImage = (i, e) => {
-    const clickTarget = e.target
-    const clickTargetParent = clickTarget.offsetParent
+    if (index === null) {
+      const clickTarget = e.target
+      const clickTargetParent = clickTarget.offsetParent
 
-    //scroll to target image
-    setIndex(i)
-    //update title for selected image if not being observed
-    if (intersecting !== clickTarget.className) {
-      setIntersecting(clickTarget.className) 
+      //scroll to target image
+      setIndex(i)
+      //update title for selected image if not being observed
+      if (intersecting !== clickTarget.className) {
+        setIntersecting(clickTarget.className)
+      }
+
+      setchildLoading(true)
+
+      myInput.current.scrollTo({
+        top: clickTargetParent.offsetTop - ((deviceHeight - clickTargetParent.clientHeight) / 2),
+        left: (phone ? clickTargetParent.offsetLeft - 32 : clickTargetParent.offsetLeft - 120),
+        behavior: 'smooth'
+      })
     }
-
-    setchildLoading(true)
-
-    myInput.current.scrollTo({
-      top:            clickTargetParent.offsetTop - ((deviceHeight - clickTargetParent.clientHeight) / 2),
-      left:           (phone ? clickTargetParent.offsetLeft - 32 : clickTargetParent.offsetLeft - 120),
-      behavior:       'smooth'
-    })
+    else {
+      setIndex(null)
+    }
   }
 
-  const showImage = () => {
-    //show all images
-    setIndex(null)
-  }
-
-  const clickShowMore = () => {
-    opened ? setOpened(false) : setOpened(true)
-  }
-
-  //showImage animation
-  const springs = useSprings(items.length, items.map((item, i) =>({ 
-    config: config.gentle,
-    opacity: (index === null) | (i === index) ? 1 : 0,
-    transform: (index === null)  ? "scale(0.9)" : "scale(1)",
-    height: intersecting === (itemss[i]) ? (phone ? 20 : 45) : 0
-  })))
-
-  //onload show image animation
-  const opacity = useSpring({opacity: loading ? 0 : 1})
-
-  const fadeMe = useSpring({opacity: childloading ? 1 : 0})
-
-  const showme = useSpring({transform: opened ? 'translateY(-100%)' : 'translateY(10%)'})
-
-  const flipme = useSpring({transform: opened ? 'scale(-1)' : 'scale(1)'})
-
-  const showbutton = useSpring({height: childloading ? 0 : 50})
-  
-  //logo animation
-  const logo = useSpring({
-    opacity: (index === null) ? 0 : 1,
-    width: (index === null) ? 0 : (phone ? 150 : 270)
+  const scaleApp = useSpring({
+    opacity: loading ? 0 : 1,
+    transform: (index === null) ? "scale(1)" : "scale(1.25)",
+    config: config.gentle
   })
 
+  const springs = useSprings(items.length, items.map((item, i) => ({
+    config: config.gentle,
+    opacity: (index === null) | (i === index) ? 1 : 0,
+    transform: (index === null) ? "scale(0.95)" : "scale(0.8)",
+    height: intersecting === (itemss[i]) ? (phone ? 20 : 45) : 0,
+    bottom: (index === null) ? "1rem" : "-2rem",
+    right: (index === null) ? "1rem" : "0rem",
+    color: (index === null) ? "white" : "black",
+  })))
+
+  const fadeApp = useSpring({ opacity: opened ? 0 : 1, transform: opened ? "translateY(-2rem)" : "translateY(0rem)" })
+  const fadeChild = useSpring({ transform: opened ? 'translateY(-100%)' : 'translateY(10%)' })
+  const fadeButton = useSpring({ height: childloading ? 0 : 72 })
+  const flipButton = useSpring({ transform: opened ? 'scale(-1)' : 'scale(1)', height: childchildopened ? 0 : 72 })
+
   return (
+    <div className="hidden">
 
-  <div className="hidden">
-    <animated.div className="buttoncontainer" style={showbutton}>
-      <animated.div className="button triangle" style={flipme} onClick={clickShowMore} />
-    </animated.div>
+      <Header prop={{ index, phone, childloading, opened }} />
+      {loading ? <Loader prop={{ initial }} /> : null}
 
-    <header>
-      <animated.div style={fadeMe} className="progress"></animated.div>
-      <animated.div style={logo} className="logo">
-          <img alt="" src="http://167.99.106.90/img/shashin.svg"></img>
-        </animated.div>
-    </header>
-
-    {loading ?
-      <div className="svg-wrapper" >
-        <svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
-          <rect className={"shape " + (initial === true ? '' : 'loaded' )} height="100%" width="100%" />
-        </svg>
-      </div>
-    :
-      ""
-    }
-
-    <animated.section
-      ref={myInput}
-      style={opacity}
-      className={"App" + (index === null ? " active" : "") + (phone ? "": " tablet")}>
-      {springs.map(({ height, opacity, transform }, i) => (
+      <animated.div style={fadeApp}>
         <animated.div
-          key={i}
-          onClick ={index === null ? (e) => selectImage(i,e) : showImage}
-          className={"shashin " + itemss[i]}
-          style={{ opacity, transform }}>
-            <img
-              ref={ref => imageRef.current[i] = ref}
-              onLoad={imageLoaded}
-              className={itemss[i]}
-              alt=""
-              src={items[i]}>
-            </img>
-          <animated.h2 style={{ height }}>
-            {titles[i]}
-          </animated.h2>
+          className={"App" + (index === null ? " active" : "") + (phone ? "" : " tablet")}
+          ref={myInput}
+          style={scaleApp}>
+          {springs.map(({ height, opacity, transform, bottom, color, right }, i) => (
+            <animated.div
+              className={"shashin " + itemss[i]}
+              key={i}
+              onClick={(e) => selectImage(i, e)}
+              style={{ opacity, transform }}>
+              <img
+                className={itemss[i]}
+                ref={ref => imageRef.current[i] = ref}
+                onLoad={imageLoaded}
+                src={items[i]}
+                alt="">
+              </img>
+              <animated.h2 style={{ height, bottom, color, right }}>{titles[i]}</animated.h2>
+            </animated.div>
+          ))}
         </animated.div>
-      ))}     
-    </animated.section>
-    
-    <animated.div style={showme} className="contentcreate">
-     { index === 4 ? <CameraRoll childLoad={imageChildLoaded} /> : null}
-    </animated.div>
-  </div>
+      </animated.div>
+
+      <animated.div className="button" style={fadeButton}>
+        <animated.img className="closebutton" style={flipButton} onClick={clickShowMore} src={iconchevron} alt="" />
+      </animated.div>
+
+      <animated.div className="contentcreate" style={fadeChild} >
+        {index === 4 ? <CameraRoll preLoad={preloadChild} childOpen={opened} childchildOpen={setchildchildOpened} /> : null}
+      </animated.div>
+    </div>
   );
 }
 
