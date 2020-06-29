@@ -39,7 +39,7 @@ function Header({ prop }) {
   const fadeLogo = useSpring({
     opacity: (prop.index === null || prop.opened) ? 0 : 1,
     width: (prop.index === null) ? 0 : (prop.phone ? 150 : 270),
-    transform: prop.opened ? "translateY(-2rem)" : "translateY(0rem)"
+    transform: prop.opened ? "translateY(-10rem)" : "translateY(0rem)"
   })
 
   return (
@@ -186,7 +186,7 @@ function App() {
     color: (index === null) ? "white" : "black",
   })))
 
-  const fadeApp = useSpring({ opacity: opened ? 0 : 1, transform: opened ? "translateY(-2rem)" : "translateY(0rem)" })
+  const fadeApp = useSpring({ opacity: opened ? 0 : 1, transform: opened ? "translateY(-100%)" : "translateY(0%)" })
   const fadeChild = useSpring({ transform: opened ? 'translateY(-100%)' : 'translateY(10%)' })
   const fadeButton = useSpring({ height: childloading ? 0 : 72 })
   const flipButton = useSpring({ transform: opened ? 'scale(-1)' : 'scale(1)', height: childchildopened ? 0 : 72 })

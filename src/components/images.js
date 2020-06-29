@@ -7,15 +7,15 @@ export const camerarollroutes = [
 
 
 export const camerarollkyoto = [
-    { url: 'https://live.staticflickr.com/65535/49936657476_87956c2d9b_w.jpg' },
-    { url: 'https://live.staticflickr.com/65535/49936657476_87956c2d9b_w.jpg' },
-    { url: 'https://live.staticflickr.com/65535/49936657476_87956c2d9b_w.jpg' },
-    { url: 'https://live.staticflickr.com/65535/49936657476_87956c2d9b_w.jpg' },
-    { url: 'https://live.staticflickr.com/65535/49936657476_87956c2d9b_w.jpg' },
-    { url: 'https://live.staticflickr.com/65535/49936657476_87956c2d9b_w.jpg' },
-    { url: 'https://live.staticflickr.com/65535/49936657476_87956c2d9b_w.jpg' },
-    { url: 'https://live.staticflickr.com/65535/49936657476_87956c2d9b_w.jpg' },
-    { url: 'https://live.staticflickr.com/65535/49936657476_87956c2d9b_w.jpg' },
+    { url: 'https://live.staticflickr.com/65535/48033978696_a43b508826_w.jpg' },
+    { url: 'https://live.staticflickr.com/65535/48033978851_046672dac7_w.jpg' },
+    { url: 'https://live.staticflickr.com/65535/48033978976_b9daa1d388_w.jpg' },
+    { url: 'https://live.staticflickr.com/65535/48034090387_d62885f35e_c.jpg' },
+    { url: 'https://live.staticflickr.com/65535/48034089612_d49c757b5b_c.jpg' },
+    { url: 'https://live.staticflickr.com/65535/48033978976_b9daa1d388_w.jpg' },
+    { url: 'https://live.staticflickr.com/65535/48033978696_a43b508826_w.jpg' },
+    { url: 'https://live.staticflickr.com/65535/48033978851_046672dac7_w.jpg' },
+    { url: 'https://live.staticflickr.com/65535/48033978976_b9daa1d388_w.jpg' },
 ]
 
 export const camerarolljapan = [
