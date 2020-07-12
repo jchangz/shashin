@@ -18,8 +18,6 @@ function Lightbox({ content, selected, setClose }) {
     const [immediate, setImmediate] = useState(null); //prevent translate animation on initial click
 
     const open = useSpring({
-        opacity: show ? 1 : 0,
-        transform: show ? 'scale(1)' : 'scale(0)',
         height: show ? '100%' : '0%',
     })
     const scroll = useSpring({
@@ -27,7 +25,6 @@ function Lightbox({ content, selected, setClose }) {
         config: immediate ? { mass: 1, tension: 270, friction: 30 } : { duration: 1 }
     })
     const fill = useSpring({ transform: show ? `scaleX(${(intersecting + 1) / content.length})` : 'scaleX(0)' })
-    const close = useSpring({ transform: show ? `translateX(${((intersecting + 1) / content.length) * deviceWidth - 30}px)` : 'translateX(0px)' })
 
     useEffect(() => {
         if (selected !== null) {
@@ -117,10 +114,11 @@ function Lightbox({ content, selected, setClose }) {
                         src={item.url} alt="" />
                 ))}
             </a.div>
-            <div className="lightbox-progress">
+            <div className="lightbox-close" onClick={closeLightbox}>
+                <div className="lightbox-progress">
                 <a.div className="lightbox-progress-indicator" style={fill} />
+                </div>
             </div>
-            <a.div className="lightbox-close" onClick={closeLightbox} style={close} />
         </a.div>
     )
 }
