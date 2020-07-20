@@ -103,7 +103,8 @@ function App() {
       }, 1500);
 
       //get distance from bottom to top of image minus 2rem
-      document.documentElement.style.setProperty('--logo', (deviceHeight - ((deviceHeight - defaultImage.clientHeight) / 2) + 32 + 'px'));
+      document.documentElement.style.setProperty('--logo', deviceHeight - ((deviceHeight - defaultImage.clientHeight) / 3) + 'px');
+      document.documentElement.style.setProperty('--button', ((deviceHeight - defaultImage.clientHeight) / 8) + 'px');
 
       //scroll to default middle image
       myInput.current.scrollTop = defaultImage.offsetTop - ((deviceHeight - defaultImage.clientHeight) / 2);
@@ -177,19 +178,15 @@ function App() {
   })
 
   const springs = useSprings(items.length, items.map((item, i) => ({
-    config: config.gentle,
-    opacity: (index === null) | (i === index) ? 1 : 0,
-    transform: (index === null) ? "scale(0.95)" : "scale(0.8)",
-    height: intersecting === (itemss[i]) ? (phone ? 20 : 45) : 0,
-    bottom: (index === null) ? "1rem" : "-2rem",
-    right: (index === null) ? "1rem" : "0rem",
-    color: (index === null) ? "white" : "black",
+    config: (index === null) ? (intersecting === (itemss[i]) ? { mass: 1, tension: 350, friction: 30 } : { mass: 1, tension: 200, friction: 17 }) : { mass: 1, tension: 350, friction: 30 },
+    transform: (index === null) ?  "scale(0.95)" : ((i !== index)? "scale(0.3)" : "scale(0.8)"),
+    opacity: intersecting === (itemss[i]) ? 1 : 0
   })))
 
   const fadeApp = useSpring({ opacity: opened ? 0 : 1, transform: opened ? "translateY(-100%)" : "translateY(0%)" })
   const fadeChild = useSpring({ transform: opened ? 'translateY(-100%)' : 'translateY(10%)' })
-  const fadeButton = useSpring({ height: childloading ? 0 : 72 })
-  const flipButton = useSpring({ transform: opened ? 'scale(-1)' : 'scale(1)', height: childchildopened ? 0 : 72 })
+  const fadeButton = useSpring({ height: childloading ? 0 : 50 })
+  const flipButton = useSpring({ transform: opened ? 'scale(-1)' : 'scale(1)', height: childchildopened ? 0 : 50 })
 
   return (
     <div className="hidden">
@@ -202,12 +199,12 @@ function App() {
           className={"App" + (index === null ? " active" : "") + (phone ? "" : " tablet")}
           ref={myInput}
           style={scaleApp}>
-          {springs.map(({ height, opacity, transform, bottom, color, right }, i) => (
+          {springs.map(({ transform, opacity }, i) => (
             <animated.div
               className={"shashin " + itemss[i]}
               key={i}
               onClick={(e) => selectImage(i, e)}
-              style={{ opacity, transform }}>
+              style={{ transform }}>
               <img
                 className={itemss[i]}
                 ref={ref => imageRef.current[i] = ref}
@@ -215,7 +212,7 @@ function App() {
                 src={items[i]}
                 alt="">
               </img>
-              <animated.h2 style={{ height, bottom, color, right }}>{titles[i]}</animated.h2>
+              <animated.h2 style={{ opacity }}>{titles[i]}</animated.h2>
             </animated.div>
           ))}
         </animated.div>

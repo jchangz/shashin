@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTrail, useSpring, useTransition, a} from 'react-spring';
+import { useTrail, useSpring, useTransition, a } from 'react-spring';
 import { camerarollroutes, camerarollkyoto, camerarolljapan, iconclose } from './images.js';
 import useImageLoaded from '../hooks/useImageLoaded.js';
 import useImageObserver from '../hooks/useImageObserver.js';
@@ -64,6 +64,7 @@ const CameraRoll = ({ preLoad, childOpen, childchildOpen }) => {
 
   const openRoute = useSpring({ transform: open ? 'translateX(0)' : 'translateX(-100%)' })
   const fadeMain = useSpring({ opacity: childOpen ? 1 : 0 })
+  const scaleMain = useSpring({ transform: childOpen ? 'scale(1)' : 'scale(1.5)' })
   const fadeGrid = useSpring({ opacity: open ? 0 : 1, transform: childOpen ? 'translateY(0%)' : 'translateY(-100%)' })
   const fadeTitle = useSpring({ opacity: childOpen ? 1 : 0, delay: 250 })
   const showTitle = useSpring({ transform: childOpen ? 'translate3d(0,0,0)' : 'translate3d(0,100%,0)', delay: 250 })
@@ -91,8 +92,9 @@ const CameraRoll = ({ preLoad, childOpen, childchildOpen }) => {
       <a.div className="cr-grid" style={fadeGrid}>
         {camerarollroutes.map(({ routeName }, i) =>
           <div key={routeName} onClick={route ? null : (e) => selectImage(e)}>
-            <img ref={ref => imageRef.current[i] = ref}
+            <a.img ref={ref => imageRef.current[i] = ref}
               className={camerarollroutes[i].routeName}
+              style={scaleMain}
               onLoad={preLoad}
               src={camerarollroutes[i].url} alt="" />
           </div>
