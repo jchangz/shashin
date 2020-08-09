@@ -1,0 +1,30 @@
+.scroller{
+    position: absolute;
+    align-self: flex-start;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #fff;
+    .scroller-container{
+        position: absolute;
+        display: flex;
+        overflow: scroll;
+        top: 50%;
+        background: white;
+        .scroller-content{
+            position: relative;
+            img{
+                width: 100vw;
+                height: 100%;
+            }
+        }
+    }
+    .scroller-progress-indicator{
+        position: fixed;
+        color: white;
+    }
+}
+
+.h100{
+    height: 100%;
+}
