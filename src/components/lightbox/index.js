@@ -18,7 +18,8 @@ function Lightbox({ content, selected, setClose }) {
     const [immediate, setImmediate] = useState(null); //prevent translate animation on initial click
 
     const open = useSpring({
-        height: show ? '100%' : '0%',
+        transform: show ? 'scale(1)' : 'scale(0)',
+        opacity: show ? 1 : 0
     })
     const scroll = useSpring({
         transform: counter ? `translate3d(${counter}px,-50%,0)` : `translate3d(${counter}px,-50%,0)`,
@@ -30,6 +31,7 @@ function Lightbox({ content, selected, setClose }) {
         if (selected !== null) {
             setCounter(-deviceWidth * selected)
             setShow(true)
+            setIntersecting(selected)
             setTimeout(() => {
                 setImmediate(true)
             }, 275);

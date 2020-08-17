@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useTrail, useSpring, a } from 'react-spring';
 import { camerarollroutes, camerarollcontent, iconclose } from './images.js';
 import useImageLoaded from '../hooks/useImageLoaded.js';
@@ -11,8 +11,9 @@ function CameraRollContent({ content, image, setImage }) {
   const fadeOut = useSpring({ opacity: loading ? 1 : 0 })
   const trail = useTrail(content.length, { opacity: loading ? 0 : 1 })
 
-  const clicked = (index) => {
+  const clicked = (index, e) => {
     setImage(index)
+    document.querySelector('.lightbox').style.setProperty("transform-origin", `${e.pageX}px ${e.pageY}px`);
   }
 
   return (
@@ -22,7 +23,7 @@ function CameraRollContent({ content, image, setImage }) {
           <div className="reflow">
             <a.img className={content[index].name}
               style={spring}
-              onClick={() => clicked(index)}
+              onClick={(e) => clicked(index, e)}
               onLoad={imageLoaded}
               src={content[index].url} alt="" />
           </div>
@@ -41,17 +42,17 @@ function CameraRollContent({ content, image, setImage }) {
 
 const CameraRoll = ({ preLoad, childOpen, childchildOpen }) => {
   const [route, setRoute] = useState(null);
-  const routeName = useRef(null);
   const [open, setOpen] = useState(null);
   const [hide, setHide] = useState(null); //hide when lightbox is opened
 
   const selectImage = (e) => {
-    const openRoute = `${e.target.dataset.click}`
-    const openRouteContent = camerarollcontent.find(route => route.name === openRoute)
-    routeName.current = e.target.dataset.click
-    setOpen(true)
-    childchildOpen(true)
-    setRoute(openRouteContent.images)
+    if (route === null) {
+      const openRoute = `${e.target.dataset.click}`
+      const openRouteContent = camerarollcontent.find(route => route.name === openRoute)
+      setOpen(true)
+      childchildOpen(true)
+      setRoute(openRouteContent.images)
+    }
   }
 
   const returnHome = () => {
@@ -63,18 +64,16 @@ const CameraRoll = ({ preLoad, childOpen, childchildOpen }) => {
     }, 475);
   }
 
-  const openRoute = useSpring({ transform: open ? 'translateX(0)' : 'translateX(-100%)' })
+  const openRoute = useSpring({ transform: open ? 'translateY(0)' : 'translateY(100%)' })
   const fadeGrid = useSpring({ transform: childOpen ? 'translate3d(0%,0,0)' : 'translate3d(0%,-100%,0)' })
-  const moveGrid = useSpring({ transform: open ? 'translate3d(100%,0,0)' : 'translate3d(0%,0,0)' })
-  const showTitle = useSpring({ opacity: open ? 1 : 0, transform: open ? 'translate3d(0,0,0)' : 'translate3d(0,100%,0)' })
-  const fadeButton = useSpring({ height: open ? 72 : 0, transform: (hide === null) ? 'translate3d(-50%,0%,0)' : 'translate3d(-50%,100%,0)' })
+  const moveGrid = useSpring({ transform: open ? 'scale(0.9)' : 'scale(1)' })
+  const fadeButton = useSpring({ height: open ? 50 : 0, transform: (hide === null) ? 'translate3d(-50%,0%,0)' : 'translate3d(-50%,200%,0)' })
 
   return (
     <a.div className="cr" >
-      <a.h2 className="cr-title" style={showTitle}>{routeName.current}</a.h2>
 
       <a.div className="h100" style={fadeGrid}>
-        <a.div className="h100" style={moveGrid}>
+        <a.div className="cr-main" style={moveGrid}>
           <Scroller
             click={selectImage}
             content={camerarollroutes}
@@ -88,7 +87,7 @@ const CameraRoll = ({ preLoad, childOpen, childchildOpen }) => {
         {route ? <CameraRollContent content={route} image={hide} setImage={setHide} /> : null}
       </a.div>
 
-      <a.div className="button fxd" onClick={returnHome} style={fadeButton} >
+      <a.div className="button btn-close fxd white" onClick={returnHome} style={fadeButton} >
         <img src={iconclose} alt="" />
       </a.div>
     </a.div>

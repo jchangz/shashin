@@ -108,7 +108,7 @@ function Scroller({ content, onLoad, animation, open, click }) {
                     </div>
                 ))}
             </a.div>
-            <span className="scroller-progress-indicator">{intersecting + 1}/{content.length}</span>
+            <span className={"scroller-progress " + intersecting}>{intersecting + 1} of {content.length}</span> 
         </a.div>
     )
 }
