@@ -3,15 +3,15 @@ import './App.scss';
 import { useSprings, useSpring, animated, config } from 'react-spring';
 import smoothscroll from 'smoothscroll-polyfill';
 import useWindowSize from './hooks/useWindowSize.js';
-import CameraRoll from './components/cameraRoll.js';
-import { iconchevron } from './components/images.js';
+import CameraRoll from './content/cameraroll/index.js';
+import { iconchevron } from './content/cameraroll/images.js';
 
 const items = [
   'https://live.staticflickr.com/65535/48034090387_d62885f35e_c.jpg',
   'https://live.staticflickr.com/65535/48034089612_d49c757b5b_c.jpg',
   'https://live.staticflickr.com/65535/48034089942_ebef0ec498_c.jpg',
   'https://live.staticflickr.com/65535/48155183631_c48bd3c918_b.jpg',
-  'https://live.staticflickr.com/65535/48033979186_8ba9e4dcff_c.jpg',
+  'https://live.staticflickr.com/65535/50317635388_02895dd76b_o.jpg',
   'https://live.staticflickr.com/65535/48034021928_1942b50c84_c.jpg',
   'https://live.staticflickr.com/65535/48033051613_949de3e023_c.jpg',
   'https://live.staticflickr.com/65535/48033978851_046672dac7_c.jpg',

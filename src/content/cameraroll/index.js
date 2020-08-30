@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useTrail, useSpring, a } from 'react-spring';
 import { camerarollroutes, camerarollcontent, iconclose } from './images.js';
-import useImageLoaded from '../hooks/useImageLoaded.js';
-import Lightbox from './lightbox/index.js';
-import Scroller from './scroller/index.js';
+import './cameraroll.scss';
+import useImageLoaded from '../../hooks/useImageLoaded.js';
+import Lightbox from '../../components/lightbox/index.js';
+import Scroller from '../../components/scroller/index.js';
 
 function CameraRollContent({ content, image, setImage }) {
   //image, setImage defined in parent to hide button on lightbox load
@@ -66,13 +67,13 @@ const CameraRoll = ({ preLoad, childOpen, childchildOpen }) => {
 
   const openRoute = useSpring({ transform: open ? 'translateY(0)' : 'translateY(100%)' })
   const fadeGrid = useSpring({ transform: childOpen ? 'translate3d(0%,0,0)' : 'translate3d(0%,-100%,0)' })
-  const moveGrid = useSpring({ transform: open ? 'scale(0.9)' : 'scale(1)' })
+  const moveGrid = useSpring({ transform: open ? 'scale(0.9)' : 'scale(1)', opacity: open ? 0.5 : 1 })
   const fadeButton = useSpring({ height: open ? 50 : 0, transform: (hide === null) ? 'translate3d(-50%,0%,0)' : 'translate3d(-50%,200%,0)' })
 
   return (
     <a.div className="cr" >
 
-      <a.div className="h100" style={fadeGrid}>
+      <a.div className="h100 bgdark" style={fadeGrid}>
         <a.div className="cr-main" style={moveGrid}>
           <Scroller
             click={selectImage}

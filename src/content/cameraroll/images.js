@@ -1,5 +1,5 @@
 export const camerarollroutes = [
-    { url: 'https://live.staticflickr.com/65535/48034022018_05faae41be_o.jpg', class: "cr-kyoto", title: 'Camera Roll', subtitle: 'Kyoto', click: 'camerarollkyoto' },
+    { url: 'https://live.staticflickr.com/65535/50318290561_36b3be1263_o.jpg', class: "cr-kyoto", title: 'Camera Roll', subtitle: 'Kyoto', click: 'camerarollkyoto' },
     { url: 'https://live.staticflickr.com/65535/48047965856_3d1ef447ef_o.jpg', class: "cr-japan", title: 'Camera Roll', subtitle: 'Japan', click: 'camerarolljapan' },
     { url: 'https://live.staticflickr.com/65535/48034089942_ebef0ec498_c.jpg', class: "cr-asia", title: 'Camera Roll', subtitle: 'Asia', click: 'asia' },
     { url: 'https://live.staticflickr.com/65535/48155183631_c48bd3c918_b.jpg', class: "cr-random", title: 'Camera Roll', subtitle: 'Random', click: 'random' }
@@ -11,7 +11,7 @@ export const camerarollcontent = [
         images: [
             { url: 'https://live.staticflickr.com/65535/48033978696_a43b508826_w.jpg' },
             { url: 'https://live.staticflickr.com/65535/48033978851_046672dac7_w.jpg' },
-            { url: 'https://live.staticflickr.com/65535/48033978976_b9daa1d388_w.jpg' },
+            { url: 'https://live.staticflickr.com/65535/50318478832_9ae414b1c8_o.jpg' },
             { url: 'https://live.staticflickr.com/65535/48034090387_d62885f35e_c.jpg' },
             { url: 'https://live.staticflickr.com/65535/48034089612_d49c757b5b_c.jpg' },
             { url: 'https://live.staticflickr.com/65535/48033978976_b9daa1d388_w.jpg' },

@@ -25,6 +25,10 @@ function Scroller({ content, onLoad, animation, open, click }) {
         opacity: intersecting === i ? 1 : 0
     })))
 
+    // const springs2 = useSprings(content.length, content.map((item, i) => ({
+    //     color: intersecting === i ? 'red' : 'black'
+    // })))
+
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
@@ -84,6 +88,14 @@ function Scroller({ content, onLoad, animation, open, click }) {
 
     return (
         <a.div className="scroller" style={openAnimation}>
+            {/*
+            {springs2.map(({color},i)=>(
+                <div>
+                <a.p style={{color}}>{content[i].subtitle}</a.p>
+                </div>
+            ))}
+            */}
+
             <a.div className="scroller-container"
                 style={scroll}
                 onTouchStart={(e) => touchStart(e)}

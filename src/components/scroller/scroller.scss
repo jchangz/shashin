@@ -15,6 +15,7 @@
             position: relative;
             height: var(--base);
             width: 100vw;
+            overflow: hidden;
         }
     }
     .scroller-progress{
@@ -26,8 +27,4 @@
         writing-mode: vertical-lr;
         transform: rotate(180deg);
     }
-}
-
-.h100{
-    height: 100%;
 }

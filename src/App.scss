@@ -212,169 +212,14 @@ body{
   }
 }
 
-.cr{
-  position: relative;
-  height: var(--base);
-  overflow: scroll;
-  .cr-title{
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    left: 1.5rem;
-    top:1rem;
-    div:first-of-type {
-      overflow: hidden;
-    }
-    .cr-title-route{
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-  }
-  .scroller-title{
-    position: absolute;
-    top: 0;
-    width: 100%;
-    h2{
-      font-weight: 700;
-      letter-spacing: -2px;
-      font-size: 2.4rem;
-      margin: 0;
-      top: 0;
-    }
-  }
-  .cr-grid{
-    padding: 0;
-    grid-gap: 1rem;
-    display: flex;
-    height: 100%;
-    align-items: center;
-    width: 350%;
-    img{
-      max-width: 100%;
-      margin: 0 auto;
-      display: block;
-    }
-    >div{
-      position: relative;
-      height: 100%;
-      width: 100%;
-      overflow: hidden;
-      img{
-        height: 100%;
-        object-fit: cover;
-      }
-    }
-    h4{
-      position: absolute;
-      color: white;
-      margin: 0;
-      font-weight: 600;
-      font-size: 1.2rem;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%,-50%);
-      overflow: hidden;
-    }
-  }
-  .cr-container{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: var(--base);
-    display: flex;
-    align-items: center;
-    .cr-content{
-      position: relative;
-      height: 100%;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      .cr-content-grid{
-        
-        padding: 0.5rem;
-        margin: 0.5rem;
-        grid-gap: 0.5rem;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        width: 100%;
-        img{
-          max-width: 100%;
-          margin: 0 auto;
-          display: block;
-        }
-        &.skeleton{
-          box-shadow: 0 6px 12px -2px rgba(50,50,93,0.25), 0 3px 7px -3px rgba(0,0,0,0.3);
-          width: calc(100% - 2rem);
-          mix-blend-mode: multiply;
-          background-color: #fff;
-          border-radius: 4px;
-          > div {
-            position:relative;
-            background-color:#f4f4f4;
-            padding-bottom:100%;
-          }
-        }
-      }
-      .cr-content-loader{
-        position: absolute;
-        top: 50%;
-        width: 100%;
-        z-index: -1;
-        transform: translateY(-50%);
-      }
-    }
-  }
-  .scroller-content{
-    img{
-      object-fit: cover;
-      width: 100%;
-      height: 100%;
-    }
-    &.cr-japan{
-      display: flex;
-      align-self: center;
-      img{
-        width: 80%;
-        height: 80%;
-      }
-    }
-  }
-  .cr-kyoto, .cr-japan{
-    h2{
-      display: flex;
-      justify-content: space-between;
-      margin: 1rem;
-      letter-spacing: 0;
-      display: flex;
-      color: white;
-      font-size: 1.1rem;
-      font-weight: 200;
-      span{
-        font-weight: 600;
-        text-transform: uppercase;
-        display: block;
-      }
-    }
-  }
-  .cr-main{
-    height: 100%;
-    box-shadow: 0 13px 27px -5px rgba(50,50,93,.25), 0 8px 16px -8px rgba(0,0,0,.3), 0 -6px 16px -6px rgba(0,0,0,.025);
-  }
-}
-
 .progress-animation {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 0.5rem;
+  left: 0.5rem;
   animation: placeHolderShimmer 1s linear infinite forwards;
   background: #f6f7f8;
   background: linear-gradient(to right, #dadada 8%, #dddddd 18%, #eeeeee 33%);
   background-size: 800px 104px;
-  height: calc(100% - 2rem);
-  width: calc(100% - 2rem);
   &.fin{
     animation-iteration-count: initial;
   }
@@ -392,10 +237,9 @@ body{
     position: fixed;
   }
   &.white{
-    background-color: #ffffff;
     mix-blend-mode: normal;
     border-radius: 4px;
-    box-shadow: 0 13px 27px -5px rgba(50,50,93,.25), 0 8px 16px -8px rgba(0,0,0,.3), 0 -6px 16px -6px rgba(0,0,0,.025);;
+    // box-shadow: 0 13px 27px -5px rgba(50,50,93,.25), 0 8px 16px -8px rgba(0,0,0,.3), 0 -6px 16px -6px rgba(0,0,0,.025);
   }
   &.btn-close{
     img{
@@ -447,4 +291,12 @@ body{
     height: 100%;
     object-fit: cover;
   }
+}
+
+.h100{
+  height: 100%;
+}
+
+.bgdark{
+  background-color: #121212;
 }
