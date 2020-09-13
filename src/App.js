@@ -4,7 +4,7 @@ import { useSprings, useSpring, animated, config } from 'react-spring';
 import smoothscroll from 'smoothscroll-polyfill';
 import useWindowSize from './hooks/useWindowSize.js';
 import CameraRoll from './content/cameraroll/index.js';
-import { iconchevron } from './content/cameraroll/images.js';
+import { ReactComponent as Chevron } from './logo.svg';
 
 const items = [
   'https://live.staticflickr.com/65535/48034090387_d62885f35e_c.jpg',
@@ -179,14 +179,13 @@ function App() {
 
   const springs = useSprings(items.length, items.map((item, i) => ({
     config: (index === null) ? (intersecting === (itemss[i]) ? { mass: 1, tension: 350, friction: 30 } : { mass: 1, tension: 200, friction: 17 }) : { mass: 1, tension: 350, friction: 30 },
-    transform: (index === null) ?  "scale(0.95)" : ((i !== index)? "scale(0.3)" : "scale(0.8)"),
+    transform: (index === null) ? "scale(0.95)" : ((i !== index) ? "scale(0.3)" : "scale(0.8)"),
     opacity: intersecting === (itemss[i]) ? 1 : 0
   })))
 
   const fadeApp = useSpring({ opacity: opened ? 0 : 1, transform: opened ? "translateY(-100%)" : "translateY(0%)" })
   const fadeChild = useSpring({ transform: opened ? 'translateY(-100%)' : 'translateY(10%)' })
-  const fadeButton = useSpring({ height: childloading ? 0 : 50 })
-  const flipButton = useSpring({ transform: opened ? 'scale(-1)' : 'scale(1)', height: childchildopened ? 0 : 50 })
+  const fadeButton = useSpring({ height: childloading ? "0%" : "100%", transform: opened ? 'scale(-1)' : 'scale(1)' })
 
   return (
     <div className="hidden">
@@ -218,8 +217,10 @@ function App() {
         </animated.div>
       </animated.div>
 
-      <animated.div className="button" style={fadeButton}>
-        <animated.img className="closebutton" style={flipButton} onClick={clickShowMore} src={iconchevron} alt="" />
+      <animated.div className={"navigation-main" + (childchildopened ? " icon-open" : "")}>
+        <animated.div className={"navigation-main-chevron" + (opened ? " icon-open" : "")} style={fadeButton}>
+          <Chevron onClick={clickShowMore} />
+        </animated.div>
       </animated.div>
 
       <animated.div className="contentcreate" style={fadeChild} >

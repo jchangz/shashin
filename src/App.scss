@@ -225,6 +225,37 @@ body{
   }
 }
 
+.navigation-main{
+  position: fixed;
+  z-index: 98;
+  bottom: var(--button);
+  height: 50px;
+  width: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  mix-blend-mode: difference;
+  transition: 0.2s;
+  &.icon-open{
+    height: 0;
+  }
+  .navigation-main-chevron{
+    overflow: hidden;
+    fill: #fff;
+    svg{
+      .chevron{
+        stroke: #fff;
+        stroke-width: 0.3px;
+        pointer-events: none;
+      }
+    }
+    &.icon-open{
+      .chevron{
+        fill: #000;
+      }
+    }
+  }
+}
+
 .button{
   position: absolute;
   z-index: 98;
@@ -244,6 +275,7 @@ body{
   &.btn-close{
     img{
       width: 50px;
+      pointer-events: none;
     }
   }
 }

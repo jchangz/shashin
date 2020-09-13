@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, } from 'react';
-import { useSpring, useSprings, a } from 'react-spring';
+import { useSpring, useTransition, useSprings, a } from 'react-spring';
+import { ReactComponent as Chevron } from '../../logo.svg';
 import './scroller.scss';
 
 function Scroller({ content, onLoad, animation, open, click }) {
@@ -13,28 +14,36 @@ function Scroller({ content, onLoad, animation, open, click }) {
 
     const [counter, setCounter] = useState(0);
     const [intersecting, setIntersecting] = useState(null);
+    const [intersectingName, setIntersectingName] = useState(null);
 
+    const fadeUp = useSpring({
+        opacity: open ? 1 : 0,
+        transform: open ? "translateY(0%)" : "translateY(100%)",
+        delay: 200, config: { mass: 1, tension: 180, friction: 12 }
+    })
     const scroll = useSpring({
         transform: counter ? `translate3d(${counter}px,-50%,0)` : `translate3d(${counter}px,-50%,0)`,
         config: { mass: 1, tension: 270, friction: 30 }
     })
-
-    const openAnimation = useSpring({ transform: open ? 'scale(1)' : animation === "explode" ? 'scale(1.5)' : 'scale(1)' })
-
+    const openAnimation = useSpring({
+        transform: open ? 'scale(1)' : animation === "explode" ? 'scale(1.5)' : 'scale(1)'
+    })
+    const transitions = useTransition(intersectingName, null, {
+        from: { position: 'absolute', transform: 'translate3d(100%,0,0)', opacity: 0 },
+        enter: { transform: 'translate3d(0,0,0)', opacity: 1 },
+        leave: { transform: 'translate3d(100%,0,0)', opacity: 0 },
+    })
     const springs = useSprings(content.length, content.map((item, i) => ({
-        opacity: intersecting === i ? 1 : 0
+        opacity: intersecting === i ? 1 : 0.4,
     })))
-
-    // const springs2 = useSprings(content.length, content.map((item, i) => ({
-    //     color: intersecting === i ? 'red' : 'black'
-    // })))
 
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
-                    var entryVal = parseInt(entry.target.dataset.img)
-                    setIntersecting(entryVal)
+                    var entryData = entry.target.dataset
+                    setIntersecting(parseInt(entryData.img))
+                    setIntersectingName(entryData.name)
                 }
             }, { root: null, rootMargin: "0px", threshold: 0.4 }
         );
@@ -88,39 +97,50 @@ function Scroller({ content, onLoad, animation, open, click }) {
 
     return (
         <a.div className="scroller" style={openAnimation}>
-            {/*
-            {springs2.map(({color},i)=>(
-                <div>
-                <a.p style={{color}}>{content[i].subtitle}</a.p>
-                </div>
-            ))}
-            */}
 
             <a.div className="scroller-container"
                 style={scroll}
                 onTouchStart={(e) => touchStart(e)}
                 onTouchMove={(e) => touchMove(e)}
                 onTouchEnd={(e) => touchEnd(e)}>
-                {springs.map(({ opacity }, i) => (
-                    <div className={"scroller-content " + content[i].class} key={i}>
+                {content.map((item, i) => (
+                    <div className={"scroller-content " + item.class} key={i}>
                         <a.img
-                            data-click={content[i].click}
+                            data-name={item.subtitle}
                             data-img={i}
                             onLoad={onLoad}
-                            onClick={click}
                             ref={ref => imageRef.current[i] = ref}
-                            src={content[i].url} alt=""
+                            src={item.url} alt=""
                         />
-                        <a.div className="scroller-title" style={{ opacity }}>
-                            <h2>
-                                {content[i].title}
-                                <span>{content[i].subtitle}</span>
-                            </h2>
-                        </a.div>
                     </div>
                 ))}
             </a.div>
-            <span className={"scroller-progress " + intersecting}>{intersecting + 1} of {content.length}</span> 
+
+            <a.div className="scroller-title">
+                <h2>
+                    {content[0].title}
+                    {transitions.map(({ item, props, key }) =>
+                        <a.span key={key} style={props}>{item}</a.span>
+                    )}
+                </h2>
+            </a.div>
+
+            {content ?
+                <a.div className="scroller-nav"
+                    data-click={(intersecting !== null) ? content[intersecting].click : null}
+                    onClick={click}
+                    style={fadeUp}>
+                    <Chevron />
+                </a.div> : null
+            }
+
+            <div className="scroller-progress-block">
+                {springs.map(({ opacity }, i) => (
+                    <a.span style={{ opacity }}>{content[i].subtitle}</a.span>
+                ))}
+            </div>
+
+            {/* <span className={"scroller-progress " + intersecting}>{intersecting + 1} of {content.length}</span> */}
         </a.div>
     )
 }

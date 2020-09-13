@@ -1,10 +1,9 @@
 .scroller{
-    position: absolute;
+    position: fixed;
     align-self: flex-start;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-color: #fff;
     .scroller-container{
         position: absolute;
         display: flex;
@@ -18,13 +17,44 @@
             overflow: hidden;
         }
     }
-    .scroller-progress{
+    .scroller-nav{
         position: absolute;
-        bottom: 0;
-        color: white;
-        padding:1rem;
-        text-orientation: mixed;
-        writing-mode: vertical-lr;
-        transform: rotate(180deg);
+        right: 1rem;
+        bottom: var(--button);
+        height: 50px;
+        svg{
+            width: 50px;
+            pointer-events: none;
+            .chevron{
+                fill: #fff;
+            }
+        }
     }
+    .scroller-progress-block{
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        left: 0.5rem;
+        bottom: var(--button);
+        margin-bottom: 0.5rem;
+        padding:0.4rem 1rem;
+        span{
+            color: white;
+            text-orientation: mixed;
+            font-size: 0.4rem;
+            writing-mode: vertical-lr;
+            transform: rotate(180deg);
+        }
+    }
+    // .scroller-progress{
+    //     position: absolute;
+    //     font-size: 0.8rem;
+    //     bottom: var(--button);
+    //     color: white;
+    //     padding:0.4rem 1rem;
+    //     text-orientation: mixed;
+    //     writing-mode: vertical-lr;
+    //     transform: rotate(180deg);
+    // }
 }
