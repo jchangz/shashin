@@ -1,36 +1,41 @@
-.scroller{
+.scroller {
     position: fixed;
     align-self: flex-start;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    .scroller-container{
+    .scroller-container {
         position: absolute;
         display: flex;
         overflow: scroll;
         top: 50%;
         background: white;
-        .scroller-content{
+        .scroller-content {
             position: relative;
             height: var(--base);
             width: 100vw;
             overflow: hidden;
+            .scroller-content-blur {
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
         }
     }
-    .scroller-nav{
+    .scroller-nav {
         position: absolute;
         right: 1rem;
         bottom: var(--button);
         height: 50px;
-        svg{
+        svg {
             width: 50px;
             pointer-events: none;
-            .chevron{
+            .chevron {
                 fill: #fff;
             }
         }
     }
-    .scroller-progress-block{
+    .scroller-progress-block {
         position: absolute;
         display: flex;
         flex-direction: row;
@@ -38,8 +43,8 @@
         left: 0.5rem;
         bottom: var(--button);
         margin-bottom: 0.5rem;
-        padding:0.4rem 1rem;
-        span{
+        padding: 0.4rem 1rem;
+        span {
             color: white;
             text-orientation: mixed;
             font-size: 0.4rem;
