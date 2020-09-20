@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import './App.scss';
 import { useSprings, useSpring, animated, config } from 'react-spring';
 import smoothscroll from 'smoothscroll-polyfill';
@@ -115,23 +115,6 @@ function App() {
       opened ? setOpened(false) : setOpened(true)
     }
   }
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && index === null) {
-          setIntersecting(entry.target.className)
-        }
-      }, { root: null, rootMargin: "0px", threshold: 0.75 }
-    );
-
-    if (index === null) {
-      imageRef.current.forEach(image => {
-        observer.observe(image);
-      })
-      return () => observer.disconnect();
-    }
-  }, [index]);
 
   const selectImage = (i, e) => {
     if (index === null) {
