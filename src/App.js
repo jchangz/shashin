@@ -22,17 +22,6 @@ const itemss = [
   "ichi", "ni", "san", "shi", "go", "roku", "nana", "hachi", "kyu"
 ]
 
-const titles = [
-  "Camera Roll Kyoto",
-  "Trinkets",
-  "Cinestill + HK",
-  "Japan",
-  "Stock Photo Booth",
-  "six",
-  "seven",
-  "eight",
-  "nine"
-]
 
 function Header({ prop }) {
   const fadeOut = useSpring({ opacity: prop.childloading ? 1 : 0, zIndex: prop.childloading ? 99 : 0 })
