@@ -180,7 +180,7 @@ function App() {
   const springs = useSprings(items.length, items.map((item, i) => ({
     config: (index === null) ? (intersecting === (itemss[i]) ? { mass: 1, tension: 350, friction: 30 } : { mass: 1, tension: 200, friction: 17 }) : { mass: 1, tension: 350, friction: 30 },
     transform: (index === null) ? "scale(0.95)" : ((i !== index) ? "scale(0.3)" : "scale(0.8)"),
-    opacity: intersecting === (itemss[i]) ? 1 : 0
+    
   })))
 
   const fadeApp = useSpring({ opacity: opened ? 0 : 1, transform: opened ? "translateY(-100%)" : "translateY(0%)" })
@@ -211,7 +211,7 @@ function App() {
                 src={items[i]}
                 alt="">
               </img>
-              <animated.h2 style={{ opacity }}>{titles[i]}</animated.h2>
+         
             </animated.div>
           ))}
         </animated.div>
