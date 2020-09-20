@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import './App.scss';
-import { useSprings, useSpring, animated, config } from 'react-spring';
+import { useSprings, useSpring, animated } from 'react-spring';
 import smoothscroll from 'smoothscroll-polyfill';
 import useWindowSize from './hooks/useWindowSize.js';
 import CameraRoll from './content/cameraroll/index.js';
@@ -140,12 +140,6 @@ function App() {
       setIndex(null)
     }
   }
-
-  const scaleApp = useSpring({
-    opacity: loading ? 0 : 1,
-   
-    config: config.gentle
-  })
 
   const springs = useSprings(items.length, items.map((item, i) => ({
     config: (index === null) ? (intersecting === (itemss[i]) ? { mass: 1, tension: 350, friction: 30 } : { mass: 1, tension: 200, friction: 17 }) : { mass: 1, tension: 350, friction: 30 },
