@@ -72,15 +72,13 @@ function App() {
   const phone = width < 500;
   const deviceHeight = window.innerHeight;
 
-  smoothscroll.polyfill();
-
   const imageLoaded = () => {
     //wait for images to onload
     counter.current += 1;
 
     if (counter.current >= items.length) {
       const defaultImage = myInput.current.children[4];
-
+      smoothscroll.polyfill();
       setInitial(false)
 
       //get device window height to set container height
