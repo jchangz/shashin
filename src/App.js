@@ -143,7 +143,7 @@ function App() {
 
   const scaleApp = useSpring({
     opacity: loading ? 0 : 1,
-    transform: (index === null) ? "scale(1)" : "scale(1.25)",
+   
     config: config.gentle
   })
 
