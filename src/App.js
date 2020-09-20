@@ -167,13 +167,13 @@ function App() {
         <animated.div
           className={"App" + (index === null ? " active" : "") + (phone ? "" : " tablet")}
           ref={myInput}
-          style={scaleApp}>
+          >
           {springs.map(({ transform, opacity }, i) => (
             <animated.div
-              className={"shashin " + itemss[i]}
+              className={"shashin " + itemss[i] + (index === i ? " select": "") }
               key={i}
               onClick={(e) => selectImage(i, e)}
-              style={{ transform }}>
+              >
               <img
                 className={itemss[i]}
                 ref={ref => imageRef.current[i] = ref}
