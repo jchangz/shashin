@@ -27,6 +27,11 @@ body{
   }
 }
 
+%full-wh{
+  width: 100%;
+  height: 100%;
+}
+
 .shashin{
   position: relative;
   &:nth-child(-n+3){
@@ -270,7 +275,8 @@ body{
   &.white{
     mix-blend-mode: normal;
     border-radius: 4px;
-    // box-shadow: 0 13px 27px -5px rgba(50,50,93,.25), 0 8px 16px -8px rgba(0,0,0,.3), 0 -6px 16px -6px rgba(0,0,0,.025);
+    background-color: #fff;
+    box-shadow: 0 13px 27px -5px rgba(50,50,93,.25), 0 8px 16px -8px rgba(0,0,0,.3), 0 -6px 16px -6px rgba(0,0,0,.025);
   }
   &.btn-close{
     img{
@@ -325,10 +331,12 @@ body{
   }
 }
 
-.h100{
-  height: 100%;
-}
-
-.bgdark{
-  background-color: #121212;
+.img-preview{
+  position: absolute;
+  @extend %full-wh;
+  box-shadow:  inset 2px -1px 165px -1px rgba(0,0,0,0.75);
+  border-radius: 5px;
+  img{
+    @extend %full-wh;
+  }
 }

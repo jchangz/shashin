@@ -3,7 +3,7 @@ import { useSpring, useTransition, useSprings, a } from 'react-spring';
 import { ReactComponent as Chevron } from '../../logo.svg';
 import './scroller.scss';
 
-function Scroller({ content, onLoad, animation, open, click }) {
+function Scroller({ content, onLoad, animation, open, click, imgopen }) {
     const deviceWidth = window.innerWidth;
 
     const imageRef = useRef([])
@@ -23,6 +23,10 @@ function Scroller({ content, onLoad, animation, open, click }) {
     })
     const scroll = useSpring({
         transform: counter ? `translate3d(${counter}px,-50%,0)` : `translate3d(${counter}px,-50%,0)`,
+        config: { mass: 1, tension: 270, friction: 30 }
+    })
+    const fadeIn = useSpring({
+        opacity: imgopen ? 1 : 0,
         config: { mass: 1, tension: 270, friction: 30 }
     })
     const openAnimation = useSpring({
@@ -112,6 +116,7 @@ function Scroller({ content, onLoad, animation, open, click }) {
                             ref={ref => imageRef.current[i] = ref}
                             src={item.url} alt=""
                         />
+                        <a.img style={fadeIn} class="scroller-content-blur" src={item.blur}></a.img>
                     </div>
                 ))}
             </a.div>
@@ -125,20 +130,22 @@ function Scroller({ content, onLoad, animation, open, click }) {
                 </h2>
             </a.div>
 
-            {content ?
+            {imgopen ? null :
                 <a.div className="scroller-nav"
                     data-click={(intersecting !== null) ? content[intersecting].click : null}
                     onClick={click}
                     style={fadeUp}>
                     <Chevron />
-                </a.div> : null
+                </a.div>
             }
 
-            <div className="scroller-progress-block">
-                {springs.map(({ opacity }, i) => (
-                    <a.span style={{ opacity }}>{content[i].subtitle}</a.span>
-                ))}
-            </div>
+            {imgopen ? null :
+                <div className="scroller-progress-block">
+                    {springs.map(({ opacity }, i) => (
+                        <a.span style={{ opacity }}>{content[i].subtitle}</a.span>
+                    ))}
+                </div>
+            }
 
             {/* <span className={"scroller-progress " + intersecting}>{intersecting + 1} of {content.length}</span> */}
         </a.div>

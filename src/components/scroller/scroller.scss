@@ -15,6 +15,11 @@
             height: var(--base);
             width: 100vw;
             overflow: hidden;
+            .scroller-content-blur{
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
         }
     }
     .scroller-nav{

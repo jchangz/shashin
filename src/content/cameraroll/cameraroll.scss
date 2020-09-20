@@ -1,136 +1,93 @@
+%full-wh{
+  width: 100%;
+  height: 100%;
+}
+
 .cr{
-    position: relative;
-    height: var(--base);
-    overflow: scroll;
-    .cr-title{
-      position: fixed;
-      display: flex;
-      flex-direction: column;
-      left: 1.5rem;
-      top:1rem;
-      div:first-of-type {
-        overflow: hidden;
-      }
-      .cr-title-route{
-        position: relative;
-        display: flex;
-        align-items: center;
-      }
-    }
+  position: relative;
+  height: var(--base);
+  overflow: scroll;
+  .cr-main{
+    height: 100%;
+    background-color: #121212;
     .scroller-title{
       position: absolute;
+      top: 0;
       display: flex;
       justify-content: space-between;
-      top: 0;
       width: 100%;
       h2{
         display: flex;
-        margin: 1rem;
-        letter-spacing: 0;
-        color: #ffffff;
         font-size: 1.1rem;
         font-weight: 200;
+        color: #ffffff;
+        letter-spacing: 0;
+        margin: 1rem 1rem 1rem 1.5rem;
         span{
           font-weight: 600;
-          right: 1rem;
+          right: 1.5rem;
           text-transform: uppercase;
-        }
-      }
-    }
-    .cr-grid{
-      padding: 0;
-      grid-gap: 1rem;
-      display: flex;
-      height: 100%;
-      align-items: center;
-      width: 350%;
-      img{
-        max-width: 100%;
-        margin: 0 auto;
-        display: block;
-      }
-      >div{
-        position: relative;
-        height: 100%;
-        width: 100%;
-        overflow: hidden;
-        img{
-          height: 100%;
-          object-fit: cover;
-        }
-      }
-      h4{
-        position: absolute;
-        color: white;
-        margin: 0;
-        font-weight: 600;
-        font-size: 1.2rem;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-        overflow: hidden;
-      }
-    }
-    .cr-container{
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: var(--base);
-      display: flex;
-      align-items: center;
-      .cr-content{
-        position: relative;
-        height: 100%;
-        width: 100%;
-        display: flex;
-        align-items: flex-end;
-        .cr-content-grid{
-          padding: 0.5rem;
-          grid-gap: 0.5rem;
-          display: grid;
-          padding-bottom: calc((var(--button)*2) + 50px);
-          grid-template-columns: 1fr 1fr 1fr;
-          width: 100%;
-          img{
-            max-width: 100%;
-            margin: 0 auto;
-            display: block;
-          }
-          &.skeleton{
-            box-shadow: 0 6px 12px -2px rgba(50,50,93,0.25), 0 3px 7px -3px rgba(0,0,0,0.3);
-            width: calc(100% - 1rem);
-            mix-blend-mode: multiply;
-            background-color: #fff;
-            border-radius: 4px;
-            > div {
-              position:relative;
-              background-color:#f4f4f4;
-              padding-bottom:100%;
-            }
-          }
-        }
-        .cr-content-loader{
-          position: absolute;
-          bottom: 0;
-          width: 100%;
-          z-index: -1;
-          .progress-animation{
-            height: calc(100% - ((var(--button)*2) + 50px + 0.5rem));
-            width: calc(100% - 1rem);
-          }
         }
       }
     }
     .scroller-content{
       img{
         object-fit: cover;
-        width: 100%;
-        height: 100%;
+        @extend %full-wh;
       }
     }
-    .cr-main{
-      height: 100%;
-      box-shadow: 0 13px 27px -5px rgba(50,50,93,.25), 0 8px 16px -8px rgba(0,0,0,.3), 0 -6px 16px -6px rgba(0,0,0,.025);
+  }
+  .cr-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: var(--base);
+    .cr-content{
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      @extend %full-wh;
+      .cr-content-grid{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 1.5rem;
+        @extend %full-wh;
+        padding: 1.5rem;
+        overflow: scroll;
+        z-index: 1;
+        .cr-overlay{
+          position: absolute;
+          left: 0;
+          width: 100%;
+          z-index: 3;
+          &.top{
+            top: 0;
+            height: 2rem;
+            opacity: 0;
+            background-image: linear-gradient(180deg, rgba(0,0,0,1) 0%, transparent 100%);
+          }
+          &.bottom{
+            bottom: 0;
+            height: 6rem;
+            background-image: linear-gradient(0deg, rgba(0,0,0,1) 0%, transparent 100%);
+          }
+        }
+        .reflow{
+          z-index: 2;
+          &:nth-of-type(-n+2){
+            margin-top: 5rem;
+          }
+          &:nth-last-child(-n+2){
+            margin-bottom: calc((var(--button)*2) + (50px));
+          }
+        }
+        img{
+          border-radius: 5px;
+        }
+      }
     }
   }
+}
