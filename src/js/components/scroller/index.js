@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, } from 'react';
 import { useSpring, useSprings, useTransition, a } from 'react-spring';
-import { ReactComponent as Chevron } from '../../logo.svg';
+import { ReactComponent as Chevron } from '../../../logo.svg';
 import './scroller.scss';
 
 function Scroller({ content, onLoad, animation, open, click, imgopen }) {
