@@ -17,7 +17,7 @@ function Lightbox({ content, selected, setClose }) {
     const [intersecting, setIntersecting] = useState(null);
     const [immediate, setImmediate] = useState(null); //prevent translate animation on initial click
 
-    const { o, h } = useSpring({
+    const { o } = useSpring({
         from: { o: 0, h: 0 },
         o: Math.abs(((-counter / deviceWidth) - intersecting) * 2.2),
         // h: (intersecting + 1),

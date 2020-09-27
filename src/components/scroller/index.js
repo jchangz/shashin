@@ -43,6 +43,10 @@ function Scroller({ content, onLoad, animation, open, click, imgopen }) {
     const springs = useSprings(content.length, content.map((item, i) => ({
         opacity: intersecting === i ? 1 : 0.4,
     })))
+    const { o } = useSpring({
+        from: { o: 0 },
+        o: Math.abs(((-counter / deviceWidth) - intersecting) * 2.2)
+    })
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -120,6 +124,9 @@ function Scroller({ content, onLoad, animation, open, click, imgopen }) {
                             src={item.url} alt=""
                         />
                         <a.img style={fadeIn} className="scroller-content-blur" src={item.blur}></a.img>
+                        <a.img src={item.blur} className="scroller-content-blur"
+                            style={{ opacity: intersecting === i ? o.interpolate(o => `${o}`) : 1 }}>
+                        </a.img>
                     </div>
                 ))}
             </a.div>
