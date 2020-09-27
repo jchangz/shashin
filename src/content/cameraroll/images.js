@@ -11,39 +11,39 @@ export const camerarollcontent = [
         images: [
             {
                 url: 'https://live.staticflickr.com/65535/48033978696_a43b508826_w.jpg',
-                thumbnail: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=100&fm=webp&blur=50'
+                thumbnail: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=100&blur=50'
             },
             {
                 url: 'https://live.staticflickr.com/65535/48033978851_046672dac7_w.jpg',
-                thumbnail: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=100&fm=webp&blur=50'
+                thumbnail: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=100&blur=50'
             },
             {
                 url: 'https://live.staticflickr.com/65535/50318478832_9ae414b1c8_o.jpg',
-                thumbnail: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=100&fm=webp&blur=50'
+                thumbnail: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=100&blur=50'
             },
             {
                 url: 'https://live.staticflickr.com/65535/48034090387_d62885f35e_c.jpg',
-                thumbnail: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=100&fm=webp&blur=50'
+                thumbnail: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=100&blur=50'
             },
             {
                 url: 'https://live.staticflickr.com/65535/48034089612_d49c757b5b_c.jpg',
-                thumbnail: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=100&fm=webp&blur=50'
+                thumbnail: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=100&blur=50'
             },
             {
                 url: 'https://live.staticflickr.com/65535/48033978976_b9daa1d388_w.jpg',
-                thumbnail: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=100&fm=webp&blur=50'
+                thumbnail: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=100&blur=50'
             },
             {
                 url: 'https://live.staticflickr.com/65535/48033978696_a43b508826_w.jpg',
-                thumbnail: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=100&fm=webp&blur=50'
+                thumbnail: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=100&blur=50'
             },
             {
                 url: 'https://live.staticflickr.com/65535/48033978851_046672dac7_w.jpg',
-                thumbnail: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=100&fm=webp&blur=50'
+                thumbnail: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=100&blur=50'
             },
             {
                 url: 'https://live.staticflickr.com/65535/48033978976_b9daa1d388_w.jpg',
-                thumbnail: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=100&fm=webp&blur=50'
+                thumbnail: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=100&blur=50'
             }
         ]
     },

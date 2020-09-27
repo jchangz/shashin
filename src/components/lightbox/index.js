@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSpring, a } from 'react-spring';
+import { useSpring, useSprings, a } from 'react-spring';
 import './lightbox.scss';
 
 function Lightbox({ content, selected, setClose }) {
@@ -17,15 +17,21 @@ function Lightbox({ content, selected, setClose }) {
     const [intersecting, setIntersecting] = useState(null);
     const [immediate, setImmediate] = useState(null); //prevent translate animation on initial click
 
+    const { o, h } = useSpring({
+        from: { o: 0, h: 0 },
+        o: Math.abs(((-counter / deviceWidth) - intersecting) * 2.2),
+        // h: (intersecting + 1),
+    })
     const open = useSpring({
-        transform: show ? 'scale(1)' : 'scale(0)',
-        opacity: show ? 1 : 0
+        transform: show ? 'translateY(0)' : 'translateY(100%)'
     })
     const scroll = useSpring({
         transform: counter ? `translate3d(${counter}px,-50%,0)` : `translate3d(${counter}px,-50%,0)`,
         config: immediate ? { mass: 1, tension: 270, friction: 30 } : { duration: 1 }
     })
-    const fill = useSpring({ transform: show ? `scaleX(${(intersecting + 1) / content.length})` : 'scaleX(0)' })
+    const springs = useSprings(content.length, content.map((item, i) => ({
+        opacity: intersecting === i ? 1 : 0.4,
+    })))
 
     useEffect(() => {
         if (selected !== null) {
@@ -103,6 +109,11 @@ function Lightbox({ content, selected, setClose }) {
 
     return (
         <a.div style={open} className="lightbox">
+            {/* <div>
+                <span>Intersecting: </span>
+                <a.span>{h.interpolate(n => n.toFixed(0))}</a.span>
+            </div> */}
+
             <a.div className="lightbox-content"
                 ref={myLightbox}
                 style={scroll}
@@ -110,16 +121,25 @@ function Lightbox({ content, selected, setClose }) {
                 onTouchMove={(e) => touchMove(e)}
                 onTouchEnd={(e) => touchEnd(e)}>
                 {content.map((item, index) => (
-                    <a.img className={index}
-                        key={index}
-                        ref={ref => imageRef.current[index] = ref}
-                        src={item.url} alt="" />
+                    <div className="lightbox-content-img">
+                        <img className={index}
+                            key={index}
+                            ref={ref => imageRef.current[index] = ref}
+                            src={item.url} alt="" />
+                        <a.img className="lightbox-content-img-blur"
+                            style={{ opacity: intersecting === index ? o.interpolate(o => `${o}`) : 1 }}
+                            src={item.thumbnail}
+                            alt="" />
+                    </div>
                 ))}
             </a.div>
-            <div className="lightbox-close" onClick={closeLightbox}>
-                <div className="lightbox-progress">
-                <a.div className="lightbox-progress-indicator" style={fill} />
-                </div>
+
+            <div className="lightbox-close" onClick={closeLightbox} />
+
+            <div className="lightbox-progress-indicator">
+                {springs.map(({ opacity }, i) => (
+                    <a.span style={{ opacity }}></a.span>
+                ))}
             </div>
         </a.div>
     )
