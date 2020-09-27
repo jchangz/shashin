@@ -1,6 +1,6 @@
 export const camerarollroutes = [
     { url: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=1200', class: "cr-kyoto", title: 'Camera Roll', subtitle: 'Kyoto', click: 'camerarollkyoto', blur: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=1200&blur=100' },
-    { url: 'https://live.staticflickr.com/65535/48047965856_3d1ef447ef_o.jpg', class: "cr-japan", title: 'Camera Roll', subtitle: 'Japan', click: 'camerarolljapan', blur: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=1200&fm=webp&blur=100' },
+    { url: 'https://shashin.imgix.net/miyajima.jpg?w=828', class: "cr-japan", title: 'Camera Roll', subtitle: 'Japan', click: 'camerarolljapan', blur: 'https://shashin.imgix.net/miyajima.jpg?w=828&blur=100' },
     { url: 'https://live.staticflickr.com/65535/48034089942_ebef0ec498_c.jpg', class: "cr-asia", title: 'Camera Roll', subtitle: 'Asia', click: 'asia', blur: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=1200&fm=webp&blur=100' },
     { url: 'https://live.staticflickr.com/65535/48155183631_c48bd3c918_b.jpg', class: "cr-random", title: 'Camera Roll', subtitle: 'Random', click: 'random', blur: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=1200&fm=webp&blur=100' }
 ]
@@ -44,11 +44,7 @@ export const camerarollcontent = [
             {
                 url: 'https://live.staticflickr.com/65535/48033978976_b9daa1d388_w.jpg',
                 thumbnail: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=100&fm=webp&blur=50'
-            },
-            {
-                url: 'https://live.staticflickr.com/65535/48033978976_b9daa1d388_w.jpg',
-                thumbnail: 'https://individual99.imgix.net/IMG_3265-desktop.jpg?w=100&fm=webp&blur=50'
-            },
+            }
         ]
     },
     {

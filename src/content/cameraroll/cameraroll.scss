@@ -5,9 +5,11 @@
 
 .cr {
   position: relative;
+  display: flex;
   height: var(--base);
   overflow: scroll;
   .cr-main {
+    width: 100%;
     height: 100%;
     background-color: #121212;
     .scroller-content {
@@ -23,13 +25,14 @@
     width: 100%;
     height: var(--base);
     .cr-content {
+      display: flex;
+      align-items: center;
       @extend %full-wh;
       .cr-content-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: 1.5rem;
-        @extend %full-wh;
-        padding: 3rem 1.5rem calc(var(--button) * 2 + 50px);
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 0.5rem;
+        width: 100%;
         overflow: scroll;
         z-index: 1;
         box-sizing: border-box;
@@ -46,12 +49,16 @@
       }
     }
   }
-  .cr-title {
+  .scroller-title {
     position: absolute;
-    top: 0;
+    top: 45%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-50%);
     width: 100%;
+    font-family: 'Roboto Condensed', sans-serif;
+    text-transform: uppercase;
     .cr-title-overlay {
       position: absolute;
       left: 0;
@@ -66,18 +73,11 @@
     }
     h2 {
       display: flex;
-      font-size: 1.1rem;
+      font-size: 5rem;
       font-weight: 200;
       color: #ffffff;
+      margin: 0;
       letter-spacing: 0;
-      margin: 1rem 1rem 1rem 1.5rem;
-    }
-    h3 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #ffffff;
-      right: 1.5rem;
-      text-transform: uppercase;
     }
   }
 }

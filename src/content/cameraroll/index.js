@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { useTrail, useSpring, useTransition, a } from 'react-spring';
+import React, { useState } from 'react';
+import { useTrail, useSpring, a } from 'react-spring';
 import { camerarollroutes, camerarollcontent, iconclose } from './images.js';
 import './cameraroll.scss';
 import useImageLoaded from '../../hooks/useImageLoaded.js';
@@ -20,16 +20,12 @@ function CameraRollContent({ content, image, setImage }) {
     <div className="cr-content">
       <div className="cr-content-grid">
         {trail.map((trail, index) =>
-          <div className="cr-img">
-            <div className="img-preview">
-              <img src={content[index].thumbnail} alt="" />
-            </div>
-            <div className="img-full">
-              <a.img style={trail}
-                onClick={loading ? null : (e) => clicked(index, e)}
-                onLoad={imageLoaded}
-                src={content[index].url} alt="" />
-            </div>
+          <div className="reflow">
+            <img src={content[index].thumbnail} alt="" />
+            <a.img style={trail}
+              onClick={loading ? null : (e) => clicked(index, e)}
+              onLoad={imageLoaded}
+              src={content[index].url} alt="" />
           </div>
         )}
       </div>
@@ -41,7 +37,6 @@ function CameraRollContent({ content, image, setImage }) {
 const CameraRoll = ({ preLoad, childOpen, childchildOpen }) => {
   const [route, setRoute] = useState(null);
   const [open, setOpen] = useState(null);
-  const [title, setTitle] = useState(null);
   const [hide, setHide] = useState(null); //hide when lightbox is opened
 
   const selectImage = (e) => {
@@ -61,15 +56,7 @@ const CameraRoll = ({ preLoad, childOpen, childchildOpen }) => {
       setRoute(null)
     }, 475);
   }
-  const updateTitle = useCallback((title) => {
-    setTitle(title)
-  }, [setTitle])
 
-  const transitions = useTransition(title, null, {
-    from: { position: 'absolute', transform: 'translate3d(0,100%,0)', opacity: 0 },
-    enter: { transform: 'translate3d(0,0,0)', opacity: 1 },
-    leave: { transform: 'translate3d(0,100%,0)', opacity: 0 },
-  })
   const openRoute = useSpring({
     transform: open ? 'translateY(0)' : 'translateY(110%)'
   })
@@ -79,9 +66,6 @@ const CameraRoll = ({ preLoad, childOpen, childchildOpen }) => {
   const fadeButton = useSpring({
     height: open ? 50 : 0,
     transform: (hide === null) ? 'translate3d(-50%,0%,0)' : 'translate3d(-50%,200%,0)'
-  })
-  const fadeTitle = useSpring({
-    opacity: open ? 1 : 0
   })
 
   return (
@@ -93,7 +77,6 @@ const CameraRoll = ({ preLoad, childOpen, childchildOpen }) => {
           onLoad={preLoad}
           open={childOpen}
           imgopen={open}
-          setTitle={updateTitle}
           animation="explode" />
       </a.div>
       <a.div className="cr-container" style={openRoute}>
@@ -105,13 +88,7 @@ const CameraRoll = ({ preLoad, childOpen, childchildOpen }) => {
           : null
         }
       </a.div>
-      <a.div className="cr-title">
-        <a.span className="cr-title-overlay" style={fadeTitle} />
-        <h2>Camera Roll</h2>
-        {transitions.map(({ item, props, key }) =>
-          <a.h3 key={key} style={props}>{item}</a.h3>
-        )}
-      </a.div>
+
       <a.div className="button btn-close fxd white" style={fadeButton}
         onClick={returnHome}>
         <img src={iconclose} alt="" />
