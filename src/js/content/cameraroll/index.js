@@ -11,9 +11,8 @@ function CameraRollContent({ content, image, setImage }) {
   const { loading, imageLoaded } = useImageLoaded(content)
   const trail = useTrail(content.length, { opacity: loading ? 0 : 1 })
 
-  const clicked = (index, e) => {
+  const openLightbox = (index) => {
     setImage(index)
-    document.querySelector('.lightbox').style.setProperty("transform-origin", `${e.pageX}px ${e.pageY}px`);
   }
 
   return (
@@ -23,7 +22,7 @@ function CameraRollContent({ content, image, setImage }) {
           <div className="reflow">
             <img src={content[index].thumbnail} alt="" />
             <a.img style={trail}
-              onClick={loading ? null : (e) => clicked(index, e)}
+              onClick={loading ? null : () => openLightbox(index)}
               onLoad={imageLoaded}
               src={content[index].url} alt="" />
           </div>
