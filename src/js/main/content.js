@@ -2,16 +2,16 @@ import React, { useRef } from 'react';
 import { useSpring, a } from 'react-spring';
 import CameraRoll from '../content/cameraroll/index.js';
 
-function Content({ prop, childchildOpen, setchildLoading }) {
+function Content({ prop, setOpenLevel2, setLoadLevel1 }) {
 
-    const fadeChild = useSpring({ transform: prop.opened ? 'translateY(-100%)' : 'translateY(10%)' })
+    const fadeChild = useSpring({ transform: prop.openLevel1 ? 'translateY(-100%)' : 'translateY(10%)' })
 
     const childcounter = useRef(0);
 
     const preloadChild = () => {
         childcounter.current += 1;
         if (childcounter.current >= 4) {
-            setchildLoading(false)
+            setLoadLevel1(false)
             childcounter.current = 0
         }
     }
@@ -21,8 +21,8 @@ function Content({ prop, childchildOpen, setchildLoading }) {
             {prop.index === 4 ?
                 <CameraRoll
                     preLoad={preloadChild}
-                    childOpen={prop.opened}
-                    childchildOpen={childchildOpen}
+                    childOpen={prop.openLevel1}
+                    childchildOpen={setOpenLevel2}
                 /> : null
             }
         </a.div>

@@ -2,24 +2,24 @@ import React from 'react';
 import { useSpring, a } from 'react-spring';
 import { ReactComponent as Chevron } from '../../logo.svg';
 
-function Navigation({ prop, setchildchildOpened, setOpened }) {
+function Navigation({ prop, setOpenLevel1, setOpenLevel2 }) {
 
     const fadeButton = useSpring({
-        height: prop.childloading ? "0%" : "100%",
-        transform: prop.opened ? 'scale(-1)' : 'scale(1)'
+        height: prop.loadLevel1 ? "0%" : "100%",
+        transform: prop.openLevel1 ? 'scale(-1)' : 'scale(1)'
     })
 
     const clickShowMore = () => {
-        if (prop.childchildopened === true) {
-            setchildchildOpened(false)
+        if (prop.openLevel2 === true) {
+            setOpenLevel2(false)
         }
         else {
-            prop.opened ? setOpened(false) : setOpened(true)
+            prop.openLevel1 ? setOpenLevel1(false) : setOpenLevel1(true)
         }
     }
     return (
-        <a.div className={"main-nav" + (prop.childchildopened ? " icon-open" : "")}>
-            <a.div className={"navigation-main-chevron" + (prop.opened ? " icon-open" : "")} style={fadeButton}>
+        <a.div className={"main-nav" + (prop.openLevel2 ? " icon-open" : "")}>
+            <a.div className={"navigation-main-chevron" + (prop.openLevel1 ? " icon-open" : "")} style={fadeButton}>
                 <Chevron onClick={clickShowMore} />
             </a.div>
         </a.div>

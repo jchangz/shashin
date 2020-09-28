@@ -2,13 +2,22 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useSpring, useSprings, a, config } from 'react-spring';
 import { mainroutes } from './images.js'
 import smoothscroll from 'smoothscroll-polyfill';
+import Loader from './loader.js';
 
-function Application({ prop, setIndex, setLoading, setInitial, setchildLoading }) {
+function Application({ prop, setIndex, setLoadLevel1 }) {
+
+    const [initialLoad, setinitalLoad] = useState(true);
+    const [initialLoader, setinitialLoader] = useState(true);
+    const counter = useRef(0);
     const myInput = useRef() //reference for main container
     const imageRef = useRef([]) //array of image refs for observer
-    const counter = useRef(0);
     const [intersecting, setIntersecting] = useState('go'); //image intersecting status for titles
     const deviceHeight = window.innerHeight;
+
+    useEffect(() => {
+        //get device window height to set container height
+        document.documentElement.style.setProperty('--base', (deviceHeight + 'px'));
+    }, [deviceHeight])
 
     const imageLoaded = () => {
         //wait for images to onload
@@ -19,14 +28,11 @@ function Application({ prop, setIndex, setLoading, setInitial, setchildLoading }
 
             const defaultImage = myInput.current.children[4];
 
-            setInitial(false)
-
-            //get device window height to set container height
-            document.documentElement.style.setProperty('--base', (deviceHeight + 'px'));
+            setinitalLoad(false)
 
             //remove svg loader after 1.5s
             setTimeout(() => {
-                setLoading(false);
+                setinitialLoader(false);
             }, 1500);
 
             //get distance from bottom to top of image minus 2rem
@@ -51,7 +57,7 @@ function Application({ prop, setIndex, setLoading, setInitial, setchildLoading }
                 setIntersecting(clickTarget.className)
             }
 
-            setchildLoading(true)
+            setLoadLevel1(true)
 
             myInput.current.scrollTo({
                 top: clickTargetParent.offsetTop - ((deviceHeight - clickTargetParent.clientHeight) / 2),
@@ -82,8 +88,7 @@ function Application({ prop, setIndex, setLoading, setInitial, setchildLoading }
     }, [prop.index]);
 
     const mainApp = useSpring({
-        opacity: prop.loading ?
-            0 : (prop.opened ? 0 : 1),
+        opacity: initialLoader ? 0 : (prop.openLevel1 ? 0 : 1),
         transform: (prop.index === null) ? "scale(1)" : "scale(1.25)",
         config: config.gentle
     })
@@ -98,26 +103,29 @@ function Application({ prop, setIndex, setLoading, setInitial, setchildLoading }
     })))
 
     return (
-        <a.div
-            className={"main-app" + (prop.index === null ? " active" : "") + (prop.phone ? "" : " tablet")}
-            ref={myInput}
-            style={mainApp}>
-            {springs.map(({ transform, opacity }, i) => (
-                <a.div
-                    className={"shashin " + mainroutes[i].number}
-                    key={i}
-                    onClick={(e) => selectImage(i, e)}
-                    style={{ transform }}>
-                    <img
-                        className={mainroutes[i].number}
-                        ref={ref => imageRef.current[i] = ref}
-                        onLoad={imageLoaded}
-                        src={mainroutes[i].url}
-                        alt="" />
-                    <a.h2 style={{ opacity }}>{mainroutes[i].title}</a.h2>
-                </a.div>
-            ))}
-        </a.div>
+        <div className="main-app">
+            {initialLoader ? <Loader prop={{ initialLoad }} /> : null}
+            <a.div
+                className={"main-app-content" + (prop.index === null ? " active" : "") + (prop.phone ? "" : " tablet")}
+                ref={myInput}
+                style={mainApp}>
+                {springs.map(({ transform, opacity }, i) => (
+                    <a.div
+                        className={"shashin " + mainroutes[i].number}
+                        key={i}
+                        onClick={(e) => selectImage(i, e)}
+                        style={{ transform }}>
+                        <img
+                            className={mainroutes[i].number}
+                            ref={ref => imageRef.current[i] = ref}
+                            onLoad={imageLoaded}
+                            src={mainroutes[i].url}
+                            alt="" />
+                        <a.h2 style={{ opacity }}>{mainroutes[i].title}</a.h2>
+                    </a.div>
+                ))}
+            </a.div>
+        </div>
     )
 }
 

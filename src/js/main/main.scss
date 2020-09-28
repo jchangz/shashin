@@ -11,87 +11,91 @@
 
 .main {
     height: var(--base);
-    .main-app {
-        display: grid;
-        grid-template-columns: repeat(3, calc(100% + 3rem));
+    .main-app{
         height: var(--base);
-        padding-left: 7rem;
-        background-color: #fff;
-        overflow: hidden;
-        &.tablet {
-            grid-template-columns: repeat(3, calc(100%));
-            padding-left: 15rem;
-        }
-        &.active {
-            overflow: scroll;
-            > .shashin::after {
-                opacity: 1;
+        width: 100vw;
+        position: relative;
+        .main-app-content {
+            display: grid;
+            grid-template-columns: repeat(3, calc(100% + 3rem));
+            height: var(--base);
+            padding-left: 7rem;
+            background-color: #fff;
+            overflow: hidden;
+            &.tablet {
+                grid-template-columns: repeat(3, calc(100%));
+                padding-left: 15rem;
             }
-        }
-        .shashin {
-            position: relative;
-            &:nth-child(-n + 3) {
-                margin-top: 15rem;
-            }
-            &:nth-last-child(-n + 3) {
-                margin-bottom: 15rem;
-            }
-            img {
-                display: block;
-                @extend %full-wh;
-            }
-            h2 {
-                position: absolute;
-                @extend %center;
-                width: 100%;
-                margin: 0;
-                color: #ffffff;
-                font-size: 1.4rem;
-                font-weight: 600;
-                text-align: center;
-                overflow: hidden;
-                z-index: 99;
-                pointer-events: none;
-                @media only screen and (min-width: 500px) {
-                    font-size: 1.5rem;
-                }
-                @media only screen and (min-width: 769px) {
-                    font-size: 2rem;
+            &.active {
+                overflow: scroll;
+                > .shashin::after {
+                    opacity: 1;
                 }
             }
-            &.san,
-            &.roku,
-            &.kyu {
-                &::before {
-                    content: "";
+            .shashin {
+                position: relative;
+                &:nth-child(-n + 3) {
+                    margin-top: 15rem;
+                }
+                &:nth-last-child(-n + 3) {
+                    margin-bottom: 15rem;
+                }
+                img {
+                    display: block;
+                    @extend %full-wh;
+                }
+                h2 {
                     position: absolute;
-                    right: -100px;
-                    width: 100px;
-                    height: 100%;
-                    background: #ffffff;
+                    @extend %center;
+                    width: 100%;
+                    margin: 0;
+                    color: #ffffff;
+                    font-size: 1.4rem;
+                    font-weight: 600;
+                    text-align: center;
+                    overflow: hidden;
+                    z-index: 99;
                     pointer-events: none;
                     @media only screen and (min-width: 500px) {
-                        right: -200px;
-                        width: 200px;
+                        font-size: 1.5rem;
+                    }
+                    @media only screen and (min-width: 769px) {
+                        font-size: 2rem;
                     }
                 }
-            }
-            &::after {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                @extend %full-wh;
-                opacity: 0;
-                background: transparent;
-                transition: 0.25s;
-                box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25), 0 8px 16px -8px rgba(0, 0, 0, 0.3),
-                    0 -6px 16px -6px rgba(0, 0, 0, 0.025);
-                z-index: -1;
+                &.san,
+                &.roku,
+                &.kyu {
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        right: -100px;
+                        width: 100px;
+                        height: 100%;
+                        background: #ffffff;
+                        pointer-events: none;
+                        @media only screen and (min-width: 500px) {
+                            right: -200px;
+                            width: 200px;
+                        }
+                    }
+                }
+                &::after {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    @extend %full-wh;
+                    opacity: 0;
+                    background: transparent;
+                    transition: 0.25s;
+                    box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25), 0 8px 16px -8px rgba(0, 0, 0, 0.3),
+                        0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+                    z-index: -1;
+                }
             }
         }
     }
-
     .main-nav {
         position: fixed;
         z-index: 98;
@@ -255,4 +259,17 @@
         height: 100%;
         object-fit: cover;
     }
+}
+
+.main-loader{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99;
+
 }

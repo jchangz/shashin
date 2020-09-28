@@ -4,14 +4,14 @@ import { useSpring, a } from 'react-spring';
 function Header({ prop }) {
 
     const fadeOut = useSpring({
-        opacity: prop.childloading ? 1 : 0,
-        zIndex: prop.childloading ? 99 : 0
+        opacity: prop.loadLevel1 ? 1 : 0,
+        zIndex: prop.loadLevel1 ? 99 : 0
     })
 
     const fadeLogo = useSpring({
-        opacity: (prop.index === null || prop.opened) ? 0 : 1,
+        opacity: (prop.index === null || prop.openLevel1) ? 0 : 1,
         width: (prop.index === null) ? 0 : (prop.phone ? 150 : 270),
-        transform: prop.opened ? "translateY(-10rem)" : "translateY(0rem)"
+        transform: prop.openLevel1 ? "translateY(-10rem)" : "translateY(0rem)"
     })
 
     return (
