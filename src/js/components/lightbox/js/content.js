@@ -2,13 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSpring, a } from 'react-spring';
 
 function Content({ prop, setIntersecting, content }) {
-    const [counter, setCounter] = useState(0);
+    const [counter, setCounter] = useState(0)
     const imageRef = useRef([])
     const myLightbox = useRef()
-    const touchPosX = useRef(0);
-    const touchPosView = useRef(0);
-    const touchTime = useRef(0);
-    const deviceWidth = window.innerWidth;
+    const touchPosX = useRef(0)
+    const touchPosView = useRef(0)
+    const touchTime = useRef(0)
+    const deviceWidth = window.innerWidth
 
     const scroll = useSpring({
         transform: counter ? `translate3d(${counter}px,-50%,0)` : `translate3d(${counter}px,-50%,0)`,
@@ -20,10 +20,10 @@ function Content({ prop, setIntersecting, content }) {
     })
 
     useEffect(() => {
-        if (prop.selected !== null) {
-            setCounter(-deviceWidth * prop.selected)
+        if (prop.selectedImage !== null) {
+            setCounter(-deviceWidth * prop.selectedImage)
         }
-    }, [prop.selected, deviceWidth])
+    }, [prop.selectedImage, deviceWidth])
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -41,7 +41,7 @@ function Content({ prop, setIntersecting, content }) {
 
         return () => observer.disconnect();
 
-    }, [setIntersecting]);
+    }, [setIntersecting])
 
     const touchStart = (e) => {
         var touchEventX = e.changedTouches[0].clientX;

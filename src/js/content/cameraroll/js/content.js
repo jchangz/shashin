@@ -1,15 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useTrail, a } from 'react-spring';
 import useImageLoaded from '../../../hooks/useImageLoaded.js';
 import Lightbox from '../../../components/lightbox/index.js';
 
-function Content({ content, image, setImage }) {
+function Content({ content, setOpenLightBox }) {
 
+    const [selectedImage, setSelectedImage] = useState(null)
     const { loading, imageLoaded } = useImageLoaded(content)
+    
     const trail = useTrail(content.length, { opacity: loading ? 0 : 1 })
 
-    const openLightbox = (index) => {
-        setImage(index)
+    const openLightBox = (index) => {
+        setSelectedImage(index)
+        setOpenLightBox(true)
     }
 
     return (
@@ -19,7 +22,7 @@ function Content({ content, image, setImage }) {
                     <div className="reflow">
                         <img src={content[index].thumbnail} alt="" />
                         <a.img style={trail}
-                            onClick={loading ? null : () => openLightbox(index)}
+                            onClick={loading ? null : () => openLightBox(index)}
                             onLoad={imageLoaded}
                             src={content[index].url} alt="" />
                     </div>
@@ -27,8 +30,9 @@ function Content({ content, image, setImage }) {
             </div>
             <Lightbox
                 content={content}
-                selected={image}
-                setClose={setImage}
+                selectedImage={selectedImage}
+                setSelectedImage={setSelectedImage}
+                setOpenLightBox={setOpenLightBox}
             />
         </div>
     )

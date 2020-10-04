@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSpring, a } from 'react-spring';
 import Title from './js/title.js';
 import Content from './js/content.js';
@@ -6,48 +6,45 @@ import Navigation from './js/navigation.js';
 import Progress from './js/progress.js';
 import './scroller.scss';
 
-function Scroller({ content, onLoad, animation, open, click, imgopen }) {
-    const deviceWidth = window.innerWidth;
-    const [intersecting, setIntersecting] = useState(null);
-    const [intersectingName, setIntersectingName] = useState(null);
+function Scroller({ content, preloadContent, openLevel1, selectImage, openLevel2 }) {
 
-    const fadeOut = useSpring({
-        opacity: imgopen ? 0 : 1
-    })
+    const deviceWidth = window.innerWidth
+    const [intersecting, setIntersecting] = useState(null)
+    const [intersectingName, setIntersectingName] = useState(null)
+    const [selectImageData, setSelectImageData] = useState(null)
+
     const scaleUp = useSpring({
-        transform: open ? 'scale(1)' : animation === "explode" ? 'scale(1.5)' : 'scale(1)'
+        transform: openLevel1 ? 'scale(1)' : 'scale(1.5)'
     })
+    const fadeOut = useSpring({
+        opacity: openLevel2 ? 0 : 1
+    })
+
+    useEffect(() => {
+        if (intersecting !== null) {
+            setSelectImageData(content[intersecting].click)
+        }
+    }, [intersecting, content])
 
     return (
         <a.div className="scroller" style={scaleUp}>
-
             <Content
-                prop={{ intersecting, deviceWidth, imgopen }}
                 content={content}
-                onLoad={onLoad}
+                prop={{ intersecting, deviceWidth, openLevel2 }}
+                preloadContent={preloadContent}
                 setIntersecting={setIntersecting}
-                setIntersectingName={setIntersectingName}
-            />
-
+                setIntersectingName={setIntersectingName} />
             <Navigation
-                prop={{ intersecting, open, imgopen }}
-                content={content}
-                click={click}
-            />
-
+                prop={{ openLevel1, openLevel2, selectImageData }}
+                selectImage={selectImage} />
             <Title
-                prop={{ intersectingName, intersecting }}
-                content={content}
-                click={click}
-                fadeOut={fadeOut}
-            />
-
+                prop={{ intersectingName, intersecting, selectImageData }}
+                selectImage={selectImage}
+                fadeOut={fadeOut} />
             <Progress
-                prop={{ intersecting }}
                 content={content}
-                fadeOut={fadeOut}
-            />
-
+                prop={{ intersecting }}
+                fadeOut={fadeOut} />
         </a.div>
     )
 }

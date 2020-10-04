@@ -6,49 +6,45 @@ import Progress from './js/progress.js';
 import './lightbox.scss';
 // import Debug from './js/debug.js';
 
-function Lightbox({ content, selected, setClose }) {
-    const [intersecting, setIntersecting] = useState(null);
+function Lightbox({ content, selectedImage, setSelectedImage, setOpenLightBox }) {
+
+    const [intersecting, setIntersecting] = useState(null)
     const [show, setShow] = useState(null)
-    const [immediate, setImmediate] = useState(null); //prevent translate animation on initial click
+    const [immediate, setImmediate] = useState(null) //prevent translate animation on initial click
 
     const open = useSpring({
         transform: show ? 'translateY(0)' : 'translateY(100%)'
     })
 
     useEffect(() => {
-        if (selected !== null) {
+        if (selectedImage !== null) {
             setShow(true)
-            setIntersecting(selected)
+            setIntersecting(selectedImage)
             setTimeout(() => {
                 setImmediate(true)
             }, 275);
         }
-    }, [selected])
+    }, [selectedImage])
 
     const closeLightbox = () => {
         setShow(null)
-        setClose(null)
+        setSelectedImage(null)
         setImmediate(null)
+        setOpenLightBox(null)
     }
 
     return (
         <a.div className="lightbox" style={open}>
-
             <Content
-                prop={{ selected, intersecting, immediate }}
+                prop={{ selectedImage, intersecting, immediate }}
                 content={content}
-                setIntersecting={setIntersecting}
-            />
-
+                setIntersecting={setIntersecting} />
             <Progress
                 content={content}
-                prop={{ intersecting }}
-            />
-
-            <Close closeLightbox={closeLightbox} />
-
+                prop={{ intersecting }} />
+            <Close
+                closeLightbox={closeLightbox} />
             {/* <Debug prop={{intersecting}}/> */}
-
         </a.div>
     )
 }

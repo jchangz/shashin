@@ -4,9 +4,11 @@ import { ReactComponent as Chevron } from '../../logo.svg';
 
 function Navigation({ prop, setOpenLevel1, setOpenLevel2 }) {
 
-    const fadeButton = useSpring({
+    const spring = useSpring({
+        opacity: prop.openLightBox ? 0 : 1,
         height: prop.loadLevel1 ? "0%" : "100%",
-        transform: prop.openLevel1 ? 'scale(-1)' : 'scale(1)'
+        transform: prop.openLevel1 ?
+            (prop.openLevel2 ? 'scale(-1) rotate(90deg)' : 'scale(-1) rotate(0deg)') : 'scale(1) rotate(0deg)'
     })
 
     const clickShowMore = () => {
@@ -17,9 +19,11 @@ function Navigation({ prop, setOpenLevel1, setOpenLevel2 }) {
             prop.openLevel1 ? setOpenLevel1(false) : setOpenLevel1(true)
         }
     }
+
     return (
-        <a.div className={"main-nav" + (prop.openLevel2 ? " icon-open" : "")}>
-            <a.div className={"navigation-main-chevron" + (prop.openLevel1 ? " icon-open" : "")} style={fadeButton}>
+        <a.div className={"main-nav" + (prop.openLightBox ? " icon-open" : "")}>
+            <a.div className={"navigation-main-chevron" + (prop.openLevel1 ? " icon-open" : "")}
+                style={spring}>
                 <Chevron onClick={clickShowMore} />
             </a.div>
         </a.div>

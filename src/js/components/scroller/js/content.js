@@ -1,20 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSpring, a } from 'react-spring';
 
-function Content({ prop, onLoad, content, setIntersecting, setIntersectingName }) {
-    const [counter, setCounter] = useState(0);
+function Content({ prop, preloadContent, content, setIntersecting, setIntersectingName }) {
+    const [counter, setCounter] = useState(0)
     const imageRef = useRef([])
-    const touchPosX = useRef(0);
-    const touchPosView = useRef(0);
-    const touchTime = useRef(0);
+    const touchPosX = useRef(0)
+    const touchPosView = useRef(0)
+    const touchTime = useRef(0)
 
     const scroll = useSpring({
         transform: counter ? `translate3d(${counter}px,-50%,0)` : `translate3d(${counter}px,-50%,0)`,
         config: { mass: 1, tension: 270, friction: 30 }
     })
-    const { o } = useSpring({
+    const { o, b } = useSpring({
         from: { o: 0 },
-        o: Math.abs(((-counter / prop.deviceWidth) - prop.intersecting) * 2.2)
+        o: Math.abs(((-counter / prop.deviceWidth) - prop.intersecting) * 2.2),
+        b: prop.openLevel2 ? 1 : 0
     })
 
     useEffect(() => {
@@ -34,12 +35,7 @@ function Content({ prop, onLoad, content, setIntersecting, setIntersectingName }
 
         return () => observer.disconnect();
 
-    }, [setIntersecting, setIntersectingName]);
-
-    const fadeIn = useSpring({
-        opacity: prop.imgopen ? 1 : 0,
-        config: { mass: 1, tension: 270, friction: 30 }
-    })
+    }, [setIntersecting, setIntersectingName])
 
     const touchStart = (e) => {
         var touchEventX = e.changedTouches[0].clientX;
@@ -91,14 +87,11 @@ function Content({ prop, onLoad, content, setIntersecting, setIntersectingName }
                     <a.img
                         data-name={item.subtitle}
                         data-img={i}
-                        onLoad={onLoad}
+                        onLoad={preloadContent}
                         ref={ref => imageRef.current[i] = ref}
                         src={item.url} alt="" />
                     <a.img className="scroller-content-blur"
-                        style={fadeIn}
-                        src={item.blur} alt="" />
-                    <a.img className="scroller-content-blur"
-                        style={{ opacity: prop.intersecting === i ? o.interpolate(o => `${o}`) : 1 }}
+                        style={{ opacity: prop.intersecting === i ? (prop.openLevel2 ? b : o.interpolate(o => `${o}`)) : 1 }}
                         src={item.blur} alt="" />
                 </div>
             ))}

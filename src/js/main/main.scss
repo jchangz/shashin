@@ -107,7 +107,7 @@
         mix-blend-mode: difference;
         transition: 0.2s;
         &.icon-open {
-            height: 0;
+            pointer-events: none;
         }
         .navigation-main-chevron {
             overflow: hidden;
