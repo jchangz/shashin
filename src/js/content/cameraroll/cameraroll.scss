@@ -36,14 +36,10 @@
         overflow: scroll;
         z-index: 1;
         box-sizing: border-box;
-        .cr-img {
-          position: relative;
-          width: calc((100vw / 2) - 2.5rem);
-          height: calc((100vw / 2) - 2.5rem);
-          overflow: hidden;
-          z-index: 2;
-          img {
-            border-radius: 5px;
+        .reflow {
+          box-shadow: inset 0px 0px 96px 0px rgba(0, 0, 0, 0.5);
+          .reflow-preview {
+            opacity: 0.4;
           }
         }
       }
@@ -57,7 +53,7 @@
     align-items: center;
     transform: translateY(-50%);
     width: 100%;
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
     text-transform: uppercase;
     .cr-title-overlay {
       position: absolute;

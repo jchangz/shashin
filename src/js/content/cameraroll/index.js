@@ -5,7 +5,7 @@ import Scroller from '../../components/scroller/index.js';
 import Content from './js/content.js';
 import './cameraroll.scss';
 
-const CameraRoll = ({ preloadContent, setPreloadLength, openLevel1, openLevel2, setOpenLevel2, setOpenLightBox }) => {
+const CameraRoll = ({ preloadContent, setPreloadLength, openLevel1, openLevel2, setOpenLevel2, openLightBox, setOpenLightBox }) => {
 
   const [route, setRoute] = useState(null)
 
@@ -54,6 +54,7 @@ const CameraRoll = ({ preloadContent, setPreloadLength, openLevel1, openLevel2, 
         {route ?
           <Content
             content={route}
+            openLightBox={openLightBox}
             setOpenLightBox={setOpenLightBox} />
           : null
         }

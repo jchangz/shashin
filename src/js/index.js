@@ -29,7 +29,7 @@ function Main() {
                 setOpenLevel1={setOpenLevel1}
                 setOpenLevel2={setOpenLevel2} />
             <Content
-                prop={{ index, openLevel1, openLevel2 }}
+                prop={{ index, openLevel1, openLevel2, openLightBox }}
                 setLoadLevel1={setLoadLevel1}
                 setOpenLevel2={setOpenLevel2}
                 setOpenLightBox={setOpenLightBox} />

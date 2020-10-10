@@ -26,6 +26,7 @@ function Content({ prop, setLoadLevel1, setOpenLevel2, setOpenLightBox }) {
                     openLevel1={prop.openLevel1}
                     openLevel2={prop.openLevel2}
                     setOpenLevel2={setOpenLevel2}
+                    openLightBox={prop.openLightBox}
                     setOpenLightBox={setOpenLightBox}
                 /> : null
             }

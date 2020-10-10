@@ -11,19 +11,21 @@
         display: flex;
         overflow: scroll;
         top: 50%;
+        height: 100%;
         .lightbox-content-img {
             position: relative;
             display: flex;
+            align-items: center;
             height: 100%;
-            img:first-of-type {
+            .lightbox-content-img-blur {
                 width: 100vw;
                 height: 100%;
+                object-fit: cover;
             }
-            .lightbox-content-img-blur {
+            .lightbox-content-img-main {
                 position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
+                width: calc(100% - 2rem);
+                padding-left: 1rem;
             }
         }
     }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSpring, a } from 'react-spring';
+import { useSpring, useSprings, a } from 'react-spring';
 
-function Content({ prop, setIntersecting, content }) {
+function Content({ prop, setIntersecting, content, closeLightbox, setImageLoaded }) {
     const [counter, setCounter] = useState(0)
     const imageRef = useRef([])
     const myLightbox = useRef()
@@ -14,10 +14,10 @@ function Content({ prop, setIntersecting, content }) {
         transform: counter ? `translate3d(${counter}px,-50%,0)` : `translate3d(${counter}px,-50%,0)`,
         config: prop.immediate ? { mass: 1, tension: 270, friction: 30 } : { duration: 1 }
     })
-    const { o } = useSpring({
-        from: { o: 0 },
-        o: Math.abs(((-counter / deviceWidth) - prop.intersecting) * 2.2),
-    })
+    const springs = useSprings(content.length, content.map((item, i) => ({
+        opacity: prop.intersecting === i && prop.imageLoaded === true ? 1 :
+            (prop.selectedImage === i && prop.imageLoaded === true ? 1 : 0)
+    })))
 
     useEffect(() => {
         if (prop.selectedImage !== null) {
@@ -29,7 +29,7 @@ function Content({ prop, setIntersecting, content }) {
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
-                    var entryVal = parseInt(entry.target.classList.value)
+                    var entryVal = parseInt(entry.target.dataset.intersecting)
                     setIntersecting(entryVal)
                 }
             }, { root: null, rootMargin: "0px", threshold: 0.4 }
@@ -82,6 +82,30 @@ function Content({ prop, setIntersecting, content }) {
         }
     }
 
+    const getImage = (url) => {
+        return new Promise(function (resolve, reject) {
+            var img = new Image()
+            img.onload = function () {
+                resolve(url)
+                setImageLoaded(true)
+            }
+            img.onerror = function () {
+                reject(url)
+            }
+            img.src = url
+        })
+    }
+
+    const preLoad = (e) => {
+        getImage(e.target.currentSrc)
+    }
+
+    useEffect(() => {
+        if (prop.openLightBox === true) {
+            setImageLoaded(false)
+        }
+    }, [prop.intersecting, prop.openLightBox, setImageLoaded])
+
     return (
         <a.div className="lightbox-content"
             ref={myLightbox}
@@ -89,17 +113,20 @@ function Content({ prop, setIntersecting, content }) {
             onTouchStart={(e) => touchStart(e)}
             onTouchMove={(e) => touchMove(e)}
             onTouchEnd={(e) => touchEnd(e)}>
-            {content.map((item, index) => (
-                <div className="lightbox-content-img">
-                    <img className={index}
-                        key={index}
-                        ref={ref => imageRef.current[index] = ref}
-                        src={item.url} alt="" />
+            {springs.map(({ opacity }, index) => (
+                <a.div className="lightbox-content-img">
                     <a.img className="lightbox-content-img-blur"
-                        style={{ opacity: prop.intersecting === index ? o.interpolate(o => `${o}`) : 1 }}
-                        src={item.thumbnail}
+                        data-intersecting={index}
+                        ref={ref => imageRef.current[index] = ref}
+                        onClick={closeLightbox}
+                        src={content[index].url + "?w=50&blur=50"}
                         alt="" />
-                </div>
+                    <a.img className="lightbox-content-img-main"
+                        style={{ opacity }}
+                        key={index}
+                        onLoad={prop.intersecting === index ? (e) => preLoad(e) : null}
+                        src={prop.intersecting === index ? content[index].url + "?w=828" : "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"} alt="" />
+                </a.div>
             ))}
         </a.div>
     )
