@@ -8,6 +8,7 @@ function Content({ prop, setIntersecting, content, closeLightbox, setImageLoaded
     const touchPosX = useRef(0)
     const touchPosView = useRef(0)
     const touchTime = useRef(0)
+    const preloadCounter = useRef(0)
     const deviceWidth = window.innerWidth
 
     const scroll = useSpring({
@@ -82,29 +83,13 @@ function Content({ prop, setIntersecting, content, closeLightbox, setImageLoaded
         }
     }
 
-    const getImage = (url) => {
-        return new Promise(function (resolve, reject) {
-            var img = new Image()
-            img.onload = function () {
-                resolve(url)
-                setImageLoaded(true)
-            }
-            img.onerror = function () {
-                reject(url)
-            }
-            img.src = url
-        })
-    }
-
-    const preLoad = (e) => {
-        getImage(e.target.currentSrc)
-    }
-
-    useEffect(() => {
-        if (prop.openLightBox === true) {
-            setImageLoaded(false)
+    const preLoad = () => {
+        preloadCounter.current += 1;
+        if (preloadCounter.current >= 1) {
+            setImageLoaded(true)
+            preloadCounter.current = 0
         }
-    }, [prop.intersecting, prop.openLightBox, setImageLoaded])
+    }
 
     return (
         <a.div className="lightbox-content"
@@ -124,7 +109,7 @@ function Content({ prop, setIntersecting, content, closeLightbox, setImageLoaded
                     <a.img className="lightbox-content-img-main"
                         style={{ opacity }}
                         key={index}
-                        onLoad={prop.intersecting === index ? (e) => preLoad(e) : null}
+                        onLoad={prop.intersecting === index ? preLoad : null}
                         src={prop.intersecting === index ? content[index].url + "?w=828" : "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"} alt="" />
                 </a.div>
             ))}

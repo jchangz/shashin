@@ -14,8 +14,8 @@ function Lightbox({ content, selectedImage, setSelectedImage, setOpenLightBox, o
     const [imageLoaded, setImageLoaded] = useState(false)
 
     const open = useSpring({
-        transform: show ? 'translateY(0)' : 'translateY(100%)',
-        opacity: show ? 1 : 0
+        opacity: show ? 1 : 0,
+        immediate: show ? null : true
     })
 
     useEffect(() => {
@@ -38,7 +38,8 @@ function Lightbox({ content, selectedImage, setSelectedImage, setOpenLightBox, o
     }
 
     return (
-        <a.div className="lightbox" style={open}>
+        <a.div className={"lightbox" + (openLightBox === true ? " lightbox-open" : "")}
+            style={open}>
             <Content
                 prop={{ selectedImage, intersecting, immediate, openLightBox, imageLoaded }}
                 content={content}
