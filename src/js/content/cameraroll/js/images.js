@@ -25,29 +25,105 @@ export const camerarollcontent = [
     {
         name: 'camerarollkyoto',
         images: [
-            { url: 'https://shashin.imgix.net/cr-kyoto-kiyomizu-2.jpg' },
-            { url: 'https://shashin.imgix.net/cr-kyoto-yasaka.jpg' },
-            { url: 'https://shashin.imgix.net/cr-kyoto-kiyomizu-1.jpg' },
-            { url: 'https://shashin.imgix.net/cr-kyoto-kamo-1.jpg' },
-            { url: 'https://shashin.imgix.net/cr-kyoto-kamischiken.jpg' },
-            { url: 'https://shashin.imgix.net/cr-kyoto-sakura.jpg' },
-            { url: 'https://shashin.imgix.net/cr-kyoto-kamo-2.jpg' },
-            { url: 'https://shashin.imgix.net/cr-kyoto-keage.jpg' },
-            { url: 'https://shashin.imgix.net/cr-kyoto-sunset.jpg' }
+            {
+                url: 'https://shashin.imgix.net/cr-kyoto-kiyomizu-2.jpg',
+                location: 'Kiyomizu Pagoda',
+                metadata: 'iPhone 6s f/2.2 1/1700 25',
+            },
+            {
+                url: 'https://shashin.imgix.net/cr-kyoto-yasaka.jpg',
+                location: 'Hokan-ji Temple',
+                metadata: 'iPhone 6s f/2.2 1/25 200'
+            },
+            {
+                url: 'https://shashin.imgix.net/cr-kyoto-kiyomizu-1.jpg',
+                location: 'Kiyomizu Pagoda',
+                metadata: 'iPhone 6s f/2.2 1/390 25',
+                textcolor: "#000000"
+            },
+            {
+                url: 'https://shashin.imgix.net/cr-kyoto-kamo-1.jpg',
+                location: 'Kyoto',
+                metadata: 'iPhone 6s f/2.2 1/1000 25'
+            },
+            {
+                url: 'https://shashin.imgix.net/cr-kyoto-kamischiken.jpg',
+                location: 'Kamishichiken',
+                metadata: 'iPhone 6s f/2.2 1/15 640'
+            },
+            {
+                url: 'https://shashin.imgix.net/cr-kyoto-sakura.jpg',
+                location: 'Shichijo',
+                metadata: 'iPhone 6s f/2.2 1/1400 25'
+            },
+            {
+                url: 'https://shashin.imgix.net/cr-kyoto-kamo-2.jpg',
+                location: 'Kamogawa',
+                metadata: 'iPhone 6s f/2.2 1/30 25'
+            },
+            {
+                url: 'https://shashin.imgix.net/cr-kyoto-keage.jpg',
+                location: 'Keage Incline',
+                metadata: 'iPhone 6s f/2.2 1/30 50',
+                textcolor: "#000000"
+            },
+            {
+                url: 'https://shashin.imgix.net/cr-kyoto-sunset.jpg',
+                location: 'Kyoto Tower',
+                metadata: 'iPhone 6s f/2.2 1/200 25'
+            }
         ]
     },
     {
         name: 'camerarolljapan',
         images: [
-            { url: 'https://live.staticflickr.com/65535/49936951732_a1c904d102_w.jpg' },
-            { url: 'https://live.staticflickr.com/65535/49936951732_a1c904d102_w.jpg' },
-            { url: 'https://live.staticflickr.com/65535/49936951732_a1c904d102_w.jpg' },
-            { url: 'https://live.staticflickr.com/65535/49936951732_a1c904d102_w.jpg' },
-            { url: 'https://live.staticflickr.com/65535/49936951732_a1c904d102_w.jpg' },
-            { url: 'https://live.staticflickr.com/65535/49936951732_a1c904d102_w.jpg' },
-            { url: 'https://live.staticflickr.com/65535/49936951732_a1c904d102_w.jpg' },
-            { url: 'https://live.staticflickr.com/65535/49936951732_a1c904d102_w.jpg' },
-            { url: 'https://live.staticflickr.com/65535/49936951732_a1c904d102_w.jpg' },
+            {
+                url: 'https://shashin.imgix.net/cr-kyoto-kiyomizu-2.jpg',
+                location: 'Kiyomizu Pagoda',
+                metadata: 'iPhone 6s f/2.2 1/1700 25',
+            },
+            {
+                url: 'https://shashin.imgix.net/cr-kyoto-yasaka.jpg',
+                location: 'Hokan-ji Temple',
+                metadata: 'iPhone 6s f/2.2 1/25 200'
+            },
+            {
+                url: 'https://shashin.imgix.net/cr-kyoto-kiyomizu-1.jpg',
+                location: 'Kiyomizu Pagoda',
+                metadata: 'iPhone 6s f/2.2 1/390 25',
+                textcolor: "#000000"
+            },
+            {
+                url: 'https://shashin.imgix.net/cr-kyoto-kamo-1.jpg',
+                location: 'Kyoto',
+                metadata: 'iPhone 6s f/2.2 1/1000 25'
+            },
+            {
+                url: 'https://shashin.imgix.net/cr-kyoto-kamischiken.jpg',
+                location: 'Kamishichiken',
+                metadata: 'iPhone 6s f/2.2 1/15 640'
+            },
+            {
+                url: 'https://shashin.imgix.net/cr-kyoto-sakura.jpg',
+                location: 'Shichijo',
+                metadata: 'iPhone 6s f/2.2 1/1400 25'
+            },
+            {
+                url: 'https://shashin.imgix.net/cr-kyoto-kamo-2.jpg',
+                location: 'Kamogawa',
+                metadata: 'iPhone 6s f/2.2 1/30 25'
+            },
+            {
+                url: 'https://shashin.imgix.net/cr-kyoto-keage.jpg',
+                location: 'Keage Incline',
+                metadata: 'iPhone 6s f/2.2 1/30 50',
+                textcolor: "#000000"
+            },
+            {
+                url: 'https://shashin.imgix.net/cr-kyoto-sunset.jpg',
+                location: 'Kyoto Tower',
+                metadata: 'iPhone 6s f/2.2 1/200 25'
+            }
         ]
     }
 ]

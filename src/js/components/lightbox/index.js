@@ -6,7 +6,7 @@ import Progress from './js/progress.js';
 import './lightbox.scss';
 // import Debug from './js/debug.js';
 
-function Lightbox({ content, selectedImage, setSelectedImage, setOpenLightBox, openLightBox }) {
+function Lightbox({ content, selectedImage, setSelectedImage, setOpenLightBox, openLightBox, metadata }) {
 
     const [intersecting, setIntersecting] = useState(null)
     const [show, setShow] = useState(null)
@@ -43,6 +43,7 @@ function Lightbox({ content, selectedImage, setSelectedImage, setOpenLightBox, o
             <Content
                 prop={{ selectedImage, intersecting, immediate, openLightBox, imageLoaded }}
                 content={content}
+                metadata={metadata}
                 setImageLoaded={setImageLoaded}
                 setIntersecting={setIntersecting}
                 closeLightbox={closeLightbox} />

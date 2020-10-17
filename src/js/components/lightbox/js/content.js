@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSpring, useSprings, a } from 'react-spring';
 
-function Content({ prop, setIntersecting, content, closeLightbox, setImageLoaded }) {
+function Content({ prop, setIntersecting, content, closeLightbox, setImageLoaded, metadata }) {
     const [counter, setCounter] = useState(0)
     const imageRef = useRef([])
     const myLightbox = useRef()
@@ -100,6 +100,10 @@ function Content({ prop, setIntersecting, content, closeLightbox, setImageLoaded
             onTouchEnd={(e) => touchEnd(e)}>
             {springs.map(({ opacity }, index) => (
                 <a.div className="lightbox-content-img">
+                    <div className="lightbox-content-text" style={{ color: content[index].textcolor }}>
+                        <p>Location: {content[index].location}</p>
+                        {metadata ? <p>{content[index].metadata}</p> : null}
+                    </div>
                     <a.img className="lightbox-content-img-blur"
                         data-intersecting={index}
                         ref={ref => imageRef.current[index] = ref}

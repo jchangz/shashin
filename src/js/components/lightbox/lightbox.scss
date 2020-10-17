@@ -31,6 +31,19 @@
                 width: calc(100% - 2rem);
                 padding-left: 1rem;
             }
+            .lightbox-content-text {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                color: #fff;
+                font-weight: 600;
+                font-size: 0.7rem;
+                text-align: right;
+                text-transform: uppercase;
+                p {
+                    margin: 0;
+                }
+            }
         }
     }
     .lightbox-close {
@@ -47,7 +60,7 @@
             display: block;
             width: 5px;
             height: 5px;
-            background: #1a73e8;
+            background: #ffffff;
             margin-right: 0.5rem;
             &:last-of-type {
                 margin-right: 0;
