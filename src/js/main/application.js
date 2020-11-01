@@ -11,7 +11,7 @@ function Application({ prop, setIndex, setLoadLevel1 }) {
     const counter = useRef(0);
     const myInput = useRef() //reference for main container
     const imageRef = useRef([]) //array of image refs for observer
-    const [intersecting, setIntersecting] = useState('go'); //image intersecting status for titles
+    const [intersecting, setIntersecting] = useState('ni'); //image intersecting status for titles
     const deviceHeight = window.innerHeight;
 
     useEffect(() => {
@@ -26,7 +26,7 @@ function Application({ prop, setIndex, setLoadLevel1 }) {
         if (counter.current >= mainroutes.length) {
             smoothscroll.polyfill();
 
-            const defaultImage = myInput.current.children[4];
+            const defaultImage = myInput.current.children[1];
 
             setinitalLoad(false)
 

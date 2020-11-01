@@ -5,9 +5,9 @@ export const mainroutes = [
         title: 'Camera Roll Kyoto'
     },
     {
-        url: 'https://live.staticflickr.com/65535/48034089612_d49c757b5b_c.jpg',
+        url: 'https://live.staticflickr.com/65535/48155261347_1959bbfb30_o.jpg',
         number: 'ni',
-        title: 'Trinkets'
+        title: 'Things'
     },
     {
         url: 'https://live.staticflickr.com/65535/48034089942_ebef0ec498_c.jpg',
@@ -22,7 +22,7 @@ export const mainroutes = [
     {
         url: 'https://live.staticflickr.com/65535/50317635388_02895dd76b_o.jpg',
         number: 'go',
-        title: 'Stock Photo Booth'
+        title: 'Camera Roll'
     },
     {
         url: 'https://live.staticflickr.com/65535/48034021928_1942b50c84_c.jpg',

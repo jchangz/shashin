@@ -1,0 +1,158 @@
+.things {
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    overflow: scroll;
+    height: var(--base);
+    .things-container {
+        display: flex;
+        position: relative;
+        align-items: center;
+    }
+}
+
+.th-content {
+    display: flex;
+    position: relative;
+    align-items: center;
+    padding: 0 5rem;
+}
+.h-purikura {
+    img {
+        width: 300px;
+    }
+}
+.h-peacememorial {
+    img {
+        width: 1000px;
+    }
+    div {
+        position: absolute;
+        overflow: hidden;
+        height: 100%;
+        width: 0;
+    }
+}
+
+.h-postcard img {
+    position: sticky;
+    width: 250px;
+    height: auto;
+    box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25), 0 18px 36px -18px rgba(0, 0, 0, 0.3);
+}
+
+.m-card img, .m-family img{
+    width: 300px;
+}
+
+.svht {
+    stroke-dasharray: 400;
+    stroke-width: 2px;
+    stroke-dashoffset: 0;
+    fill: transparent;
+}
+
+.things-container.zero {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin-left: 300px;
+    padding-right: 0;
+}
+
+.hiroshima {
+    width: 350px;
+    position: absolute;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.st0 {
+    fill: none;
+    stroke-width: 9;
+    stroke-linecap: round;
+    stroke-miterlimit: 10;
+}
+
+.th-sticky {
+    position: sticky !important;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.th-sticky-content {
+    display: flex;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.th-container {
+    display: flex;
+    align-items: center;
+    &.hide{
+        display: none;
+    }
+}
+
+.th-loading {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: var(--base);
+    background: #fff;
+    z-index: 2;
+    left: 4rem;
+    div {
+
+        .th-loading-title{
+            position: absolute;
+            margin: 0;
+        }
+    }
+    h2 {
+        position: absolute;
+        z-index: 3;
+        font-family: "Roboto Condensed";
+        color: white;
+        font-size: 4rem;
+        margin:0;
+        padding-left: 1rem;
+        padding-right: 15rem;
+        left: 0;
+        text-transform: uppercase;
+    }
+}
+.th-loading-container{
+    position: sticky;
+    left: 10%;
+    width: 50%;
+}
+.th-loading-container-2{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.img-cover{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.th-loading-container-3{
+    height: var(--base);
+}

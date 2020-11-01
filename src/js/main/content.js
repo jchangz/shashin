@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useSpring, a } from 'react-spring';
 import CameraRoll from '../content/cameraroll/index.js';
+import Things from '../content/things/index.js';
 
 function Content({ prop, setLoadLevel1, setOpenLevel2, setOpenLightBox }) {
 
@@ -28,6 +29,13 @@ function Content({ prop, setLoadLevel1, setOpenLevel2, setOpenLightBox }) {
                     setOpenLevel2={setOpenLevel2}
                     openLightBox={prop.openLightBox}
                     setOpenLightBox={setOpenLightBox}
+                /> : null
+            }
+            {prop.index === 1 ?
+                <Things
+                    preloadContent={preloadContent}
+                    setPreloadLength={setPreloadLength}
+                    openLevel1={prop.openLevel1}
                 /> : null
             }
         </a.div>
