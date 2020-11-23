@@ -14,8 +14,8 @@ function Mosaic({ prop, imageLoaded, setloadNext, setimageLoaded }) {
 
     const { o, b, } = useSpring({
         from: { o: 0, b: 0 },
-        o: 1 - ((prop.scrollLeft - thingwidth) / 800),
-        b: prop.scrollLeft >= 0 ? 400 - (prop.scrollLeft * 1.5) : 0,
+        o: 1 - ((prop.scrollLeft - thingwidth) / 600),
+        b: 500 - (prop.scrollLeft - thingwidth) / 2,
         immediate: true,
     })
 
@@ -32,13 +32,12 @@ function Mosaic({ prop, imageLoaded, setloadNext, setimageLoaded }) {
             setimageLoaded(false)
         }
     }, [setloadedImageFlag, prop.imageLoaded, loadedImageFlag, setimageLoaded])
-
     return (
         <div className="th-container" >
             {mosaicContent.map((item, i) => (
-                <div className={"th-content " + item.name} ref={ref => imageRef.current[i] = ref}>
+                <div className={"th-content " + item.name} >
                     {item.name === "m-family" ?
-                        <div className="th-content">
+                        <div className="th-content" style={{ width: 800 }}>
                             {item.img.map((item, i) => (
                                 <div className="th-sticky">
                                     <div className="th-sticky-content">
@@ -46,9 +45,6 @@ function Mosaic({ prop, imageLoaded, setloadNext, setimageLoaded }) {
                                     </div>
                                 </div>
                             ))}
-                            <a.div className="th-loading" ref={ref => imageRef.current[2] = ref}>
-                                <Loading prop={{ nextSectionLoaded, title, loadedImageFlag, o, b, intersecting }} />
-                            </a.div>
                         </div>
                         : null}
                 </div>

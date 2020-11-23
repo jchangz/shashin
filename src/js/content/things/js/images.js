@@ -25,10 +25,7 @@ export const hiroshimaText =
 }
 
 export const hiroshimaContent = [
-    {
-        name: "h-purikura",
-        img: ["https://live.staticflickr.com/65535/50504100842_6b29acd783_o.jpg"]
-    },
+
     {
         name: "h-peacememorial",
         img: [
@@ -44,6 +41,8 @@ export const hiroshimaContent = [
         ]
     }
 ]
+
+export const hiroshimaLoad = "https://live.staticflickr.com/65535/50504100842_6b29acd783_o.jpg"
 
 export const mosaicContent = [
     {
