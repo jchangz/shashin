@@ -9,25 +9,22 @@ import imgPromise from '../hooks/imagePromise.js';
 
 function Application({ prop, setIndex, setLoadLevel1 }) {
 
-    const [initialLoad, setinitalLoad] = useState(true);
-    const [initialLoader, setinitialLoader] = useState(true);
+    const [initialLoad, setinitalLoad] = useState(true)
+    const [initialLoader, setinitialLoader] = useState(true)
     const myInput = useRef() //reference for main container
     const imageRef = useRef([]) //array of image refs for observer
     const [intersectingArray, setIntersectingArray] = useState([])
-    const deviceHeight = window.innerHeight
+    const [opacityArray, setOpacityArray] = useState([])
     const imageSize = window.innerWidth * 1.25
 
     useEffect(() => {
+        smoothscroll.polyfill();
         //get device window height to set container height
-        document.documentElement.style.setProperty('--base', (deviceHeight + 'px'));
+        document.documentElement.style.setProperty('--base', (window.innerHeight + 'px'));
         const defaultImage = myInput.current.children[1];
         //get distance from bottom to top of image minus 2rem
-        document.documentElement.style.setProperty('--logo', deviceHeight - ((deviceHeight - defaultImage.clientHeight) / 3) + 'px');
-        document.documentElement.style.setProperty('--button', ((deviceHeight - defaultImage.clientHeight) / 8) + 'px');
-    }, [deviceHeight])
-
-    useEffect(() => {
-        smoothscroll.polyfill();
+        document.documentElement.style.setProperty('--logo', window.innerHeight - ((window.innerHeight - defaultImage.clientHeight) / 3) + 'px');
+        document.documentElement.style.setProperty('--button', ((window.innerHeight - defaultImage.clientHeight) / 8) + 'px');
 
         const coverImages = mainroutes.reduce(function (result, item) {
             if (item.cover.img) {
@@ -48,9 +45,7 @@ function Application({ prop, setIndex, setLoadLevel1 }) {
                 setinitialLoader(false);
             }, 1500);
         })
-    }, [])
 
-    useEffect(() => {
         const observer = new IntersectionObserver(
             (entries, observer) => {
                 entries.forEach(entry => {
@@ -65,26 +60,23 @@ function Application({ prop, setIndex, setLoadLevel1 }) {
             }, { root: null, rootMargin: "0px", threshold: 1 }
         )
 
-        if (prop.index === null) {
-            imageRef.current.forEach(image => {
-                observer.observe(image);
-            })
-            return () => observer.disconnect();
-        }
-    }, [prop.index]);
+        imageRef.current.forEach(image => {
+            observer.observe(image);
+        })
+        return () => observer.disconnect();
+    }, [])
 
     const selectImage = (i, e) => {
         if (prop.index === null) {
             setIndex(i)
+            setOpacityArray([(i - 1), (i + 1)])
             setLoadLevel1(true)
             myInput.current.scrollTo({
-                top: e.target.offsetTop - ((deviceHeight - (imageSize)) / 2),
+                top: e.target.offsetTop - ((window.innerHeight - (imageSize)) / 2),
                 behavior: 'smooth'
             })
         }
-        else {
-            setIndex(null)
-        }
+        else { setIndex(null) }
     }
 
     const mainApp = useSpring({
@@ -94,9 +86,9 @@ function Application({ prop, setIndex, setLoadLevel1 }) {
     })
 
     const springs = useSprings(mainroutes.length, mainroutes.map((item, i) => ({
-        config: { mass: 1, tension: 200, friction: 17 },
+        config: { mass: 1, tension: 200, friction: 15 },
         height: (prop.index === null) ? "200px" : ((i !== prop.index) ? "200px" : `${imageSize}`),
-        opacity: (prop.index === null) ? 1 : (i !== prop.index) ? 0 : 1,
+        opacity: (prop.index === null) ? 1 : (opacityArray.includes(i)) ? 0 : 1,
         margin: (prop.index === null) ? "2rem" : ((i !== prop.index) ? "2rem" : "1rem")
     })))
 
@@ -110,11 +102,14 @@ function Application({ prop, setIndex, setLoadLevel1 }) {
                 {springs.map(({ height, opacity, margin }, i) => (
                     <a.div
                         className={"shashin " + mainroutes[i].number}
-                        style={{ backgroundImage: `url(${mainroutes[i].img})`, height, margin, opacity }}
+                        style={{ height, opacity, margin }}
                         onClick={(e) => selectImage(i, e)}
                         ref={ref => imageRef.current[i] = ref}
                         data-number={[i]}
                         key={i}>
+                        <div className="cover-img">
+                            <img src={mainroutes[i].img} />
+                        </div>
                         {prop.index === i ? <Cover prop={mainroutes[i].cover} /> : null}
                         {intersectingArray.includes(`${i}`) ? <Title selected={prop.index} name={mainroutes[i].title} /> : null}
                     </a.div>
