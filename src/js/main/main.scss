@@ -11,16 +11,17 @@
 
 .main {
     height: var(--base);
-    .main-app{
+    .main-app {
+        background-color: #fff;
         height: var(--base);
         width: 100vw;
         position: relative;
+        display: flex;
+        align-items: center;
         .main-app-content {
-            display: grid;
-            grid-template-columns: repeat(3, calc(100% + 3rem));
             height: var(--base);
-            padding-left: 7rem;
-            background-color: #fff;
+            height: 100%;
+            width: 100%;
             overflow: hidden;
             &.tablet {
                 grid-template-columns: repeat(3, calc(100%));
@@ -28,70 +29,56 @@
             }
             &.active {
                 overflow: scroll;
-                > .shashin::after {
-                    opacity: 1;
+                .reflow {
+                    overflow: hidden;
                 }
             }
             .shashin {
                 position: relative;
-                &:nth-child(-n + 3) {
-                    margin-top: 15rem;
-                }
-                &:nth-last-child(-n + 3) {
-                    margin-bottom: 15rem;
-                }
-                img {
-                    display: block;
-                    @extend %full-wh;
-                }
+                display: flex;
+                align-items: center;
+                background-size: cover;
+                background-position: center;
+                border-radius: 3px;
+                box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25), 0 8px 16px -8px rgba(0, 0, 0, 0.3),
+                    0 -6px 16px -6px rgba(0, 0, 0, 0.025);
                 h2 {
                     position: absolute;
-                    @extend %center;
-                    width: 100%;
+                    color: #fff;
+                    left: 2rem;
                     margin: 0;
-                    color: #ffffff;
                     font-size: 1.4rem;
                     font-weight: 600;
-                    text-align: center;
-                    overflow: hidden;
-                    z-index: 99;
                     pointer-events: none;
-                    @media only screen and (min-width: 500px) {
-                        font-size: 1.5rem;
-                    }
-                    @media only screen and (min-width: 769px) {
-                        font-size: 2rem;
-                    }
+                    z-index: 4;
                 }
-                &.san,
-                &.roku,
-                &.kyu {
+                &.go {
                     &::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        width: 100%;
+                        height: 48%;
+                        animation: bganimate 3s infinite alternate;
+                        background: darkgray;
+                        background: linear-gradient(
+                            90deg,
+                            rgba(0, 0, 0, 0.5) 10%,
+                            rgba(0, 0, 0, 0) 50%,
+                            rgba(0, 0, 0, 0.5) 100%
+                        );
+                        background-size: 150%;
+                    }
+                    &::after {
                         content: "";
                         position: absolute;
-                        right: -100px;
-                        width: 100px;
-                        height: 100%;
-                        background: #ffffff;
-                        pointer-events: none;
-                        @media only screen and (min-width: 500px) {
-                            right: -200px;
-                            width: 200px;
-                        }
+                        top: 0;
+                        left: 0;
+                        @extend %full-wh;
+                        background-image: url("https://live.staticflickr.com/65535/50657763953_12e079b244_o.png");
+                        background-position: center;
+                        background-size: cover;
                     }
-                }
-                &::after {
-                    content: "";
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    @extend %full-wh;
-                    opacity: 0;
-                    background: transparent;
-                    transition: 0.25s;
-                    box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25), 0 8px 16px -8px rgba(0, 0, 0, 0.3),
-                        0 -6px 16px -6px rgba(0, 0, 0, 0.025);
-                    z-index: -1;
                 }
             }
         }
@@ -261,7 +248,7 @@
     }
 }
 
-.main-loader{
+.main-loader {
     position: absolute;
     top: 0;
     left: 0;
@@ -271,5 +258,26 @@
     align-items: center;
     justify-content: center;
     z-index: 99;
+}
 
+.main-cover {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    @extend %full-wh;
+    z-index: 2;
+    padding: 1rem;
+    pointer-events: none;
+    img {
+        width: 75px;
+    }
+}
+
+@keyframes bganimate {
+    0% {
+        background-position: -50% 0;
+    }
+    100% {
+        background-position: 50% 0;
+    }
 }

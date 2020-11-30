@@ -8,7 +8,7 @@ import useWindowSize from './hooks/useWindowSize.js';
 
 function Main() {
 
-    const [index, setIndex] = useState(1)
+    const [index, setIndex] = useState(null)
     const [loadLevel1, setLoadLevel1] = useState(true)
     const [openLevel1, setOpenLevel1] = useState(false)
     const [openLevel2, setOpenLevel2] = useState(false)
@@ -18,8 +18,8 @@ function Main() {
 
     return (
         <div className="main">
-            <Header
-                prop={{ index, loadLevel1, openLevel1, phone }} />
+            {/* <Header
+                prop={{ index, loadLevel1, openLevel1, phone }} /> */}
             <Application
                 prop={{ index, openLevel1, phone }}
                 setIndex={setIndex}
