@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSpring, useSprings, a, config } from 'react-spring';
 import { mainroutes } from './images.js'
-import smoothscroll from 'smoothscroll-polyfill';
 import Loader from './loader.js';
 import Cover from './cover.js';
 import Title from './title.js';
@@ -14,11 +13,9 @@ function Application({ prop, setIndex, setLoadLevel1 }) {
     const myInput = useRef() //reference for main container
     const imageRef = useRef([]) //array of image refs for observer
     const [intersectingArray, setIntersectingArray] = useState([])
-    const [opacityArray, setOpacityArray] = useState([])
-    const imageSize = window.innerWidth * 1.25
+    const [imageTransform, setImageTransform] = useState([])
 
     useEffect(() => {
-        smoothscroll.polyfill();
         //get device window height to set container height
         document.documentElement.style.setProperty('--base', (window.innerHeight + 'px'));
         const defaultImage = myInput.current.children[1];
@@ -57,7 +54,7 @@ function Application({ prop, setIndex, setLoadLevel1 }) {
                         setIntersectingArray(intersectingArray => (intersectingArray.filter(item => item !== entry.target.dataset.number)))
                     }
                 })
-            }, { root: null, rootMargin: "0px", threshold: 1 }
+            }, { root: null, rootMargin: "0px", threshold: 0.7 }
         )
 
         imageRef.current.forEach(image => {
@@ -66,15 +63,15 @@ function Application({ prop, setIndex, setLoadLevel1 }) {
         return () => observer.disconnect();
     }, [])
 
-    const selectImage = (i, e) => {
+    const selectImage = e => {
+        var viewTop = ((window.innerHeight / 2) - (e.target.offsetHeight / 2)) - (e.target.offsetTop - myInput.current.scrollTop)
+        var viewLeft = ((window.innerWidth / 2) - (e.target.offsetWidth / 2)) - (e.target.offsetLeft - myInput.current.scrollLeft)
+        var targetIndex = e.target.dataset.number;
+
         if (prop.index === null) {
-            setIndex(i)
-            setOpacityArray([(i - 1), (i + 1)])
+            setIndex(`${targetIndex}`)
+            setImageTransform([viewTop, viewLeft])
             setLoadLevel1(true)
-            myInput.current.scrollTo({
-                top: e.target.offsetTop - ((window.innerHeight - (imageSize)) / 2),
-                behavior: 'smooth'
-            })
         }
         else { setIndex(null) }
     }
@@ -86,10 +83,10 @@ function Application({ prop, setIndex, setLoadLevel1 }) {
     })
 
     const springs = useSprings(mainroutes.length, mainroutes.map((item, i) => ({
-        config: { mass: 1, tension: 200, friction: 15 },
-        height: (prop.index === null) ? "200px" : ((i !== prop.index) ? "200px" : `${imageSize}`),
-        opacity: (prop.index === null) ? 1 : (opacityArray.includes(i)) ? 0 : 1,
-        margin: (prop.index === null) ? "2rem" : ((i !== prop.index) ? "2rem" : "1rem")
+        config: { mass: 1, tension: 200, friction: 20 },
+        transform: (prop.index === null) ? "translate(0px, 0px) scale(1)" :
+            ((`${i}` !== prop.index) ? `translate(0px, 0px) scale(0.5)"}` : `translate(${imageTransform[1]}px, ${imageTransform[0]}px) scale(1.7)"}`),
+        opacity: (prop.index === null) ? 1 : ((`${i}` !== prop.index) ? 0 : 1)
     })))
 
     return (
@@ -99,19 +96,20 @@ function Application({ prop, setIndex, setLoadLevel1 }) {
                 className={"main-app-content" + (prop.index === null ? " active" : "") + (prop.phone ? "" : " tablet")}
                 style={mainApp}
                 ref={myInput}>
-                {springs.map(({ height, opacity, margin }, i) => (
+                {springs.map(({ opacity, transform }, i) => (
                     <a.div
                         className={"shashin " + mainroutes[i].number}
-                        style={{ height, opacity, margin }}
-                        onClick={(e) => selectImage(i, e)}
+                        onClick={selectImage}
                         ref={ref => imageRef.current[i] = ref}
                         data-number={[i]}
                         key={i}>
                         <div className="cover-img">
-                            <img src={mainroutes[i].img} />
+                            <div class="reflow">
+                                <a.img className={prop.index === `${i}` ? " selected" : ""} style={{ transform, opacity }} src={mainroutes[i].img} />
+                            </div>
                         </div>
-                        {prop.index === i ? <Cover prop={mainroutes[i].cover} /> : null}
-                        {intersectingArray.includes(`${i}`) ? <Title selected={prop.index} name={mainroutes[i].title} /> : null}
+                        {prop.index === null ?
+                            <Title isIntersecting={intersectingArray.includes(`${i}`) ? true : null} name={mainroutes[i].title} /> : null}
                     </a.div>
                 ))}
             </a.div>

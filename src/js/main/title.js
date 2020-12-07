@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSpring, a } from 'react-spring';
 
-function Title({ name, selected }) {
+function Title({ name, isIntersecting }) {
     const [load, setLoad] = useState(false);
 
     setTimeout(() => {
@@ -9,7 +9,7 @@ function Title({ name, selected }) {
     }, 10);
 
     const spring = useSpring({
-        opacity: load ? (selected !== null ? 0 : 1) : 0,
+        opacity: load ? (isIntersecting === true ? 1 : 0) : 0,
     })
 
     return (
