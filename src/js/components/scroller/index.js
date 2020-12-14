@@ -13,11 +13,9 @@ function Scroller({ content, preloadContent, openLevel1, selectImage, openLevel2
     const [intersectingName, setIntersectingName] = useState(null)
     const [selectImageData, setSelectImageData] = useState(null)
 
-    const scaleUp = useSpring({
+    const spring = useSpring({
+        opacity: openLevel2 ? 0 : (openLevel1 ? 1 : 0),
         transform: openLevel1 ? 'scale(1)' : 'scale(1.5)'
-    })
-    const fadeOut = useSpring({
-        opacity: openLevel2 ? 0 : 1
     })
 
     useEffect(() => {
@@ -27,10 +25,10 @@ function Scroller({ content, preloadContent, openLevel1, selectImage, openLevel2
     }, [intersecting, content])
 
     return (
-        <a.div className="scroller" style={scaleUp}>
+        <a.div className="scroller" style={spring}>
             <Content
                 content={content}
-                prop={{ intersecting, deviceWidth, openLevel2 }}
+                prop={{ intersecting, deviceWidth, openLevel1, openLevel2 }}
                 preloadContent={preloadContent}
                 setIntersecting={setIntersecting}
                 setIntersectingName={setIntersectingName} />
@@ -39,12 +37,10 @@ function Scroller({ content, preloadContent, openLevel1, selectImage, openLevel2
                 selectImage={selectImage} />
             <Title
                 prop={{ intersectingName, intersecting, selectImageData }}
-                selectImage={selectImage}
-                fadeOut={fadeOut} />
+                selectImage={selectImage} />
             <Progress
                 content={content}
-                prop={{ intersecting }}
-                fadeOut={fadeOut} />
+                prop={{ intersecting }} />
         </a.div>
     )
 }

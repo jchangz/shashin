@@ -8,7 +8,11 @@ function Content({ prop, setLoadLevel1, setOpenLevel2, setOpenLightBox }) {
     const [preloadLength, setPreloadLength] = useState(0);
     const preloadCounter = useRef(0);
 
-    const fadeChild = useSpring({ transform: prop.openLevel1 ? 'translateY(-100%)' : 'translateY(10%)' })
+    const fadeChild = useSpring({
+        transform: prop.openLevel1 ? 'translateY(-100%)' : 'translateY(10%)',
+        immediate: true,
+        delay: (prop.openLevel1 === true) ? 0 : 250
+    })
 
     const preloadContent = () => {
         preloadCounter.current += 1;
@@ -20,7 +24,7 @@ function Content({ prop, setLoadLevel1, setOpenLevel2, setOpenLightBox }) {
 
     return (
         <a.div className="main-content" style={fadeChild}>
-            {prop.index === 4 ?
+            {prop.index === "4" ?
                 <CameraRoll
                     preloadContent={preloadContent}
                     setPreloadLength={setPreloadLength}

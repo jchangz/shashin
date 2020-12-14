@@ -78,7 +78,6 @@ function Application({ prop, setIndex, setLoadLevel1 }) {
 
     const mainApp = useSpring({
         opacity: initialLoader ? 0 : (prop.openLevel1 ? 0 : 1),
-        transform: initialLoader ? "translateY(20%)" : "translateY(0%)",
         config: config.gentle
     })
 

@@ -12,9 +12,6 @@ const CameraRoll = ({ preloadContent, setPreloadLength, openLevel1, openLevel2, 
   const openRoute = useSpring({
     transform: openLevel2 ? 'translateY(0)' : 'translateY(110%)'
   })
-  const fadeGrid = useSpring({
-    transform: openLevel1 ? 'translate3d(0%,0,0)' : 'translate3d(0%,-100%,0)'
-  })
 
   const selectImage = (e) => {
     if (route === null) {
@@ -42,14 +39,14 @@ const CameraRoll = ({ preloadContent, setPreloadLength, openLevel1, openLevel2, 
 
   return (
     <div className="cr">
-      <a.div className="cr-main" style={fadeGrid}>
+      <div className="cr-main">
         <Scroller
           content={camerarollroutes}
           preloadContent={preloadContent}
           openLevel1={openLevel1}
           openLevel2={openLevel2}
           selectImage={selectImage} />
-      </a.div>
+      </div>
       <a.div className="cr-container" style={openRoute}>
         {route ?
           <Content

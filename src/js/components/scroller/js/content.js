@@ -1,21 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useSpring, a } from 'react-spring';
+import React, { useEffect, useRef } from 'react';
+import { useSpring, useTrail, a } from 'react-spring';
+import useTouchScroller from '../../../hooks/touchScroller.js'
 
 function Content({ prop, preloadContent, content, setIntersecting, setIntersectingName }) {
-    const [counter, setCounter] = useState(0)
+
     const imageRef = useRef([])
-    const touchPosX = useRef(0)
-    const touchPosView = useRef(0)
-    const touchTime = useRef(0)
+    const scrollWidth = -prop.deviceWidth * 0.8 - 16
+    const { counter, touchStart, touchMove, touchEnd } = useTouchScroller(prop, content, scrollWidth)
 
     const scroll = useSpring({
-        transform: counter ? `translate3d(${counter}px,-50%,0)` : `translate3d(${counter}px,-50%,0)`,
+        transform: counter ? `translate3d(${counter}px,0,0)` : `translate3d(${counter}px,0,0)`,
         config: { mass: 1, tension: 270, friction: 30 }
     })
     const { o, b } = useSpring({
         from: { o: 0 },
-        o: Math.abs(((-counter / prop.deviceWidth) - prop.intersecting) * 2.2),
+        o: Math.abs(((-counter / (prop.deviceWidth * 0.8)) - prop.intersecting) * 2.2),
         b: prop.openLevel2 ? 1 : 0
+    })
+    const trail = useTrail(content.length, {
+        transform: prop.openLevel1 ? "translateY(0px)" : "translateY(100%)",
+        config: { mass: 1, tension: 200, friction: 20 }
     })
 
     useEffect(() => {
@@ -37,63 +41,24 @@ function Content({ prop, preloadContent, content, setIntersecting, setIntersecti
 
     }, [setIntersecting, setIntersectingName])
 
-    const touchStart = (e) => {
-        var touchEventX = e.changedTouches[0].clientX;
-        touchTime.current = new Date().getTime();  //Intial touch time to check if swipe
-        touchPosView.current = touchEventX;  //Touch position of current viewport
-        touchPosX.current = (touchEventX + (prop.deviceWidth * prop.intersecting));  //Touch position of component width
-    }
-
-    const touchMove = (e) => {
-        var touchEventX = (e.changedTouches[0].clientX - touchPosX.current);
-        setCounter(touchEventX);
-    }
-
-    const touchEnd = (e) => {
-        var touchTiming = (new Date().getTime() - touchTime.current);
-        var touchDiff = (touchPosView.current - e.changedTouches[0].clientX);
-
-        if (touchTiming < 250) {
-            if (touchDiff > 0) {
-                if (prop.intersecting < (content.length - 1)) {
-                    setCounter(-prop.deviceWidth * (prop.intersecting + 1));
-                }
-                else {
-                    setCounter(-prop.deviceWidth * prop.intersecting);
-                }
-            }
-            else if (touchDiff < 0) {
-                if (prop.intersecting > 0) {
-                    setCounter(-prop.deviceWidth * (prop.intersecting - 1));
-                }
-                else {
-                    setCounter(-prop.deviceWidth * prop.intersecting);
-                }
-            }
-        }
-        else {
-            setCounter(-prop.deviceWidth * prop.intersecting)
-        }
-    }
-
     return (
         <a.div className="scroller-container"
             style={scroll}
-            onTouchStart={(e) => touchStart(e)}
-            onTouchMove={(e) => touchMove(e)}
-            onTouchEnd={(e) => touchEnd(e)}>
-            {content.map((item, i) => (
-                <div className={"scroller-content " + item.class} key={i}>
+            onTouchStart={touchStart}
+            onTouchMove={touchMove}
+            onTouchEnd={touchEnd}>
+            {trail.map((trail, i) => (
+                <a.div className={"scroller-content " + content[i].class} key={i} style={trail}>
                     <a.img
-                        data-name={item.subtitle}
+                        data-name={content[i].subtitle}
                         data-img={i}
                         onLoad={preloadContent}
                         ref={ref => imageRef.current[i] = ref}
-                        src={item.url} alt="" />
+                        src={content[i].url} alt="" />
                     <a.img className="scroller-content-blur"
                         style={{ opacity: prop.intersecting === i ? (prop.openLevel2 ? b : o.interpolate(o => `${o}`)) : 1 }}
-                        src={item.blur} alt="" />
-                </div>
+                        src={content[i].blur} alt="" />
+                </a.div>
             ))}
         </a.div>
     )
