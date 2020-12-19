@@ -10,7 +10,7 @@ const CameraRoll = ({ preloadContent, setPreloadLength, openLevel1, openLevel2, 
   const [route, setRoute] = useState(null)
 
   const openRoute = useSpring({
-    transform: openLevel2 ? 'translateY(0)' : 'translateY(110%)'
+    transform: openLevel2 ? 'translateY(0)' : 'translateY(110%)', immediate: openLevel2 ? true : false
   })
 
   const selectImage = (e) => {

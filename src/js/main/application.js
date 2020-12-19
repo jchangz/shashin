@@ -78,13 +78,14 @@ function Application({ prop, setIndex, setLoadLevel1 }) {
 
     const mainApp = useSpring({
         opacity: initialLoader ? 0 : (prop.openLevel1 ? 0 : 1),
+        transform: (prop.openLevel1 ? "scale(0.6)" : "scale(1)"),
         config: config.gentle
     })
 
     const springs = useSprings(mainroutes.length, mainroutes.map((item, i) => ({
         config: { mass: 1, tension: 200, friction: 20 },
         transform: (prop.index === null) ? "translate(0px, 0px) scale(1)" :
-            ((`${i}` !== prop.index) ? `translate(0px, 0px) scale(0.5)"}` : `translate(${imageTransform[1]}px, ${imageTransform[0]}px) scale(1.7)"}`),
+            ((`${i}` !== prop.index) ? `translate(0px, 0px) scale(0.5)"}` : `translate(${imageTransform[1]}px, ${imageTransform[0]}px) scale(1.5)"}`),
         opacity: (prop.index === null) ? 1 : ((`${i}` !== prop.index) ? 0 : 1)
     })))
 
