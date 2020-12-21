@@ -9,7 +9,6 @@
     .scroller-container {
         position: absolute;
         display: flex;
-        overflow: scroll;
         .scroller-content {
             position: relative;
             will-change: transform;

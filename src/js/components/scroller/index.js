@@ -14,8 +14,8 @@ function Scroller({ content, preloadContent, openLevel1, selectImage, openLevel2
     const [selectImageData, setSelectImageData] = useState(null)
 
     const spring = useSpring({
-        opacity: openLevel2 ? 0 : (openLevel1 ? 1 : 0),
-        transform: openLevel2 ? "scale(0.8)" : (openLevel1 ? 'scale(1)' : 'scale(1.5)'),
+        opacity: openLevel1 ? 1 : 0,
+        transform: openLevel1 ? 'scale(1)' : 'scale(1.5)',
         config: config.gentle
     })
 

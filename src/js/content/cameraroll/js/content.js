@@ -1,34 +1,39 @@
-import React, { useState } from 'react';
-import { useTrail, a } from 'react-spring';
+import React, { useEffect, useState } from 'react';
+import { useSpring, useTrail, a } from 'react-spring';
 import useImageLoaded from '../../../hooks/useImageLoaded.js';
 import Lightbox from '../../../components/lightbox/index.js';
+import Grid from './grid.js';
 
 function Content({ content, openLightBox, setOpenLightBox }) {
 
     const [selectedImage, setSelectedImage] = useState(null)
     const { loading, imageLoaded } = useImageLoaded(content)
+    const [ready, setReady] = useState(null)
 
-    const trail = useTrail(content.length, { opacity: loading ? 0 : 1 })
+    useEffect(() => {
+        setReady(true)
+    }, [])
 
-    const openLightbox = (index) => {
-        setSelectedImage(index)
-        setOpenLightBox(true)
-    }
+    const trail = useTrail(content.length, {
+        transform: loading ? "scale(0)" : "scale(1)",
+        config: { mass: 1, tension: 400, friction: 30 }
+    })
+    const opacity = useSpring({ opacity: ready ? 1 : 0 })
+    const scale = useSpring({ transform: ready ? "scale(1)" : "scale(0.6)" })
 
     return (
-        <div className="cr-content">
-            <div className="cr-content-grid">
+        <a.div className="cr-content" style={opacity}>
+            <a.div className="cr-content-grid" style={scale}>
                 {trail.map((trail, index) =>
-                    <div className="reflow">
-                        <img className="reflow-preview"
-                            src={content[index].url + "?w=50&blur=50"} alt="" />
-                        <a.img style={trail}
-                            onClick={loading ? null : () => openLightbox(index)}
-                            onLoad={imageLoaded}
-                            src={content[index].url + "?w=200"} alt="" />
-                    </div>
+                    <Grid
+                        content={content}
+                        index={index}
+                        trail={trail}
+                        setOpenLightBox={setOpenLightBox}
+                        imageLoaded={imageLoaded}
+                        setSelectedImage={setSelectedImage} />
                 )}
-            </div>
+            </a.div>
             <Lightbox
                 content={content}
                 openLightBox={openLightBox}
@@ -37,7 +42,7 @@ function Content({ content, openLightBox, setOpenLightBox }) {
                 setOpenLightBox={setOpenLightBox}
                 metadata="true"
             />
-        </div>
+        </a.div>
     )
 }
 
