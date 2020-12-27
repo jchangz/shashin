@@ -104,17 +104,16 @@ function Content({ prop, setIntersecting, content, closeLightbox, setImageLoaded
                         <p>Location: {content[index].location}</p>
                         {metadata ? <p>{content[index].metadata}</p> : null}
                     </div>
-                    <a.img className="lightbox-content-img-blur"
+                    <a.img className={"lightbox-content-img-blur" + (prop.imageLoaded ? " bg-white" : "")}
                         data-intersecting={index}
                         ref={ref => imageRef.current[index] = ref}
                         onClick={closeLightbox}
-                        src={content[index].url + "?w=50&blur=50"}
                         alt="" />
                     <a.img className="lightbox-content-img-main"
                         style={{ opacity }}
                         key={index}
                         onLoad={prop.intersecting === index ? preLoad : null}
-                        src={prop.intersecting === index ? content[index].url + "?w=828" : "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"} alt="" />
+                        src={prop.intersecting === index && prop.openLightBox ? content[index].url + "?w=828" : "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"} alt="" />
                 </a.div>
             ))}
         </a.div>

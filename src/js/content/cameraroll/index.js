@@ -6,8 +6,8 @@ import Content from './js/content.js';
 import './cameraroll.scss';
 
 const CameraRoll = ({ preloadContent, setPreloadLength, openLevel1, openLevel2, setOpenLevel2, openLightBox, setOpenLightBox }) => {
-
   const [route, setRoute] = useState(null)
+  const [routeTitle, setRouteTitle] = useState(null)
 
   const openRoute = useSpring({
     transform: openLevel2 ? 'translateX(0)' : 'translateX(-110%)', immediate: openLevel2 ? true : false
@@ -19,6 +19,7 @@ const CameraRoll = ({ preloadContent, setPreloadLength, openLevel1, openLevel2, 
       const openRouteContent = camerarollcontent.find(route => route.name === openRoute)
       setOpenLevel2(true)
       setRoute(openRouteContent.images)
+      setRouteTitle(openRouteContent.title)
     }
   }
 
@@ -50,6 +51,7 @@ const CameraRoll = ({ preloadContent, setPreloadLength, openLevel1, openLevel2, 
       <a.div className="cr-container" style={openRoute}>
         {route ?
           <Content
+            title={routeTitle}
             content={route}
             openLightBox={openLightBox}
             setOpenLightBox={setOpenLightBox} />

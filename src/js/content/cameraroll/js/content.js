@@ -1,39 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { useSpring, useTrail, a } from 'react-spring';
-import useImageLoaded from '../../../hooks/useImageLoaded.js';
+import { useSpring, a } from 'react-spring';
 import Lightbox from '../../../components/lightbox/index.js';
 import Grid from './grid.js';
 
-function Content({ content, openLightBox, setOpenLightBox }) {
-
+function Content({ content, title, openLightBox, setOpenLightBox }) {
     const [selectedImage, setSelectedImage] = useState(null)
-    const { loading, imageLoaded } = useImageLoaded(content)
     const [ready, setReady] = useState(null)
 
     useEffect(() => {
         setReady(true)
     }, [])
 
-    const trail = useTrail(content.length, {
-        transform: loading ? "scale(0)" : "scale(1)",
-        config: { mass: 1, tension: 400, friction: 30 }
-    })
     const opacity = useSpring({ opacity: ready ? 1 : 0 })
-    const scale = useSpring({ transform: ready ? "scale(1)" : "scale(0.6)" })
 
     return (
         <a.div className="cr-content" style={opacity}>
-            <a.div className="cr-content-grid" style={scale}>
-                {trail.map((trail, index) =>
-                    <Grid
-                        content={content}
-                        index={index}
-                        trail={trail}
-                        setOpenLightBox={setOpenLightBox}
-                        imageLoaded={imageLoaded}
-                        setSelectedImage={setSelectedImage} />
-                )}
-            </a.div>
+            <h2 className="cr-content-title">{title}</h2>
+            <Grid
+                prop={{ ready, selectedImage }}
+                content={content}
+                setOpenLightBox={setOpenLightBox}
+                openLightBox={openLightBox}
+                setSelectedImage={setSelectedImage}
+            />
             <Lightbox
                 content={content}
                 openLightBox={openLightBox}

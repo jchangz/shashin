@@ -24,6 +24,7 @@ export const camerarollroutes = [
 export const camerarollcontent = [
     {
         name: 'camerarollkyoto',
+        title: 'Camera Roll Kyoto',
         images: [
             {
                 url: 'https://shashin.imgix.net/cr-kyoto-kiyomizu-2.jpg',
@@ -76,6 +77,7 @@ export const camerarollcontent = [
     },
     {
         name: 'camerarolljapan',
+        title: 'Camera Roll Japan',
         images: [
             {
                 url: 'https://shashin.imgix.net/cr-kyoto-kiyomizu-2.jpg',

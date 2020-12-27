@@ -33,7 +33,14 @@
       align-items: center;
       @extend %full-wh;
       background-color: #ffffff;
+      .cr-content-title{
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+        margin: 0;
+      }
       .cr-content-grid {
+        position: relative;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         grid-gap: 0.5rem;
@@ -42,12 +49,17 @@
         z-index: 1;
         box-sizing: border-box;
         .reflow {
+          will-change: transform;
           .reflow-preview {
             background: #f4f4f4;
           }
           img{
-            will-change: transform;
+            pointer-events: none;
           }
+        }
+        .cr-content-grid-placeholder{
+          position: absolute;
+          width: 100%;
         }
       }
     }
