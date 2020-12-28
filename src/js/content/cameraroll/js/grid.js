@@ -47,10 +47,10 @@ function Grid({ prop, content, setOpenLightBox, setSelectedImage, openLightBox }
             style={scale}
             ref={myInput}>
             {removePlaceholder ? null :
-                <div class="cr-content-grid-placeholder">
+                <div className="cr-content-grid-placeholder">
                     <div className="cr-content-grid">
                         {content.map((item, i) => (
-                            <div class="reflow" key={i}>
+                            <div className="reflow" key={i}>
                                 <img className="reflow-preview"
                                     src={item.url + "?w=50&blur=50"} alt="" />
                             </div>

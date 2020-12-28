@@ -6,12 +6,11 @@ import Progress from './js/progress.js';
 import './lightbox.scss';
 // import Debug from './js/debug.js';
 
-function Lightbox({ content, selectedImage, setSelectedImage, setOpenLightBox, openLightBox, metadata }) {
+function Lightbox({ content, selectedImage, setSelectedImage, setOpenLightBox, openLightBox }) {
 
     const [intersecting, setIntersecting] = useState(null)
     const [show, setShow] = useState(null)
     const [immediate, setImmediate] = useState(null) //prevent translate animation on initial click
-    const [imageLoaded, setImageLoaded] = useState(false)
 
     const open = useSpring({
         opacity: show ? 1 : 0,
@@ -34,17 +33,14 @@ function Lightbox({ content, selectedImage, setSelectedImage, setOpenLightBox, o
         setImmediate(null)
         setOpenLightBox(null)
         setIntersecting(null)
-        setImageLoaded(false)
     }
 
     return (
         <a.div className={"lightbox" + (openLightBox === true ? " lightbox-open" : "")}
             style={open}>
             <Content
-                prop={{ selectedImage, intersecting, immediate, openLightBox, imageLoaded }}
+                prop={{ selectedImage, intersecting, immediate, openLightBox }}
                 content={content}
-                metadata={metadata}
-                setImageLoaded={setImageLoaded}
                 setIntersecting={setIntersecting}
                 closeLightbox={closeLightbox} />
             <Progress

@@ -6,8 +6,7 @@ import Navigation from './js/navigation.js';
 import Progress from './js/progress.js';
 import './scroller.scss';
 
-function Scroller({ content, preloadContent, openLevel1, selectImage, openLevel2 }) {
-
+function Scroller({ content, openLevel1, selectImage, openLevel2 }) {
     const deviceWidth = window.innerWidth
     const [intersecting, setIntersecting] = useState(null)
     const [intersectingName, setIntersectingName] = useState(null)
@@ -30,7 +29,6 @@ function Scroller({ content, preloadContent, openLevel1, selectImage, openLevel2
             <Content
                 content={content}
                 prop={{ intersecting, deviceWidth, openLevel1, openLevel2 }}
-                preloadContent={preloadContent}
                 setIntersecting={setIntersecting}
                 setIntersectingName={setIntersectingName} />
             <Navigation

@@ -11,7 +11,7 @@ function useTouchScroller(prop, content, scrollWidth) {
         var touchEventX = e.changedTouches[0].clientX;
         touchTime.current = new Date().getTime();  //Intial touch time to check if swipe
         touchPosView.current = touchEventX;  //Touch position of current viewport
-        touchPosX.current = (touchEventX + (-(scrollWidth) * prop.intersecting));  //Touch position of component width
+        touchPosX.current = (touchEventX + (Math.abs(scrollWidth) * prop.intersecting));  //Touch position of component width
     }
 
     const touchMove = e => {
@@ -46,7 +46,7 @@ function useTouchScroller(prop, content, scrollWidth) {
         }
     }
 
-    return { counter, touchStart, touchMove, touchEnd }
+    return { counter, touchStart, touchMove, touchEnd, setCounter }
 }
 
 export default useTouchScroller;

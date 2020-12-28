@@ -25,9 +25,7 @@
                 width: 100vw;
                 height: 100%;
                 object-fit: cover;
-                &.bg-white {
-                    background-color: #ffffff;
-                }
+                background-color: #ffffff;
             }
             .lightbox-content-img-main {
                 position: absolute;
@@ -38,7 +36,7 @@
                 position: absolute;
                 top: 1rem;
                 right: 1rem;
-                color: #fff;
+                color: #000;
                 font-weight: 600;
                 font-size: 0.7rem;
                 text-align: right;

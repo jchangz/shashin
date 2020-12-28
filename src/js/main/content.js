@@ -1,47 +1,43 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSpring, a } from 'react-spring';
 import CameraRoll from '../content/cameraroll/index.js';
 import Things from '../content/things/index.js';
 
 function Content({ prop, setLoadLevel1, setOpenLevel2, setOpenLightBox }) {
-
-    const [preloadLength, setPreloadLength] = useState(0);
-    const preloadCounter = useRef(0);
+    const [childLoaded, setChildLoaded] = useState(false)
 
     const fadeChild = useSpring({
         transform: prop.openLevel1 ? 'translateY(-100%)' : 'translateY(10%)',
-        immediate: true,
-        delay: (prop.openLevel1 === true) ? 0 : 250
+        delay: (prop.openLevel1 === true) ? 0 : 250,
+        immediate: true
     })
 
-    const preloadContent = () => {
-        preloadCounter.current += 1;
-        if (preloadCounter.current >= preloadLength) {
+    useEffect(() => {
+        if (childLoaded === true) {
             setLoadLevel1(false)
-            preloadCounter.current = 0
         }
-    }
+    }, [childLoaded, setLoadLevel1])
+
+    useEffect(() => {
+        setLoadLevel1(true)
+        setChildLoaded(false)
+    }, [prop.index, setLoadLevel1])
 
     return (
         <a.div className="main-content" style={fadeChild}>
-            {prop.index === "4" ?
+            {prop.index === 4 ?
                 <CameraRoll
-                    preloadContent={preloadContent}
-                    setPreloadLength={setPreloadLength}
+                    setChildLoaded={setChildLoaded}
                     openLevel1={prop.openLevel1}
                     openLevel2={prop.openLevel2}
                     setOpenLevel2={setOpenLevel2}
                     openLightBox={prop.openLightBox}
                     setOpenLightBox={setOpenLightBox}
-                /> : null
-            }
+                /> : null}
             {prop.index === 1 ?
                 <Things
-                    preloadContent={preloadContent}
-                    setPreloadLength={setPreloadLength}
                     openLevel1={prop.openLevel1}
-                /> : null
-            }
+                /> : null}
         </a.div>
     )
 }

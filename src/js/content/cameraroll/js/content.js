@@ -29,7 +29,6 @@ function Content({ content, title, openLightBox, setOpenLightBox }) {
                 selectedImage={selectedImage}
                 setSelectedImage={setSelectedImage}
                 setOpenLightBox={setOpenLightBox}
-                metadata="true"
             />
         </a.div>
     )

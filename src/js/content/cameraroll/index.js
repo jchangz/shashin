@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useSpring, a } from 'react-spring';
 import { camerarollroutes, camerarollcontent } from './js/images.js';
 import Scroller from '../../components/scroller/index.js';
+import useImageLoaded from '../../hooks/useImageLoaded.js';
 import Content from './js/content.js';
 import './cameraroll.scss';
 
-const CameraRoll = ({ preloadContent, setPreloadLength, openLevel1, openLevel2, setOpenLevel2, openLightBox, setOpenLightBox }) => {
+const CameraRoll = ({ setChildLoaded, openLevel1, openLevel2, setOpenLevel2, openLightBox, setOpenLightBox }) => {
   const [route, setRoute] = useState(null)
   const [routeTitle, setRouteTitle] = useState(null)
+  const { loading } = useImageLoaded(camerarollroutes, null)
 
   const openRoute = useSpring({
     transform: openLevel2 ? 'translateX(0)' : 'translateX(-110%)', immediate: openLevel2 ? true : false
@@ -24,9 +26,10 @@ const CameraRoll = ({ preloadContent, setPreloadLength, openLevel1, openLevel2, 
   }
 
   useEffect(() => {
-    setPreloadLength(camerarollroutes.length)
-  }, [setPreloadLength])
-
+    if (loading === false) {
+      setChildLoaded(true)
+    }
+  }, [loading, setChildLoaded])
 
   useEffect(() => {
     if (openLevel2 === false) {
@@ -43,7 +46,6 @@ const CameraRoll = ({ preloadContent, setPreloadLength, openLevel1, openLevel2, 
       <div className="cr-main">
         <Scroller
           content={camerarollroutes}
-          preloadContent={preloadContent}
           openLevel1={openLevel1}
           openLevel2={openLevel2}
           selectImage={selectImage} />

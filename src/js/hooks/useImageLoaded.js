@@ -9,7 +9,7 @@ function useImageLoaded(content, size) {
         const img = new Image();
         img.onload = () => resolve(img);
         img.addEventListener('error', (err) => reject(err));
-        img.src = url + size;
+        img.src = url + `${size ? size : ""}`;
       });
     }
 

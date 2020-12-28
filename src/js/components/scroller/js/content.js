@@ -2,8 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useSpring, useTrail, a } from 'react-spring';
 import useTouchScroller from '../../../hooks/touchScroller.js'
 
-function Content({ prop, preloadContent, content, setIntersecting, setIntersectingName }) {
-
+function Content({ prop, content, setIntersecting, setIntersectingName }) {
     const imageRef = useRef([])
     const scrollWidth = -prop.deviceWidth * 0.8 - 16
     const { counter, touchStart, touchMove, touchEnd } = useTouchScroller(prop, content, scrollWidth)
@@ -52,7 +51,6 @@ function Content({ prop, preloadContent, content, setIntersecting, setIntersecti
                     <a.img
                         data-name={content[i].subtitle}
                         data-img={i}
-                        onLoad={preloadContent}
                         ref={ref => imageRef.current[i] = ref}
                         src={content[i].url} alt="" />
                     <a.img className="scroller-content-blur"

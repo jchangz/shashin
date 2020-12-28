@@ -9,8 +9,8 @@ function Progress({ prop, content }) {
 
     return (
         <a.div className="scroller-progress-indicator">
-            {springs.map(({ opacity }) => (
-                <a.span style={{ opacity }} />
+            {springs.map(({ opacity }, i) => (
+                <a.span key={i} style={{ opacity }} />
             ))}
         </a.div>
     )
