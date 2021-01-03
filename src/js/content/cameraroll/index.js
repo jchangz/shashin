@@ -1,65 +1,58 @@
-import React, { useState, useEffect } from 'react';
-import { useSpring, a } from 'react-spring';
+import React, { useEffect, useContext } from 'react';
+import { useTransition, a } from 'react-spring';
+import Content from './js/content.js';
 import { camerarollroutes, camerarollcontent } from './js/images.js';
+import { LoadingContext } from "../../main/context/loadingContext.js";
+import { OpenContext } from "../../main/context/openContext.js";
+import { ScrollerContext } from "../../components/scroller/js/scrollerContext.js";
+import { LightboxProvider } from '../../components/lightbox/js/lightboxContext.js';
 import Scroller from '../../components/scroller/index.js';
 import useImageLoaded from '../../hooks/useImageLoaded.js';
-import Content from './js/content.js';
 import './cameraroll.scss';
 
-const CameraRoll = ({ setChildLoaded, openLevel1, openLevel2, setOpenLevel2, openLightBox, setOpenLightBox }) => {
-  const [route, setRoute] = useState(null)
-  const [routeTitle, setRouteTitle] = useState(null)
+const CameraRoll = () => {
   const { loading } = useImageLoaded(camerarollroutes, null)
+  const { dispatchLoading } = useContext(LoadingContext);
+  const { stateOpen } = useContext(OpenContext);
+  const { stateScroller, dispatchScroller } = useContext(ScrollerContext);
 
-  const openRoute = useSpring({
-    transform: openLevel2 ? 'translateX(0)' : 'translateX(-110%)', immediate: openLevel2 ? true : false
+  const transitions = useTransition(stateOpen.openLevel2, null, {
+    from: { opacity: 0, transform: 'scale(1.5)' },
+    enter: { opacity: 1, transform: 'scale(1)' },
+    leave: { opacity: 0, transform: 'scale(1.5)' },
   })
-
-  const selectImage = (e) => {
-    if (route === null) {
-      const openRoute = `${e.target.dataset.click}`
-      const openRouteContent = camerarollcontent.find(route => route.name === openRoute)
-      setOpenLevel2(true)
-      setRoute(openRouteContent.images)
-      setRouteTitle(openRouteContent.title)
-    }
-  }
 
   useEffect(() => {
     if (loading === false) {
-      setChildLoaded(true)
+      dispatchLoading({ type: 'finishLoad' })
+      dispatchScroller({
+        type: 'setRoute',
+        route: camerarollroutes
+      })
     }
-  }, [loading, setChildLoaded])
+  }, [loading, dispatchLoading, dispatchScroller])
 
   useEffect(() => {
-    if (openLevel2 === false) {
-      setOpenLevel2(false)
-      setTimeout(() => {
-        //delay to remove content once transition finishes
-        setRoute(null)
-      }, 475);
+    if (stateScroller.intersecting !== null) {
+      dispatchScroller({
+        type: 'setImages',
+        images: camerarollcontent[stateScroller.intersecting].images
+      })
     }
-  }, [openLevel2, setOpenLevel2])
+  }, [stateScroller.intersecting, dispatchScroller])
 
   return (
     <div className="cr">
-      <div className="cr-main">
-        <Scroller
-          content={camerarollroutes}
-          openLevel1={openLevel1}
-          openLevel2={openLevel2}
-          selectImage={selectImage} />
-      </div>
-      <a.div className="cr-container" style={openRoute}>
-        {route ?
-          <Content
-            title={routeTitle}
-            content={route}
-            openLightBox={openLightBox}
-            setOpenLightBox={setOpenLightBox} />
-          : null
-        }
-      </a.div>
+      <Scroller name={"cr-scroller"} />
+      {transitions.map(({ item, key, props }) => item ?
+        <a.div className="cr-container"
+          style={props}
+          key={key}>
+          <LightboxProvider>
+            <Content />
+          </LightboxProvider>
+        </a.div> : null
+      )}
     </div>
   )
 }

@@ -1,43 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useSpring, a } from 'react-spring';
+import { ScrollerProvider } from '../components/scroller/js/scrollerContext.js';
 import CameraRoll from '../content/cameraroll/index.js';
 import Things from '../content/things/index.js';
+import { IndexContext } from "./context/indexContext.js";
+import { OpenContext } from "./context/openContext.js";
 
-function Content({ prop, setLoadLevel1, setOpenLevel2, setOpenLightBox }) {
-    const [childLoaded, setChildLoaded] = useState(false)
+function Content() {
+    const { stateIndex } = useContext(IndexContext);
+    const { stateOpen } = useContext(OpenContext);
 
     const fadeChild = useSpring({
-        transform: prop.openLevel1 ? 'translateY(-100%)' : 'translateY(10%)',
-        delay: (prop.openLevel1 === true) ? 0 : 250,
+        transform: stateOpen.openLevel1 ? 'translateY(-100%)' : 'translateY(0%)',
+        delay: (stateOpen.openLevel1 === true) ? 0 : 250,
         immediate: true
     })
 
-    useEffect(() => {
-        if (childLoaded === true) {
-            setLoadLevel1(false)
-        }
-    }, [childLoaded, setLoadLevel1])
-
-    useEffect(() => {
-        setLoadLevel1(true)
-        setChildLoaded(false)
-    }, [prop.index, setLoadLevel1])
-
     return (
         <a.div className="main-content" style={fadeChild}>
-            {prop.index === 4 ?
-                <CameraRoll
-                    setChildLoaded={setChildLoaded}
-                    openLevel1={prop.openLevel1}
-                    openLevel2={prop.openLevel2}
-                    setOpenLevel2={setOpenLevel2}
-                    openLightBox={prop.openLightBox}
-                    setOpenLightBox={setOpenLightBox}
-                /> : null}
-            {prop.index === 1 ?
-                <Things
-                    openLevel1={prop.openLevel1}
-                /> : null}
+            {stateIndex.index === 4 ?
+                <ScrollerProvider>
+                    <CameraRoll />
+                </ScrollerProvider> : null}
+            {stateIndex.index === 1 ?
+                <Things /> : null}
         </a.div>
     )
 }

@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 
-function useTouchScroller(prop, content, scrollWidth) {
+function useTouchScroller(intersecting, content, scrollWidth) {
 
     const [counter, setCounter] = useState(0)
     const touchPosX = useRef(0)
@@ -11,7 +11,7 @@ function useTouchScroller(prop, content, scrollWidth) {
         var touchEventX = e.changedTouches[0].clientX;
         touchTime.current = new Date().getTime();  //Intial touch time to check if swipe
         touchPosView.current = touchEventX;  //Touch position of current viewport
-        touchPosX.current = (touchEventX + (Math.abs(scrollWidth) * prop.intersecting));  //Touch position of component width
+        touchPosX.current = (touchEventX + (Math.abs(scrollWidth) * intersecting));  //Touch position of component width
     }
 
     const touchMove = e => {
@@ -25,24 +25,24 @@ function useTouchScroller(prop, content, scrollWidth) {
 
         if (touchTiming < 250) {
             if (touchDiff > 0) {
-                if (prop.intersecting < (content.length - 1)) {
-                    setCounter(scrollWidth * (prop.intersecting + 1));
+                if (intersecting < (content.length - 1)) {
+                    setCounter(scrollWidth * (intersecting + 1));
                 }
                 else {
-                    setCounter(scrollWidth * prop.intersecting);
+                    setCounter(scrollWidth * intersecting);
                 }
             }
             else if (touchDiff < 0) {
-                if (prop.intersecting > 0) {
-                    setCounter(scrollWidth * (prop.intersecting - 1));
+                if (intersecting > 0) {
+                    setCounter(scrollWidth * (intersecting - 1));
                 }
                 else {
-                    setCounter(scrollWidth * prop.intersecting);
+                    setCounter(scrollWidth * intersecting);
                 }
             }
         }
         else {
-            setCounter(scrollWidth * prop.intersecting)
+            setCounter(scrollWidth * intersecting)
         }
     }
 

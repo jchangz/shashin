@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useSprings, a } from 'react-spring';
+import { LightboxContext } from "./lightboxContext.js";
 
-function Progress({ prop, content }) {
+function Progress({ content }) {
+    const { stateLightbox } = useContext(LightboxContext);
 
     const springs = useSprings(content.length, content.map((item, i) => ({
-        opacity: prop.intersecting === i ? 1 : 0.4,
+        opacity: stateLightbox.intersecting === i ? 1 : 0.4,
     })))
 
     return (
         <div className="lightbox-progress-indicator">
             {springs.map(({ opacity }, i) => (
-                <a.span key={i} style={{ opacity }}></a.span>
+                <a.span style={{ opacity }}
+                    key={i} />
             ))}
         </div>
     )

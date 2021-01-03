@@ -5,11 +5,7 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    z-index: 0;
-    &.lightbox-open {
-        display: block;
-        z-index: 99;
-    }
+    z-index: 99;
     .lightbox-content {
         position: absolute;
         display: flex;
@@ -22,9 +18,10 @@
             align-items: center;
             height: 100%;
             .lightbox-content-img-blur {
+                display: flex;
+                align-items: center;
                 width: 100vw;
                 height: 100%;
-                object-fit: cover;
                 background-color: #ffffff;
             }
             .lightbox-content-img-main {
@@ -61,7 +58,7 @@
             display: block;
             width: 5px;
             height: 5px;
-            background: #ffffff;
+            background: #121212;
             margin-right: 0.5rem;
             &:last-of-type {
                 margin-right: 0;

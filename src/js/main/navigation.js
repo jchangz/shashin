@@ -1,30 +1,35 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useSpring, a } from 'react-spring';
+import { LoadingContext } from "./context/loadingContext.js";
+import { OpenContext } from "./context/openContext.js";
 import { ReactComponent as Chevron } from '../../logo.svg';
 
-function Navigation({ prop, setOpenLevel1, setOpenLevel2 }) {
+function Navigation() {
+    const { stateLoading } = useContext(LoadingContext);
+    const { stateOpen, dispatchOpen } = useContext(OpenContext);
 
     const spring = useSpring({
-        opacity: prop.openLightBox ? 0 : 1,
-        height: prop.loadLevel1 ? "0%" : "100%",
-        transform: prop.openLevel1 ?
-            (prop.openLevel2 ? 'scale(-1) rotate(90deg)' : 'scale(-1) rotate(0deg)') : 'scale(1) rotate(0deg)'
+        opacity: stateOpen.lightbox ? 0 : 1,
+        height: stateLoading.loaded ? "100%" : "0%",
+        transform: stateOpen.openLevel1 ?
+            (stateOpen.openLevel2 ? 'scale(-1) rotate(90deg)' : 'scale(-1) rotate(0deg)') : 'scale(1) rotate(0deg)'
     })
 
-    const clickShowMore = () => {
-        if (prop.openLevel2 === true) {
-            setOpenLevel2(false)
+    const openLevels = () => {
+        if (stateOpen.openLevel2 === true) {
+            dispatchOpen({ type: 'closeLevel2' })
         }
         else {
-            prop.openLevel1 ? setOpenLevel1(false) : setOpenLevel1(true)
+            stateOpen.openLevel1 ? dispatchOpen({ type: 'closeOpenLevel1' }) :
+                dispatchOpen({ type: 'setOpenLevel1' })
         }
     }
 
     return (
-        <a.div className={"main-nav" + (prop.openLightBox ? " icon-open" : "")}>
-            <a.div className={"navigation-main-chevron" + (prop.openLevel1 ? " icon-open" : "")}
+        <a.div className={"main-nav" + (stateOpen.lightbox ? " icon-open" : "")}>
+            <a.div className={"navigation-main-chevron" + (stateOpen.openLevel1 ? " icon-open" : "")}
                 style={spring}>
-                <Chevron onClick={clickShowMore} />
+                <Chevron onClick={openLevels} />
             </a.div>
         </a.div>
     )

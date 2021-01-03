@@ -1,60 +1,61 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import { useSpring, a } from 'react-spring';
 import useTouchScroller from '../../../hooks/touchScroller.js';
+import { OpenContext } from "../../../main/context/openContext.js";
+import { LightboxContext } from "./lightboxContext.js";
+import useObserver from './observer.js';
 
-function Content({ prop, setIntersecting, content, closeLightbox, setImageLoaded }) {
-    const imageRef = useRef([])
-    const myLightbox = useRef()
+function Content({ content }) {
+    const { imageRef } = useObserver()
+    const immediate = useRef(true)
+    const { stateOpen, dispatchOpen } = useContext(OpenContext);
+    const { stateLightbox, dispatchLightbox } = useContext(LightboxContext);
     const deviceWidth = window.innerWidth
-    const { counter, touchStart, touchMove, touchEnd, setCounter } = useTouchScroller(prop, content, -deviceWidth)
+    const { counter, touchStart, touchMove, touchEnd, setCounter } = useTouchScroller(stateLightbox.intersecting, content, -deviceWidth)
+
+    useEffect(() => {
+        if (stateOpen.lightbox === true) {
+            setTimeout(() => {
+                immediate.current = false
+            }, 275);
+        }
+    }, [stateOpen.lightbox])
+
+    useEffect(() => {
+        if (stateLightbox.selected !== null) {
+            setCounter(-deviceWidth * stateLightbox.selected)
+        }
+    }, [stateLightbox.selected, deviceWidth, setCounter])
+
+    const closeLightbox = () => {
+        dispatchOpen({ type: 'closeLightbox' })
+        dispatchLightbox({ type: 'closeLightbox' })
+    }
 
     const scroll = useSpring({
         transform: counter ? `translate3d(${counter}px,-50%,0)` : `translate3d(${counter}px,-50%,0)`,
-        config: prop.immediate ? { mass: 1, tension: 270, friction: 30 } : { duration: 1 }
+        config: immediate.current === false ? { mass: 1, tension: 270, friction: 30 } : { duration: 1 }
     })
-
-    useEffect(() => {
-        if (prop.selectedImage !== null) {
-            setCounter(-deviceWidth * prop.selectedImage)
-        }
-    }, [prop.selectedImage, deviceWidth, setCounter])
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    var entryVal = parseInt(entry.target.dataset.intersecting)
-                    setIntersecting(entryVal)
-                }
-            }, { root: null, rootMargin: "0px", threshold: 0.4 }
-        );
-
-        imageRef.current.forEach(image => {
-            observer.observe(image);
-        })
-
-        return () => observer.disconnect();
-
-    }, [setIntersecting])
 
     return (
         <a.div className="lightbox-content"
-            ref={myLightbox}
             style={scroll}
-            onTouchStart={(e) => touchStart(e)}
-            onTouchMove={(e) => touchMove(e)}
-            onTouchEnd={(e) => touchEnd(e)}>
+            onTouchStart={touchStart}
+            onTouchMove={touchMove}
+            onTouchEnd={touchEnd}>
             {content.map((item, i) => (
                 <a.div className="lightbox-content-img" key={i}>
                     <div className="lightbox-content-text">
                         <p>Location: {item.location}</p>
                     </div>
                     <div className="lightbox-content-img-blur"
-                        data-intersecting={i}
                         ref={ref => imageRef.current[i] = ref}
-                        onClick={closeLightbox} />
+                        data-intersecting={i}
+                        onClick={closeLightbox} >
+                        <img className="lightbox-content-img-main"
+                            src={item.url + "?w=200"} alt="" /></div>
                     <img className="lightbox-content-img-main"
-                        src={prop.intersecting === i && prop.openLightBox ? item.url + "?w=828" : item.url + "?w=200"} alt="" />
+                        src={stateLightbox.intersecting === i ? item.url + "?w=828" : null} alt="" />
                 </a.div>
             ))}
         </a.div>

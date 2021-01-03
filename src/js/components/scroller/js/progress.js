@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useSprings, a } from 'react-spring';
+import { ScrollerContext } from "./scrollerContext.js";
 
-function Progress({ prop, content }) {
-
+function Progress() {
+    const { stateScroller } = useContext(ScrollerContext);
+    const content = stateScroller.route
     const springs = useSprings(content.length, content.map((item, i) => ({
-        opacity: prop.intersecting === i ? 1 : 0.4,
+        opacity: stateScroller.intersecting === i ? 1 : 0.4,
     })))
 
     return (

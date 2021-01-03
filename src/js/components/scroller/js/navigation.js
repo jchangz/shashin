@@ -1,20 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useSpring, a } from 'react-spring';
 import { ReactComponent as Chevron } from '../../../../logo.svg';
+import { OpenContext } from "../../../../js/main/context/openContext.js";
 
-function Navigation({ prop, selectImage }) {
+function Navigation() {
+    const { stateOpen, dispatchOpen } = useContext(OpenContext);
 
+    const selectImage2 = () => {
+        dispatchOpen({ type: 'openLevel2' })
+    }
     const fadeUp = useSpring({
-        opacity: prop.openLevel1 ? (prop.openLevel2 ? 0 : 1) : 1,
-        transform: prop.openLevel1 ? "translate3d(-50%,-50%,0)" : "translate3d(-50%, 250%, 0)",
-        config: { mass: 1, tension: 100, friction: 12 }
+        opacity: stateOpen.openLevel1 ? (stateOpen.openLevel2 ? 0 : 1) : 1,
+        transform: stateOpen.openLevel1 ? "translate3d(-50%,-50%,0)" : "translate3d(-50%, 250%, 0)",
+        config: { mass: 1, tension: 100, friction: 12 },
     })
 
     return (
         <a.div className="scroller-nav"
             style={fadeUp}
-            data-click={prop.selectImageData}
-            onClick={selectImage} >
+            onClick={selectImage2} >
             <Chevron />
         </a.div>
     )

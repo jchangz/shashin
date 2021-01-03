@@ -8,7 +8,7 @@
   display: flex;
   height: var(--base);
   overflow: scroll;
-  .cr-main {
+  .cr-scroller {
     width: 100%;
     height: 100%;
     .scroller-container {
@@ -33,33 +33,43 @@
       align-items: center;
       @extend %full-wh;
       background-color: #ffffff;
-      .cr-content-title{
+      .cr-content-title {
         position: absolute;
         top: 2rem;
         left: 2rem;
         margin: 0;
       }
-      .cr-content-grid {
-        position: relative;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-gap: 0.5rem;
+      .cr-content-main {
         width: 100%;
-        overflow: scroll;
-        z-index: 1;
-        box-sizing: border-box;
-        .reflow {
-          will-change: transform;
-          .reflow-preview {
-            background: #f4f4f4;
+        .cr-content-grid {
+          position: relative;
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          grid-gap: 0.5rem;
+          width: 100%;
+          overflow: scroll;
+          z-index: 1;
+          box-sizing: border-box;
+          .reflow {
+            will-change: transform;
+            .reflow-preview {
+              background: #f4f4f4;
+            }
+            img {
+              pointer-events: none;
+            }
           }
-          img{
-            pointer-events: none;
+          .cr-content-grid-placeholder {
+            position: absolute;
+            width: 100%;
           }
         }
-        .cr-content-grid-placeholder{
+        .cr-lightbox {
           position: absolute;
+          top: 0;
           width: 100%;
+          height: var(--base);
+          z-index: 2;
         }
       }
     }

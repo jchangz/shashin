@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
-import { useSpring, a } from 'react-spring';
+import { useSpring, a, config } from 'react-spring';
 
-function Title({ name, isIntersecting }) {
+function Title({ name }) {
     const [load, setLoad] = useState(false);
 
     setTimeout(() => {
         setLoad(true)
-    }, 10);
+    }, 1);
 
     const spring = useSpring({
-        opacity: load ? (isIntersecting === true ? 1 : 0) : 0,
+        transform: load ? "scale(1)" : "scale(0)",
+        config: config.gentle
     })
 
     return (
-        <a.h2 style={spring} className="main-title">{name}</a.h2>
+        <a.h2 style={spring}>{name}</a.h2>
     )
 }
 
